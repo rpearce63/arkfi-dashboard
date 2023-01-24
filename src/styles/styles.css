@@ -85,18 +85,19 @@ html {
 body {
     min-height: 100vh;
     background: var(--bg2);
+    
 }
 
 .grotesk {
-    font-family: SpaceGrotesk !important;
+    font-family: SpaceGrotesk !important, sans-serif;
 }
 
 .inter {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
 }
 
 .inter-bold {
-    font-family: 'Inter Bold', Arial;
+    font-family: 'Inter Bold', sans-serif;
     
 }
 
