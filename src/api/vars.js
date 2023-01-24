@@ -142,7 +142,7 @@ const cwrPresets = {
 var selectedCWR = cwrPresets[1.0];
 
 var web3 = new Web3(Web3.givenProvider);
-var web3bsc = new Web3(new Web3.providers.HttpProvider(rpcs.BSC.url));
+export var web3bsc = new Web3(new Web3.providers.HttpProvider(rpcs.BSC.url));
 var account = "";
 
 //SALES

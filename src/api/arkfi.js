@@ -1,8 +1,8 @@
 import axios from "axios";
 import Web3 from "web3";
-import VaultABI from "./arkfi_vault_abi";
-import { contractBscToken, contractBscVault, contractBscSwap } from "./vars";
-const web3 = new Web3(Web3.givenProvider);
+
+import { web3bsc, contractBscToken, contractBscVault, contractBscSwap } from "./vars";
+const web3 = web3bsc;//new Web3(Web3.givenProvider);
 
 let account = "";
 
@@ -412,7 +412,7 @@ export const initData = async (accounts) => {
     const roi = await GetROI_Vault();
     const walletBalance = await GetARKBalance_Token();
     const maxPayout = await GetMaxPayout_Vault();
-    console.log(maxPayout);
+    
     response.push({
       account: wallet,
       availableRewards,
