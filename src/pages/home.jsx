@@ -1,78 +1,73 @@
 import * as React from "react";
-import { animated } from "react-spring";
-import { useWiggle } from "../hooks/wiggle";
-import { Link } from "wouter";
+import { useEffect, useState } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { initData } from "../api/arkfi";
 
-// Our language strings for the header
-const strings = [
-  "Hello React",
-  "Salut React",
-  "Hola React",
-  "안녕 React",
-  "Hej React"
+const accounts = [
+  "0x1ff661243cb97384102a69a466c887b4cC12d72a",
+  "0xb066550524e791c41672178975febb4e7038a3f8",
 ];
 
-// Utility function to choose a random value from the language array
-function randomLanguage() {
-  return strings[Math.floor(Math.random() * strings.length)];
-}
+export default function BasicTable() {
+  const [acctData, setAcctData] = useState([]);
 
-/**
-* The Home function defines the content that makes up the main content of the Home page
-*
-* This component is attached to the /about path in router.jsx
-* The function in app.jsx defines the page wrapper that this appears in along with the footer
-*/
+  const getInitData = async () => {
+    const accountInfo = await initData(accounts);
 
-export default function Home() {
-  /* We use state to set the hello string from the array https://reactjs.org/docs/hooks-state.html
-     - We'll call setHello when the user clicks to change the string
-  */
-  const [hello, setHello] = React.useState(strings[0]);
-  
-  /* The wiggle function defined in /hooks/wiggle.jsx returns the style effect and trigger function
-     - We can attach this to events on elements in the page and apply the resulting style
-  */
-  const [style, trigger] = useWiggle({ x: 5, y: 5, scale: 1 });
-
-  // When the user clicks we change the header language
-  const handleChangeHello = () => {
-    
-    // Choose a new Hello from our languages
-    const newHello = randomLanguage();
-    
-    // Call the function to set the state string in our component
-    setHello(newHello);
+    setAcctData([...accountInfo]);
   };
+
+  useEffect(() => {
+    getInitData();
+    setInterval(() => {
+      getInitData();
+    }, 60000);
+  }, []);
+
   return (
-    <>
-      <h1 className="title">{hello}!</h1>
-      {/* When the user hovers over the image we apply the wiggle style to it */}
-      <animated.div onMouseEnter={trigger} style={style}>
-        <img
-          src="https://cdn.glitch.com/2f80c958-3bc4-4f47-8e97-6a5c8684ac2c%2Fillustration.svg?v=1618196579405"
-          className="illustration"
-          onClick={handleChangeHello}
-          alt="Illustration click to change language"
-        />
-      </animated.div>
-      <div className="navigation">
-        {/* When the user hovers over this text, we apply the wiggle function to the image style */}
-        <animated.div onMouseEnter={trigger}>
-          <a className="btn--click-me" onClick={handleChangeHello}>
-            Psst, click me
-          </a>
-        </animated.div>
-      </div>
-      <div className="instructions">
-        <h2>Using this project</h2>
-        <p>
-          This is the Glitch <strong>Hello React</strong> project. You can use
-          it to build your own app. See more info in the{" "}
-          <Link href="/about">About</Link> page, and check out README.md in the
-          editor for additional detail plus next steps you can take!
-        </p>
-      </div>
-    </>
+    <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Account</TableCell>
+            <TableCell align="right">Balance</TableCell>
+            <TableCell align="right">Wallet Balance</TableCell>
+            <TableCell align="right">Available</TableCell>
+            <TableCell align="right">CWR</TableCell>
+            <TableCell align="right">Daily ROI</TableCell>
+            <TableCell align="right">Total Deposits</TableCell>
+            <TableCell align="right">NDV</TableCell>
+
+            <TableCell align="right">Max Payout</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {acctData.map((row) => (
+            <TableRow
+              key={row.account}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.account}
+              </TableCell>
+              <TableCell align="right">{row.principalBalance}</TableCell>
+              <TableCell align="right">{row.walletBalance}</TableCell>
+              <TableCell align="right">{row.availableRewards}</TableCell>
+              <TableCell align="right">{row.maxCwr}</TableCell>
+              <TableCell align="right">{row.roi}%</TableCell>
+              <TableCell align="right">{row.deposits}</TableCell>
+              <TableCell align="right">{row.ndv}</TableCell>
+              <TableCell align="right">{row.maxPayout}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

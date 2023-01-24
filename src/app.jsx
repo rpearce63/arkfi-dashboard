@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Router, Link } from "wouter";
+import Header from "./components/Header"
 
 /**
 * This code defines the react app
@@ -26,6 +27,7 @@ export default function Home() {
     <Router>
       <Seo />
       <main role="main" className="wrapper">
+        <Header/>
         <div className="content">
           {/* Router specifies which component to insert here as the main content */}
           <PageRouter />
