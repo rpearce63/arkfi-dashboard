@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <header className="App-header">
-      <h1>Ark Price: {arkPrice}</h1>
+      <h1 className="page-title">Ark Price: {arkPrice}</h1>
     </header>
   );
 };
