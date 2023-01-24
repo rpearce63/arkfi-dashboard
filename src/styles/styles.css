@@ -125,9 +125,10 @@ body {
   color: #e6e6e6;
 }
 
-.links {
-  color: #e6e6e6
+.links  a {
+  color: var(--textcolor2)
 }
+
 .mt-r {
     /*margin-top: 24px;*/
     margin-top: calc(var(--bs-gutter-x) * .42);
