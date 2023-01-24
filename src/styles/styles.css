@@ -42,7 +42,7 @@ html {
     --bg1: #131518;
     --bg2: #1e1f23;
     --bg3: #292933;
-    --textcolor: #e6e6e6;
+    --textcolor: black;
     --textcolor2: #61626d;
     --textcolor3: #61626c;
     --filter1: brightness(1) invert(1);
@@ -51,7 +51,7 @@ html {
 
 @font-face {
     font-family: 'SpaceGrotesk Medium';
-    src: url('SpaceGrotesk-Medium.woff2') format('woff2'), url('SpaceGrotesk-Medium.woff') format('woff'), url("SpaceGrotesk-Medium.ttf") format("truetype");
+    src: url('https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/SpaceGrotesk-Medium.woff2?v=1674582321539') format('woff2'), url('https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/SpaceGrotesk-Medium.woff2?v=1674582321539') format('woff'), url("SpaceGrotesk-Medium.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -59,7 +59,7 @@ html {
 
 @font-face {
     font-family: 'SpaceGrotesk';
-    src: url('SpaceGrotesk-Regular.woff2') format('woff2'), url('SpaceGrotesk-Regular.woff') format('woff'), url("SpaceGrotesk-Regular.ttf") format("truetype");
+    src: url('https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/SpaceGrotesk-Regular.woff2?v=1674582326188') format('woff2'), url('https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/SpaceGrotesk-Regular.woff2?v=1674582326188') format('woff'), url("SpaceGrotesk-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -68,7 +68,7 @@ html {
 
 @font-face {
     font-family: 'Inter';
-    src: url('Inter-Regular.woff2') format('woff2'), url('Inter-Regular.woff') format('woff'), url("Inter-Regular.ttf") format("truetype");
+    src: url('https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/Inter-Regular.woff2?v=1674582315160') format('woff2'), url('https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/Inter-Regular.woff2?v=1674582315160') format('woff'), url("Inter-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -76,7 +76,7 @@ html {
 
 @font-face {
     font-family: 'Inter Bold';
-    src: url("Inter-Bold.ttf") format("truetype");
+    src: url("https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/Inter-Bold.ttf?v=1674582300198") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -119,10 +119,15 @@ body {
     object-fit: contain;
 }
 
+
 .page-title {
     margin-bottom: 12px;
+  color: #e6e6e6;
 }
 
+.links {
+  color: #e6e6e6
+}
 .mt-r {
     /*margin-top: 24px;*/
     margin-top: calc(var(--bs-gutter-x) * .42);
