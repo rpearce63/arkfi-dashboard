@@ -1,4 +1,5 @@
 import React from "react";
+import { createRoot } from 'react-dom/client';
 import ReactDOM from "react-dom";
 import App from "./app.jsx";
 import { HelmetProvider } from 'react-helmet-async';
@@ -11,12 +12,11 @@ import { HelmetProvider } from 'react-helmet-async';
 */
 
 // Render the site https://reactjs.org/docs/react-dom.html#render
-const root = React.createRoot(document.getElementById("root"));
-ReactDOM.render(
+const root = createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
     <HelmetProvider>
       <App />
     </HelmetProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
