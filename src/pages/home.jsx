@@ -12,11 +12,10 @@ export default () => {
   ];
 
   const [acctData, setAcctData] = useState([]);
-  const [addresses, setAddresses] = useState([]);
 
   const getInitData = async () => {
     
-    const savedData = JSON.parse(localStorage.getItem("arkFiWallets"));
+    const savedData = JSON.parse(localStorage.getItem("arkFiWallets")) || [];
     const accountInfo = await initData(savedData);
 
     accountInfo.length && setAcctData([...accountInfo]);
@@ -29,8 +28,7 @@ export default () => {
   
   
   const addWallet = (address) => {
-    //setAddresses([...new Set([...addresses, address])]);
-    const wallets = JSON.parse(localStorage.getItem('arkFiWallets'))
+    const wallets = JSON.parse(localStorage.getItem('arkFiWallets')) || []
     localStorage.setItem('arkFiWallets', JSON.stringify([...wallets, address]))
     getInitData();
     
