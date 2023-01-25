@@ -25,9 +25,6 @@ export default () => {
     const savedData = JSON.parse(localStorage.getItem("arkFiWallets"));
     console.log('savedData: ', savedData)
     savedData.length && setAddresses([...savedData]);
-    setInterval(() => {
-      getInitData();
-    }, 10000);
   }, []);
 
   useEffect(() => {
