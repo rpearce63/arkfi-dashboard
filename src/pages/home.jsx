@@ -18,7 +18,7 @@ export default () => {
     console.log("getting data: ", addresses);
     const accountInfo = await initData(addresses);
 
-    setAcctData([...accountInfo]);
+    accountInfo && setAcctData([...accountInfo]);
   };
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export default () => {
   }, []);
 
   useEffect(() => {
+    console.log('addresses changed: ', addresses)
     getInitData();
     localStorage.setItem("arkFiWallets", JSON.stringify(addresses));
   }, [addresses]);
