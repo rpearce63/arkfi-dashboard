@@ -230,9 +230,9 @@ async function LastAction_Vault() {
   try {
     var _val = await contractBscVault.methods.lastAction(account).call();
     _val = new Date(Number(_val) * 1000);
-    return _val;
+    return _val.getTime();
   } catch {
-    return new Date();
+    return new Date().getTime();
   }
 }
 
@@ -440,7 +440,7 @@ export const initData = async (accounts) => {
     const maxPayout = await GetMaxPayout_Vault();
     const busdBalance = await GetBusdBalance();
     const nftRewards = await GetClaimableRewards_Legacy();
-    const nextAction = await LastAction_Vault();
+    const lastAction = await LastAction_Vault();
     
     response.push({
       account: wallet,
@@ -454,7 +454,7 @@ export const initData = async (accounts) => {
       maxPayout,
       busdBalance,
       nftRewards,
-      nextAction
+      lastAction
     });
   }
 

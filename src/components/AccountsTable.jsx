@@ -9,9 +9,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 function Timer(toDate) {
-    var dateEntered = toDate;
+    
+    var dateEntered = toDate + 86400000;
     var now = new Date();
-    var difference = dateEntered.getTime() - now.getTime();
+    var difference = dateEntered - now.getTime();
 
     if (difference <= 0) {
         //$("#vaulttimer").text("00:00:00");
@@ -35,9 +36,18 @@ function Timer(toDate) {
     }
 }
 
+
+
 export default function BasicTable({ accounts }) {
   const [totals, setTotals] = useState([]);
   const [timers, setTimers] = useState([]);
+  
+  const updateTimers = () => {
+    for(const account of accounts) {
+      const timer = Timer(account.lastAction);
+      setTimers([...timers, {account: account.account, timer}])
+    }
+  }
   
 
   useEffect(() => {
