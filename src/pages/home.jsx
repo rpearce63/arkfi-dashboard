@@ -17,7 +17,7 @@ export default () => {
   const [addresses, setAddresses] = useState([])
   
   const getInitData = async () => {
-    
+    console.log('getting data: ', addresses)
     const accountInfo = await initData(addresses);
 
     setAcctData([...accountInfo]);
@@ -26,18 +26,19 @@ export default () => {
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem('arkFiWallets'));
     savedData && setAddresses([...savedData])
+    setInterval(() => {
+      getInitData();
+    }, 60000);
   }, [])
   
   useEffect(() => {
     getInitData();
-    setInterval(() => {
-      getInitData();
-    }, 60000);
+    localStorage.setItem('arkFiWallets', JSON.stringify(addresses))
   }, [addresses]);
   
   const addWallet = (address) => {
-    setAddresses(() => [...addresses, address])
-    localStorage.setItem('arkFiWallets', JSON.stringify(addresses))
+    setAddresses([...new Set([...addresses, address])])
+    
   }
   
   return (
