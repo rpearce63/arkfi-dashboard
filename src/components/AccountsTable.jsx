@@ -32,7 +32,7 @@ function Timer(toDate) {
         const hourText = hours < 10 ? "0" + hours : hours;
         const minutesText = minutes < 10 ? "0" + minutes : minutes;
         const secondsText = seconds < 10 ? "0" + seconds : seconds;
-        return (hourText + ":" + minutesText + ":" + secondsText);
+        return hourText + ":" + minutesText + ":" + secondsText;
     }
 }
 
@@ -43,10 +43,14 @@ export default function BasicTable({ accounts }) {
   const [timers, setTimers] = useState([]);
   
   const updateTimers = () => {
+    let _timers = {};
     for(const account of accounts) {
+      
       const timer = Timer(account.lastAction);
-      setTimers([...timers, {account: account.account, timer}])
+      _timers = {..._timers, timer}
     }
+    console.log(_timers)
+    setTimers([..._timers])
   }
   
 
@@ -63,6 +67,12 @@ export default function BasicTable({ accounts }) {
     const maxPayoutTotal =accounts.reduce((total, account) => total + parseFloat(account.maxPayout), 0);
     const nftRewardsTotal = accounts.reduce((total, account) => total + parseFloat(account.nftRewards), 0);
     setTotals({ ...totals, balanceTotal, walletTotal, busdTotal, availTotal, depositsTotal, maxPayoutTotal, nftRewardsTotal });
+  
+    const timerInterval = setInterval(() => {
+      updateTimers();
+      return () => clearInterval(timerInterval);
+    }, 1000)
+    
   }, [accounts]);
 
   return (
