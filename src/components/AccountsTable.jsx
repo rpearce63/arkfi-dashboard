@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import {useState, useEffect} from 'react';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,6 +11,12 @@ import Paper from "@mui/material/Paper";
 
 export default function BasicTable({accounts}) {
   
+  const [totalBalance, setTotalBalance] = useState(0);
+  
+  useEffect(() => {
+    const balanceTotal = accounts.reduce((total, account) => total + parseFloat(account.principalBalance), 0);
+    setTotalBalance(balanceTotal)
+  },[])
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
@@ -30,6 +36,10 @@ export default function BasicTable({accounts}) {
           </TableRow>
         </TableHead>
         <TableBody>
+          <TableRow sx={{backgroundColor: "WhiteSmoke"}}>
+            <TableCell>{accounts.length}</TableCell>
+            <TableCell>{totalBalance}</TableCell>
+          </TableRow>
           {accounts.map((row) => (
             <TableRow
               key={row.account}

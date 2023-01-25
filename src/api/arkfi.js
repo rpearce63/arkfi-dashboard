@@ -1,7 +1,7 @@
 import axios from "axios";
 import Web3 from "web3";
 
-import { web3bsc, contractBscToken, contractBscVault, contractBscSwap } from "./vars";
+import { web3bsc, contractBscToken, contractBscVault, contractBscSwap, contractBscBusd } from "./vars";
 const web3 = web3bsc;//new Web3(Web3.givenProvider);
 
 let account = "";
@@ -397,6 +397,12 @@ export async function GetArkPrice_Swap() {
   } catch {
     return 0;
   }
+}
+
+const BusdBalance = async () => {
+  var _val = await contractBscBusd.methods.balanceOf(account).call();
+  _val = web3.utils.fromWei(_val);
+  const busdBalace =
 }
 
 export const initData = async (accounts) => {
