@@ -14,7 +14,7 @@ export default function BasicTable({accounts}) {
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
-      <Table sx={{ minWidth: 650, backgroundColor: "#f0f0f0" }} aria-label="simple table">
+      <Table sx={{ minWidth: 650, backgroundColor: "AliceBlue" }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Account</TableCell>
