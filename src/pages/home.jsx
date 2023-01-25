@@ -24,8 +24,10 @@ export default () => {
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("arkFiWallets"));
     console.log('savedData: ', savedData)
-    savedData.length && setAddresses([...savedData]);
+    savedData?.length && setAddresses([...savedData]);
+    
   }, []);
+  
 
   useEffect(() => {
     console.log('addresses changed: ', addresses)
@@ -34,12 +36,12 @@ export default () => {
   }, [addresses]);
 
   const addWallet = (address) => {
-    setAddresses([...new Set(...addresses, address)]);
+    setAddresses([...new Set([...addresses, address])]);
   };
 
   return (
     <div>
-
+      <AddWallet addWallet={addWallet} />
       <AccountsTable accounts={acctData} />
     </div>
   );
