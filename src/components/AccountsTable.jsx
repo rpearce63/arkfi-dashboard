@@ -83,7 +83,7 @@ const TableHeader = () => {
 
 const TotalsHeader = ({accounts, totals}) => {
   return (
-    <TableRow sx={{ backgroundColor: "WhiteSmoke" }}>
+    <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>{accounts.length}</TableCell>
       <TableCell align="right">{totals.balanceTotal}</TableCell>
       <TableCell align="right">{totals.walletTotal}</TableCell>
