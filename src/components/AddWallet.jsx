@@ -5,11 +5,11 @@ import Button from '@mui/material/Button';
 
 export default ({addWallet}) => {
   
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState('');
   const processAddress = () => {
     
     !!address && addWallet(address)
-    setAddress(null)
+    setAddress('')
   }
   
   return (
