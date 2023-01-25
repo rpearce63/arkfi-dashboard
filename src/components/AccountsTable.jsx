@@ -14,7 +14,7 @@ function Timer(toDate) {
     var difference = dateEntered.getTime() - now.getTime();
 
     if (difference <= 0) {
-        $("#vaulttimer").text("00:00:00");
+        //$("#vaulttimer").text("00:00:00");
         //clearInterval(rewardsTimer);
         const haltTimer = true;
         return "00:00:00";
@@ -37,8 +37,11 @@ function Timer(toDate) {
 
 export default function BasicTable({ accounts }) {
   const [totals, setTotals] = useState([]);
+  const [timers, setTimers] = useState([]);
+  
 
   useEffect(() => {
+    
     const balanceTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.principalBalance),
       0
@@ -79,6 +82,7 @@ export default function BasicTable({ accounts }) {
               <TableCell align="right">{row.ndv}</TableCell>
               <TableCell align="right">{row.maxPayout}</TableCell>
               <TableCell align="right">{row.nftRewards}</TableCell>
+              <TableCell align="right">{Timer(row.lastAction)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -122,6 +126,7 @@ const TotalsHeader = ({accounts, totals}) => {
       <TableCell></TableCell>
       <TableCell align="right">{totals.maxPayoutTotal}</TableCell>
       <TableCell align="right">{totals.nftRewardsTotal}</TableCell>
+      
     </TableRow>
   );
 };

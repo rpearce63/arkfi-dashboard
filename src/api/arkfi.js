@@ -440,7 +440,7 @@ export const initData = async (accounts) => {
     const maxPayout = await GetMaxPayout_Vault();
     const busdBalance = await GetBusdBalance();
     const nftRewards = await GetClaimableRewards_Legacy();
-    const lastAction = await LastAction_Vault();
+    const nextAction = await LastAction_Vault();
     
     response.push({
       account: wallet,
@@ -454,7 +454,7 @@ export const initData = async (accounts) => {
       maxPayout,
       busdBalance,
       nftRewards,
-      lastAction
+      nextAction
     });
   }
 
