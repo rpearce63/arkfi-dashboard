@@ -27,7 +27,7 @@ export default () => {
     setInterval(() => {
       getInitData();
     }, 60000);
-  }, []);
+  }, [addresses]);
   
   const addWallet = (address) => {
     setAddresses([...addresses, address])
