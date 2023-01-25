@@ -20,9 +20,9 @@ export default function BasicTable({ accounts }) {
     const busdTotal = accounts.reduce((total, account) => total + parseFloat(account.busdBalance), 0);
     const availTotal = accounts.reduce((total, account) => total + parseFloat(account.availableRewards), 0);
     const depositsTotal = accounts.reduce((total, account) => total + parseFloat(account.deposits), 0);
-    
-    
-    setTotals({ ...totals, balanceTotal, walletTotal, busdTotal, availTotal, depositsTotal });
+    const maxPayoutTotal =accounts.reduce((total, account) => total + parseFloat(account.maxPayout), 0);
+    const nftRewardsTotal = accounts.reduce((total, account) => total + parseFloat(account.nftRewards), 0);
+    setTotals({ ...totals, balanceTotal, walletTotal, busdTotal, availTotal, depositsTotal, maxPayoutTotal, nftRewardsTotal });
   }, [accounts]);
 
   return (
@@ -51,6 +51,7 @@ export default function BasicTable({ accounts }) {
               <TableCell align="right">{row.deposits}</TableCell>
               <TableCell align="right">{row.ndv}</TableCell>
               <TableCell align="right">{row.maxPayout}</TableCell>
+              <TableCell align="right">{row.nftRewards}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -74,6 +75,7 @@ const TableHeader = () => {
         <TableCell align="right">NDV</TableCell>
 
         <TableCell align="right">Max Payout</TableCell>
+        <TableCell align="right">NFT Rewards</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -90,6 +92,9 @@ const TotalsHeader = ({accounts, totals}) => {
       <TableCell></TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{totals.depositsTotal}</TableCell>
+      <TableCell></TableCell>
+      <TableCell align="right">{totals.maxPayoutTotal}</TableCell>
+      <TableCell align="right">{totals.nftRewardsTotal}</TableCell>
     </TableRow>
   );
 };

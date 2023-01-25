@@ -8157,7 +8157,7 @@ var contractAutoAllo = new web3.eth.Contract(abiAutoAllo, caAutoAllo);
 var contractBondPre = new web3.eth.Contract(abiBondPre, caBondPre);
 var contractLegacy2 = new web3.eth.Contract(abiLegacy2, caLegacy2);
 
-var contractBscLegacy = new web3bsc.eth.Contract(abiLegacy, caLegacy);
+export var contractBscLegacy = new web3bsc.eth.Contract(abiLegacy, caLegacy);
 export var contractBscSwap = new web3bsc.eth.Contract(abiSwap, caSwap);
 export var contractBscToken = new web3bsc.eth.Contract(abiToken, caToken);
 export var contractBscVault = new web3bsc.eth.Contract(abiVault, caVault);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import Web3 from "web3";
 
-import { web3bsc, contractBscToken, contractBscVault, contractBscSwap, contractBscBUSD } from "./vars";
+import { web3bsc, contractBscToken, contractBscVault, contractBscSwap, contractBscBUSD, contractBscLegacy } from "./vars";
 const web3 = web3bsc;//new Web3(Web3.givenProvider);
 
 let account = "";
@@ -411,6 +411,18 @@ const GetBusdBalance = async () => {
   
 }
 
+async function GetClaimableRewards_Legacy() {
+    try {
+        var _val = await contractBscLegacy.methods.getClaimableRewards(account).call();
+        _val = web3.utils.fromWei(_val);
+        return Number(_val).toFixed(2);
+    }
+    catch {
+        return 0;
+    }
+}
+
+
 export const initData = async (accounts) => {
   
   const response = [];
@@ -426,6 +438,7 @@ export const initData = async (accounts) => {
     const walletBalance = await GetARKBalance_Token();
     const maxPayout = await GetMaxPayout_Vault();
     const busdBalance = await GetBusdBalance();
+    const nftRewards = await GetClaimableRewards_Legacy();
     
     response.push({
       account: wallet,
@@ -437,7 +450,8 @@ export const initData = async (accounts) => {
       roi,
       walletBalance,
       maxPayout,
-      busdBalance
+      busdBalance,
+      nftRewards
     });
   }
 
