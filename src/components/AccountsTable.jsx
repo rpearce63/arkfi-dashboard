@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,28 +7,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { initData } from "../api/arkfi";
 
-const accounts = [
-  "0x1ff661243cb97384102a69a466c887b4cC12d72a",
-  "0xb066550524e791c41672178975febb4e7038a3f8",
-];
 
-export default function BasicTable() {
-  const [acctData, setAcctData] = useState([]);
-
-  const getInitData = async () => {
-    const accountInfo = await initData(accounts);
-
-    setAcctData([...accountInfo]);
-  };
-
-  useEffect(() => {
-    getInitData();
-    setInterval(() => {
-      getInitData();
-    }, 60000);
-  }, []);
+export default function BasicTable({accounts}) {
+  
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
@@ -48,7 +30,7 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {acctData.map((row) => (
+          {accounts.map((row) => (
             <TableRow
               key={row.account}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

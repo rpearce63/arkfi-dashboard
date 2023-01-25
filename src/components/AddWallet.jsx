@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 
-export default () => {
+export default ({addWallet}) => {
   
   const [address, setAddress] = useState();
   
@@ -16,7 +16,7 @@ export default () => {
         sx={{ backgroundColor: "white", marginRight: "1em" }}
         onChange={e => setAddress(e.target.value)}
       />
-      <Button variant="contained">Contained</Button>
+      <Button variant="contained" onClick={() => addWallet(address)}>Add Wallet</Button>
     </Box>
   );
 };
