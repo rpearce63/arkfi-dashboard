@@ -18,7 +18,7 @@ export default () => {
     console.log("getting data: ", addresses);
     const accountInfo = await initData(addresses);
 
-    accountInfo && setAcctData([...accountInfo]);
+    accountInfo.length && setAcctData([...accountInfo]);
   };
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default () => {
     savedData.length && setAddresses([...savedData]);
     setInterval(() => {
       getInitData();
-    }, 60000);
+    }, 10000);
   }, []);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default () => {
 
   return (
     <div>
-      <AddWallet addWallet={addWallet} />
+
       <AccountsTable accounts={acctData} />
     </div>
   );
