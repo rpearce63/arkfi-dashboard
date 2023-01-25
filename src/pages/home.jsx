@@ -36,7 +36,7 @@ export default () => {
   }, [addresses]);
 
   const addWallet = (address) => {
-    setAddresses([...new Set([...addresses, address])]);
+    setAddresses([...new Set(...addresses, address)]);
   };
 
   return (
