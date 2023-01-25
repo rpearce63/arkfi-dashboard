@@ -1,7 +1,7 @@
 import axios from "axios";
 import Web3 from "web3";
 
-import { web3bsc, contractBscToken, contractBscVault, contractBscSwap, contractBscBusd } from "./vars";
+import { web3bsc, contractBscToken, contractBscVault, contractBscSwap, contractBscBUSD } from "./vars";
 const web3 = web3bsc;//new Web3(Web3.givenProvider);
 
 let account = "";
@@ -399,10 +399,16 @@ export async function GetArkPrice_Swap() {
   }
 }
 
-const BusdBalance = async () => {
-  var _val = await contractBscBusd.methods.balanceOf(account).call();
+const GetBusdBalance = async () => {
+  try {
+    var _val = await contractBscBUSD.methods.balanceOf(account).call();
   _val = web3.utils.fromWei(_val);
-  const busdBalace =
+  const busdBalance = Number(_val);
+    return busdBalance.toFixed(2)
+  } catch {
+    return 0
+  }
+  
 }
 
 export const initData = async (accounts) => {
@@ -419,6 +425,7 @@ export const initData = async (accounts) => {
     const roi = await GetROI_Vault();
     const walletBalance = await GetARKBalance_Token();
     const maxPayout = await GetMaxPayout_Vault();
+    const busdBalance = await GetBusdBalance();
     
     response.push({
       account: wallet,
@@ -430,6 +437,7 @@ export const initData = async (accounts) => {
       roi,
       walletBalance,
       maxPayout,
+      busdBalance
     });
   }
 
