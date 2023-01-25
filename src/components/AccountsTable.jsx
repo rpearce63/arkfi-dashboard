@@ -8,6 +8,33 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+function Timer(toDate) {
+    var dateEntered = toDate;
+    var now = new Date();
+    var difference = dateEntered.getTime() - now.getTime();
+
+    if (difference <= 0) {
+        $("#vaulttimer").text("00:00:00");
+        //clearInterval(rewardsTimer);
+        const haltTimer = true;
+        return "00:00:00";
+    } else {
+        var seconds = Math.floor(difference / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+
+        hours %= 24;
+        minutes %= 60;
+        seconds %= 60;
+
+        const hourText = hours < 10 ? "0" + hours : hours;
+        const minutesText = minutes < 10 ? "0" + minutes : minutes;
+        const secondsText = seconds < 10 ? "0" + seconds : seconds;
+        return (hourText + ":" + minutesText + ":" + secondsText);
+    }
+}
+
 export default function BasicTable({ accounts }) {
   const [totals, setTotals] = useState([]);
 
@@ -31,7 +58,7 @@ export default function BasicTable({ accounts }) {
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
         aria-label="simple table"
       >
-        <TableHeader></TableHeader>
+        <TableHeader/>
         <TableBody>
           <TotalsHeader accounts={accounts} totals={totals} />
           {accounts.map((row) => (

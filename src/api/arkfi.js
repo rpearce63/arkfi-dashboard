@@ -423,6 +423,7 @@ async function GetClaimableRewards_Legacy() {
 }
 
 
+
 export const initData = async (accounts) => {
   
   const response = [];
@@ -439,6 +440,7 @@ export const initData = async (accounts) => {
     const maxPayout = await GetMaxPayout_Vault();
     const busdBalance = await GetBusdBalance();
     const nftRewards = await GetClaimableRewards_Legacy();
+    const lastAction = await LastAction_Vault();
     
     response.push({
       account: wallet,
@@ -451,7 +453,8 @@ export const initData = async (accounts) => {
       walletBalance,
       maxPayout,
       busdBalance,
-      nftRewards
+      nftRewards,
+      lastAction
     });
   }
 
