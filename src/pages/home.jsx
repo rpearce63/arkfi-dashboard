@@ -14,7 +14,7 @@ export default () => {
   const [acctData, setAcctData] = useState([]);
 
   const getInitData = async () => {
-    console.log('get data')
+    
     const savedData = JSON.parse(localStorage.getItem("arkFiWallets")) || [];
     const accountInfo = await initData(savedData);
 

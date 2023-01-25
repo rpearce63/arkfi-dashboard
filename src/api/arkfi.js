@@ -400,7 +400,7 @@ export async function GetArkPrice_Swap() {
 }
 
 export const initData = async (accounts) => {
-  console.log('accounts: ', accounts);
+  
   const response = [];
   for (const wallet of accounts) {
     account = wallet;
