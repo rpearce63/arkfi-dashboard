@@ -11,6 +11,7 @@ import { HelmetProvider } from 'react-helmet-async';
 */
 
 // Render the site https://reactjs.org/docs/react-dom.html#render
+const root = React.createRoot(document.getElementById("root"));
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
