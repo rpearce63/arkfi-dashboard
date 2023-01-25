@@ -17,11 +17,17 @@ export default () => {
   const [addresses, setAddresses] = useState([])
   
   const getInitData = async () => {
+    
     const accountInfo = await initData(addresses);
 
     setAcctData([...accountInfo]);
   };
 
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem('arkFiWallets'));
+    savedData && setAddresses([...savedData])
+  }, [])
+  
   useEffect(() => {
     getInitData();
     setInterval(() => {
@@ -30,7 +36,8 @@ export default () => {
   }, [addresses]);
   
   const addWallet = (address) => {
-    setAddresses([...addresses, address])
+    setAddresses(() => [...addresses, address])
+    localStorage.setItem('arkFiWallets', JSON.stringify(addresses))
   }
   
   return (
