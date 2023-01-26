@@ -47,10 +47,10 @@ export default function BasicTable({ accounts }) {
     for(const account of accounts) {
       
       const timer = Timer(account.lastAction);
-      _timers = {..._timers, timer}
+      _timers = {..._timers, [account.account]:timer}
     }
-    console.log(_timers)
-    setTimers([..._timers])
+    
+    setTimers(_timers)
   }
   
 
@@ -92,6 +92,7 @@ export default function BasicTable({ accounts }) {
               <TableCell component="th" scope="row">
                 {row.account}
               </TableCell>
+              <TableCell align="right">{Timer(row.lastAction)}</TableCell>
               <TableCell align="right">{row.principalBalance}</TableCell>
               <TableCell align="right">{row.walletBalance}</TableCell>
               <TableCell align="right">{row.busdBalance}</TableCell>
@@ -102,7 +103,7 @@ export default function BasicTable({ accounts }) {
               <TableCell align="right">{row.ndv}</TableCell>
               <TableCell align="right">{row.maxPayout}</TableCell>
               <TableCell align="right">{row.nftRewards}</TableCell>
-              <TableCell align="right">{Timer(row.lastAction)}</TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
@@ -116,6 +117,7 @@ const TableHeader = () => {
     <TableHead>
       <TableRow>
         <TableCell>Account</TableCell>
+        <TableCell>Countdown</TableCell>
         <TableCell align="right">Balance</TableCell>
         <TableCell align="right">Wallet Balance</TableCell>
         <TableCell align="right">BUSD</TableCell>
@@ -136,6 +138,7 @@ const TotalsHeader = ({accounts, totals}) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>{accounts.length}</TableCell>
+      <TableCell></TableCell>
       <TableCell align="right">{totals.balanceTotal}</TableCell>
       <TableCell align="right">{totals.walletTotal}</TableCell>
       <TableCell align="right">{totals.busdTotal}</TableCell>
