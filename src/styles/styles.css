@@ -539,7 +539,8 @@ h6 {
     margin-top: 96px;
     position: relative;
     width: 100%;
-    color: var(--textcolor2);
+    color: lightgrey;
+    font-family: 'Inter', sans-serif;
 }
 
 .dropdown {

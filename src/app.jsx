@@ -35,7 +35,7 @@ export default function Home() {
       </main>
       {/* Footer links to Home and About, Link elements matched in router.jsx */}
       <footer className="footer">
-
+        <div>Donations: 0x1ff661243cb97384102a69a466c887b4cC12d72a</div>
         
       </footer>
     </Router>
