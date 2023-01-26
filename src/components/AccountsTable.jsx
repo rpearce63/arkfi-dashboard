@@ -7,86 +7,110 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import ToggleButton from '@mui/material/ToggleButton';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import ToggleButton from "@mui/material/ToggleButton";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import Switch from '@mui/material/Switch';
 
 function Timer(toDate) {
-    
-    var dateEntered = toDate + 86400000;
-    var now = new Date();
-    var difference = dateEntered - now.getTime();
+  var dateEntered = toDate + 86400000;
+  var now = new Date();
+  var difference = dateEntered - now.getTime();
 
-    if (difference <= 0) {
-        //$("#vaulttimer").text("00:00:00");
-        //clearInterval(rewardsTimer);
-        const haltTimer = true;
-        return "00:00:00";
-    } else {
-        var seconds = Math.floor(difference / 1000);
-        var minutes = Math.floor(seconds / 60);
-        var hours = Math.floor(minutes / 60);
-        var days = Math.floor(hours / 24);
+  if (difference <= 0) {
+    //$("#vaulttimer").text("00:00:00");
+    //clearInterval(rewardsTimer);
+    const haltTimer = true;
+    return "00:00:00";
+  } else {
+    var seconds = Math.floor(difference / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
 
-        hours %= 24;
-        minutes %= 60;
-        seconds %= 60;
+    hours %= 24;
+    minutes %= 60;
+    seconds %= 60;
 
-        const hourText = hours < 10 ? "0" + hours : hours;
-        const minutesText = minutes < 10 ? "0" + minutes : minutes;
-        const secondsText = seconds < 10 ? "0" + seconds : seconds;
-        return hourText + ":" + minutesText + ":" + secondsText;
-    }
+    const hourText = hours < 10 ? "0" + hours : hours;
+    const minutesText = minutes < 10 ? "0" + minutes : minutes;
+    const secondsText = seconds < 10 ? "0" + seconds : seconds;
+    return hourText + ":" + minutesText + ":" + secondsText;
+  }
 }
-
-
 
 export default function BasicTable({ accounts }) {
   const [totals, setTotals] = useState([]);
   const [timers, setTimers] = useState([]);
+  const [selected, setSelected] = React.useState(false);
+  const [isBusd, setIsBusd] = useState(false);
   
   const updateTimers = () => {
     let _timers = {};
-    for(const account of accounts) {
-      
+    for (const account of accounts) {
       const timer = Timer(account.lastAction);
-      _timers = {..._timers, [account.account]:timer}
+      _timers = { ..._timers, [account.account]: timer };
     }
-    
-    setTimers(_timers)
-  }
-  
+
+    setTimers(_timers);
+  };
 
   useEffect(() => {
-    
     const balanceTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.principalBalance),
       0
     );
-    const walletTotal = accounts.reduce((total, account) => total + parseFloat(account.walletBalance), 0);
-    const busdTotal = accounts.reduce((total, account) => total + parseFloat(account.busdBalance), 0);
-    const availTotal = accounts.reduce((total, account) => total + parseFloat(account.availableRewards), 0);
-    const depositsTotal = accounts.reduce((total, account) => total + parseFloat(account.deposits), 0);
-    const maxPayoutTotal =accounts.reduce((total, account) => total + parseFloat(account.maxPayout), 0);
-    const nftRewardsTotal = accounts.reduce((total, account) => total + parseFloat(account.nftRewards), 0);
-    setTotals({ ...totals, balanceTotal, walletTotal, busdTotal, availTotal, depositsTotal, maxPayoutTotal, nftRewardsTotal });
-  
+    const walletTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.walletBalance),
+      0
+    );
+    const busdTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.busdBalance),
+      0
+    );
+    const availTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.availableRewards),
+      0
+    );
+    const depositsTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.deposits),
+      0
+    );
+    const maxPayoutTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.maxPayout),
+      0
+    );
+    const nftRewardsTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.nftRewards),
+      0
+    );
+    setTotals({
+      ...totals,
+      balanceTotal,
+      walletTotal,
+      busdTotal,
+      availTotal,
+      depositsTotal,
+      maxPayoutTotal,
+      nftRewardsTotal,
+    });
+
     const timerInterval = setInterval(() => {
       updateTimers();
       return () => clearInterval(timerInterval);
-    }, 1000)
-    
+    }, 1000);
   }, [accounts]);
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
-      
       <Table
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
         aria-label="simple table"
       >
-        <ToggleButton>
-        </ToggleButton>
-        <TableHeader/>
+        
+        <Switch
+          onChange={() => setIsBusd(!isBusd)}
+          />$ 
+        <TableHeader />
         <TableBody>
           <TotalsHeader accounts={accounts} totals={totals} />
           {accounts.map((row) => (
@@ -108,7 +132,6 @@ export default function BasicTable({ accounts }) {
               <TableCell align="right">{row.ndv}</TableCell>
               <TableCell align="right">{row.maxPayout}</TableCell>
               <TableCell align="right">{row.nftRewards}</TableCell>
-              
             </TableRow>
           ))}
         </TableBody>
@@ -139,7 +162,7 @@ const TableHeader = () => {
   );
 };
 
-const TotalsHeader = ({accounts, totals}) => {
+const TotalsHeader = ({ accounts, totals }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>{accounts.length}</TableCell>
@@ -154,7 +177,6 @@ const TotalsHeader = ({accounts, totals}) => {
       <TableCell></TableCell>
       <TableCell align="right">{totals.maxPayoutTotal}</TableCell>
       <TableCell align="right">{totals.nftRewardsTotal}</TableCell>
-      
     </TableRow>
   );
 };
