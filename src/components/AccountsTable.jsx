@@ -46,6 +46,7 @@ export default function AccountsTable({ accounts }) {
   const [isBusd, setIsBusd] = useState(false);
   const [arkPrice, setArkPrice] = useState(0)
   
+  
   const updateTimers = () => {
     let _timers = {};
     for (const account of accounts) {
@@ -58,6 +59,7 @@ export default function AccountsTable({ accounts }) {
   
   useEffect(() => {
     const getArkPrice = async () => {
+      
       const arkPrice = await GetArkPrice_Swap();
       setArkPrice(arkPrice);
     }
