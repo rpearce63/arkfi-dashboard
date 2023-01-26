@@ -45,7 +45,7 @@ export default function AccountsTable({ accounts }) {
   const [selected, setSelected] = React.useState(false);
   const [isBusd, setIsBusd] = useState(false);
   const [arkPrice, setArkPrice] = useState(0)
-  const [wallets, setWallets] = useState([]);
+  //const [wallets, setWallets] = useState([]);
   
   const updateTimers = () => {
     let _timers = {};
@@ -59,7 +59,7 @@ export default function AccountsTable({ accounts }) {
   
   useEffect(() => {
     const getArkPrice = async () => {
-      setWallets([...accounts]);
+      //setWallets(() => [...accounts]);
       const arkPrice = await GetArkPrice_Swap();
       setArkPrice(arkPrice);
     }
@@ -123,10 +123,11 @@ export default function AccountsTable({ accounts }) {
     const stored = JSON.parse(localStorage.getItem('arkFiWallets'))
     const updated = stored.filter(w => w !== account);
     localStorage.setItem('arkFiWallets', JSON.stringify(updated));
-    const updatedWallets = wallets.filter(w => w.account !== account);
-    setWallets(updatedWallets);
+    //const updatedWallets = accounts.filter(w => w.account !== account);
+    //setWallets(() => [...updatedWallets]);
+    window.location.reload(false);
   }
-
+  
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}><Switch
           onChange={() => setIsBusd(!isBusd)}
@@ -140,7 +141,7 @@ export default function AccountsTable({ accounts }) {
         <TableHeader ></TableHeader>
         <TableBody>
           <TotalsHeader accounts={accounts} totals={totals} displayValue={displayValue} />
-          {wallets.map((row) => (
+          {accounts.map((row) => (
             <TableRow
               key={row.account}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
