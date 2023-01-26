@@ -47,7 +47,7 @@ export default function AccountsTable({ accounts }) {
   const [isBusd, setIsBusd] = useState(false);
   const [arkPrice, setArkPrice] = useState(0)
   //const [wallets, setWallets] = useState([]);
-  const [confirm, setConfirm] = useState(false);
+  //const [confirm, setConfirm] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState('');
   
