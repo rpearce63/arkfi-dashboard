@@ -458,6 +458,7 @@ export const initData = async (accounts) => {
       nftRewards,
       lastAction,
       level,
+      newDeposits
     });
   }
 console.log(response)
