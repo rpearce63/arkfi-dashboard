@@ -14,7 +14,7 @@ export default ({addWallet}) => {
   
   return (
     <>
-    <Box sx={{backgroundColor: "lightgrey", padding: "10px "}}>
+    <Box sx={{backgroundColor: "lightgrey", padding: "10px ", borderRadius: "5px"}}>
       <TextField
         size="small"
         id="add-wallet"

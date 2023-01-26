@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-
+import Container from '@mui/material/Container';
 import AccountsTable from "../components/AccountsTable";
 import AddWallet from "../components/AddWallet";
 import { initData } from "../api/arkfi";
@@ -36,9 +36,9 @@ export default () => {
   };
 
   return (
-    <div>
+    <Container maxWidth="xl">
       <AddWallet addWallet={addWallet} />
       <AccountsTable accounts={acctData} />
-    </div>
+    </Container>
   );
 };
