@@ -1,7 +1,7 @@
 {
   "glitch-help-instructions": "For a custom domain, change the 'url' parameter from 'glitch-default' to your domain _without_ a traling slash, like 'https://www.example.com'",
   "title": "ArkFi Multi-Wallet Dashboard",
-  "description": "A simple React single page app, built with Glitch. Remix it to get your own!!!!",
+  "description": "Display stats for multiple wallets in ArkFi",
   "url": "glitch-default",
   "image": "https://cdn.glitch.global/978aea18-869b-4b40-962c-a60aa7e7166f/favicon.png?v=1674677737518"
 }

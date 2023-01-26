@@ -2543,3 +2543,7 @@ input[type=number] {
 .remove-row:hover {
   color: red !important;
 }
+
+.App-header {
+  margin-left: 20px
+}
