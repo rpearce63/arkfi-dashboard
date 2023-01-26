@@ -1,8 +1,15 @@
 import axios from "axios";
 import Web3 from "web3";
 
-import { web3bsc, contractBscToken, contractBscVault, contractBscSwap, contractBscBUSD, contractBscLegacy } from "./vars";
-const web3 = web3bsc;//new Web3(Web3.givenProvider);
+import {
+  web3bsc,
+  contractBscToken,
+  contractBscVault,
+  contractBscSwap,
+  contractBscBUSD,
+  contractBscLegacy,
+} from "./vars";
+const web3 = web3bsc; //new Web3(Web3.givenProvider);
 
 let account = "";
 
@@ -402,30 +409,44 @@ export async function GetArkPrice_Swap() {
 const GetBusdBalance = async () => {
   try {
     var _val = await contractBscBUSD.methods.balanceOf(account).call();
-  _val = web3.utils.fromWei(_val);
-  const busdBalance = Number(_val);
-    return busdBalance.toFixed(2)
+    _val = web3.utils.fromWei(_val);
+    const busdBalance = Number(_val);
+    return busdBalance.toFixed(2);
   } catch {
-    return 0
+    return 0;
   }
-  
-}
+};
 
 async function GetClaimableRewards_Legacy() {
-    try {
-        var _val = await contractBscLegacy.methods.getClaimableRewards(account).call();
-        _val = web3.utils.fromWei(_val);
-        return Number(_val).toFixed(2);
-    }
-    catch {
-        return 0;
-    }
+  try {
+    var _val = await contractBscLegacy.methods
+      .getClaimableRewards(account)
+      .call();
+    _val = web3.utils.fromWei(_val);
+    return Number(_val).toFixed(2);
+  } catch {
+    return 0;
+  }
 }
 
-
+export const backupData = async () => {
+  const data = localStorage.getItem("arkFiWallets");
+  if (window.showSaveFilePicker) {
+    const handle = await window.showSaveFilePicker();
+    const writable = await handle.createWritable();
+    await writable.write(data);
+    writable.close();
+  } else {
+    const element = document.createElement("a");
+    const file = new Blob([data], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = "arkFiWallets.json";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+};
 
 export const initData = async (accounts) => {
-  
   const response = [];
   for (const wallet of accounts) {
     account = wallet;
@@ -443,7 +464,7 @@ export const initData = async (accounts) => {
     const lastAction = await LastAction_Vault();
     const level = await GetLevelForInvestor_Vault();
     const newDeposits = await GetNewDeposits_Vault();
-    
+
     response.push({
       account: wallet,
       availableRewards,
@@ -458,9 +479,9 @@ export const initData = async (accounts) => {
       nftRewards,
       lastAction,
       level,
-      newDeposits
+      newDeposits,
     });
   }
-console.log(response)
+  console.log(response);
   return response;
 };
