@@ -7,6 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import ToggleButton from '@mui/material/ToggleButton';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 function Timer(toDate) {
     
@@ -77,10 +79,13 @@ export default function BasicTable({ accounts }) {
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
+      
       <Table
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
         aria-label="simple table"
       >
+        <ToggleButton>
+        </ToggleButton>
         <TableHeader/>
         <TableBody>
           <TotalsHeader accounts={accounts} totals={totals} />
