@@ -489,6 +489,6 @@ export const initData = async (accounts) => {
       newDeposits,
     });
   }
-  console.log(response);
+  
   return response;
 };
