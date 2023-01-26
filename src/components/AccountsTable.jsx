@@ -113,8 +113,16 @@ export default function AccountsTable({ accounts }) {
     
   }, [accounts]);
   
-  const displayValue = (amount) => isBusd ? '$' + parseFloat(amount * arkPrice).toFixed(2) : amount;
-  
+  const displayValue = (amount) => isBusd ? '$' + parseFloat(amount * arkPrice).toFixed(2) : parseFloat(amount).toFixed(2);
+  const removeWallet = (account) => {
+    if (!window.confirm("Delete row?")) {
+      return false;
+    }
+    const wallets = JSON.parse(localStorage.getItem('arkFiWallets'))
+    const updated = wallets.filter(w => w !== account);
+    localStorage.setItem('arkFiWallets', JSON.stringify(updated));
+    
+  }
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}><Switch
@@ -134,9 +142,11 @@ export default function AccountsTable({ accounts }) {
               key={row.account}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
+              <TableCell onClick={() => removeWallet(row.account)}>x</TableCell>
               <TableCell component="th" scope="row">
                 {row.account}
               </TableCell>
+              
               <TableCell align="right">{Timer(row.lastAction)}</TableCell>
               <TableCell align="right">{displayValue(row.principalBalance)}</TableCell>
               <TableCell align="right">{displayValue(row.walletBalance)}</TableCell>
@@ -160,6 +170,7 @@ const TableHeader = () => {
   return (
     <TableHead>
       <TableRow>
+        <TableCell></TableCell>
         <TableCell>Account</TableCell>
         <TableCell>Countdown</TableCell>
         <TableCell align="right">Balance</TableCell>
@@ -181,6 +192,7 @@ const TableHeader = () => {
 const TotalsHeader = ({ accounts, totals, displayValue }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
+      <TableCell></TableCell>
       <TableCell>{accounts.length}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
