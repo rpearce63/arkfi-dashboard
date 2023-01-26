@@ -10,8 +10,9 @@ import Paper from "@mui/material/Paper";
 import ToggleButton from "@mui/material/ToggleButton";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Switch from '@mui/material/Switch';
-import {GetArkPrice_Swap} from '../api/arkfi';
+import {GetArkPrice_Swap, backupData} from '../api/arkfi';
 import ConfirmationDialog from './ConfirmationDialog';
+import Button from '@mui/material/Button';
 
 function Timer(toDate) {
   var dateEntered = toDate + 86400000;
@@ -149,7 +150,7 @@ export default function AccountsTable({ accounts }) {
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
       
       <Switch onChange={() => setIsBusd(!isBusd)}/>$ 
-      <Button>Save</Button>
+      <Button onClick={backupData}>Save</Button>
       <Table
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
         aria-label="simple table"
