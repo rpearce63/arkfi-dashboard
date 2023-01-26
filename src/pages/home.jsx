@@ -29,7 +29,7 @@ export default () => {
   
   const addWallet = (address) => {
     const wallets = JSON.parse(localStorage.getItem('arkFiWallets')) || []
-    localStorage.setItem('arkFiWallets', JSON.stringify([...wallets, address]))
+    localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...wallets, address])]))
     getInitData();
     
   };
