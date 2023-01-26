@@ -48,6 +48,8 @@ export default function AccountsTable({ accounts }) {
   const [arkPrice, setArkPrice] = useState(0)
   //const [wallets, setWallets] = useState([]);
   const [confirm, setConfirm] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedRow, setSelectedRow] = useState('');
   
   const updateTimers = () => {
     let _timers = {};
@@ -119,10 +121,15 @@ export default function AccountsTable({ accounts }) {
   
   const displayValue = (amount) => isBusd ? '$' + parseFloat(amount * arkPrice).toFixed(2) : parseFloat(amount).toFixed(2);
   
-  const handleResponse = (response) => response;
+  const handleResponse = (response) => setConfirm(response);
+  const openConfirmationDialog = (account) => {
+    setOpenDialog(true);
+    setSelectedRow(account);
+  }
   
-  const removeWallet = (account) => {
-    if (!window.confirm("Delete row?")) {
+  const removeWallet = () => {
+    
+    if (!confirm) {
       return false;
     }
     const stored = JSON.parse(localStorage.getItem('arkFiWallets'))
@@ -173,7 +180,7 @@ export default function AccountsTable({ accounts }) {
         </TableBody>
       </Table>
     </TableContainer>
-      <ConfirmationDialog isOpen={confirm} handleResonse={removeWallet}/>
+      <ConfirmationDialog isOpen={openDialog} handleResonse={removeWallet}/>
     </>
   );
 }
