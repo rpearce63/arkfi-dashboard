@@ -11,7 +11,13 @@ export default ({ addWallet }) => {
     setAddress("");
   };
 
-  const loadFile = () => {};
+  const loadFile = (event) => {
+    event.target.files[0].text().then((t) => {
+      console.log(t)
+      localStorage.setItem("arkFiWallets", t);
+    });
+    window.location.reload(true);
+  };
 
   return (
     <>
@@ -43,7 +49,7 @@ export default ({ addWallet }) => {
           </Button>
           <Button variant="contained" component="label">
             Load Backup
-            <input type="file" hidden />
+            <input type="file" hidden onChange={loadFile} />
           </Button>
         </Stack>
       </Box>{" "}

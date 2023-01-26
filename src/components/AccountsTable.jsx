@@ -150,7 +150,7 @@ export default function AccountsTable({ accounts }) {
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
       
       <Switch onChange={() => setIsBusd(!isBusd)}/>$ 
-      <Button onClick={backupData}>Save</Button>
+      <Button onClick={backupData}>Backup</Button>
       <Table
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
         aria-label="simple table"
