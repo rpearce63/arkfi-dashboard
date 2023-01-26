@@ -471,6 +471,7 @@ export const initData = async (accounts) => {
     const lastAction = await LastAction_Vault();
     const level = await GetLevelForInvestor_Vault();
     const newDeposits = await GetNewDeposits_Vault();
+    const airdropsReceived = await GetAirdropsReceived_Vault();
 
     response.push({
       account: wallet,
@@ -487,6 +488,7 @@ export const initData = async (accounts) => {
       lastAction,
       level,
       newDeposits,
+      airdropsReceived
     });
   }
   

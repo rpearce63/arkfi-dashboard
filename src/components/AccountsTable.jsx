@@ -101,6 +101,10 @@ export default function AccountsTable({ accounts }) {
       (total, account) => total + parseFloat(account.nftRewards),
       0
     );
+    const airdropsReceivedTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.airdropsReceived),
+      0
+    );
     setTotals({
       ...totals,
       balanceTotal,
@@ -110,6 +114,7 @@ export default function AccountsTable({ accounts }) {
       depositsTotal,
       maxPayoutTotal,
       nftRewardsTotal,
+      airdropsReceivedTotal
     });
 
     const timerInterval = setInterval(() => {
@@ -181,6 +186,7 @@ export default function AccountsTable({ accounts }) {
               <TableCell align="right">{row.ndv}</TableCell>
               <TableCell align="right">{displayValue(row.maxPayout)}</TableCell>
               <TableCell align="right">{displayValue(row.nftRewards)}</TableCell>
+              <TableCell align="right">{displayValue(row.airdropsReceived)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -209,6 +215,7 @@ const TableHeader = () => {
 
         <TableCell align="right">Max Payout</TableCell>
         <TableCell align="right">NFT Rewards</TableCell>
+        <TableCell align="right">Airdrops Received</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -230,6 +237,7 @@ const TotalsHeader = ({ accounts, totals, displayValue }) => {
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.nftRewardsTotal)}</TableCell>
+      <TableCell align="right">{displayValue(totals.airdropsReceivedTotal)}</TableCell>
     </TableRow>
   );
 };
