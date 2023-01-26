@@ -13,16 +13,18 @@ export default ({addWallet}) => {
   }
   
   return (
+    <>
     <Box sx={{backgroundColor: "lightgrey", padding: "10px "}}>
       <TextField
         id="add-wallet"
         label="Enter address"
         variant="outlined"
-        sx={{ backgroundColor: "white", marginRight: "1em" }}
+        sx={{ backgroundColor: "white", marginRight: "1em", width: "px" }}
+        fullWidth
         value={address}
         onChange={e => setAddress(e.target.value)}
       />
       <Button variant="contained" onClick={processAddress}>Add Wallet</Button>
-    </Box>
+   </Box> </>
   );
 };
