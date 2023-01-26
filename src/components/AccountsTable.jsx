@@ -149,7 +149,7 @@ export default function AccountsTable({ accounts }) {
     <>
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
       
-      <Switch onChange={() => setIsBusd(!isBusd)}/>$ 
+      <span className="ml-1 inter-bold">ARK</span><Switch onChange={() => setIsBusd(!isBusd)}/><span className="inter-bold">USD</span>
       <Button onClick={backupData}>Backup</Button>
       <Table
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
