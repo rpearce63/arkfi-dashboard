@@ -121,19 +121,24 @@ export default function AccountsTable({ accounts }) {
   
   const displayValue = (amount) => isBusd ? '$' + parseFloat(amount * arkPrice).toFixed(2) : parseFloat(amount).toFixed(2);
   
-  const handleResponse = (response) => setConfirm(response);
+  const handleResponse = (response) => {
+    setOpenDialog(false);
+    setConfirm(response);
+  }
+  
   const openConfirmationDialog = (account) => {
     setOpenDialog(true);
     setSelectedRow(account);
   }
   
   const removeWallet = () => {
-    
+    console.log(selectedAccount, confirm)
+    setOpenDialog(false);
     if (!confirm) {
       return false;
     }
     const stored = JSON.parse(localStorage.getItem('arkFiWallets'))
-    const updated = stored.filter(w => w !== account);
+    const updated = stored.filter(w => w !== selectedRow);
     localStorage.setItem('arkFiWallets', JSON.stringify(updated));
     //const updatedWallets = accounts.filter(w => w.account !== account);
     //setWallets(() => [...updatedWallets]);
@@ -159,7 +164,7 @@ export default function AccountsTable({ accounts }) {
               key={row.account}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell className="remove-row" onClick={() => removeWallet(row.account)}>x</TableCell>
+              <TableCell className="remove-row" onClick={() => openConfirmationDialog(row.account)}>x</TableCell>
               <TableCell component="th" scope="row">
                 {row.account}
               </TableCell>
@@ -180,7 +185,7 @@ export default function AccountsTable({ accounts }) {
         </TableBody>
       </Table>
     </TableContainer>
-      <ConfirmationDialog isOpen={openDialog} handleResonse={removeWallet}/>
+      {openDialog && <ConfirmationDialog isOpen={openDialog} handleResponse={removeWallet}/>}
     </>
   );
 }
