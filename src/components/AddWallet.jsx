@@ -20,7 +20,7 @@ export default ({addWallet}) => {
         id="add-wallet"
         label="Enter address"
         variant="outlined"
-        sx={{ backgroundColor: "white", marginRight: "1em", width: "50ch" }}
+        sx={{ backgroundColor: "white", marginRight: "1em", width: "55ch" }}
         fullWidth
         value={address}
         onChange={e => setAddress(e.target.value)}

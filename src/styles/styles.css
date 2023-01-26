@@ -2535,3 +2535,11 @@ input[type=number] {
             }
 
 /**/
+
+.remove-row {
+  cursor: pointer
+}
+
+.remove-row:hover {
+  color: red !important;
+}

@@ -146,7 +146,7 @@ export default function AccountsTable({ accounts }) {
               key={row.account}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell onClick={() => removeWallet(row.account)}>x</TableCell>
+              <TableCell className="remove-row" onClick={() => removeWallet(row.account)}>x</TableCell>
               <TableCell component="th" scope="row">
                 {row.account}
               </TableCell>
