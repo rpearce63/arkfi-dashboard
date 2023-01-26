@@ -441,6 +441,8 @@ export const initData = async (accounts) => {
     const busdBalance = await GetBusdBalance();
     const nftRewards = await GetClaimableRewards_Legacy();
     const lastAction = await LastAction_Vault();
+    const level = await GetLevelForInvestor_Vault();
+    const newDeposits = await GetNewDeposits_Vault();
     
     response.push({
       account: wallet,
@@ -454,9 +456,10 @@ export const initData = async (accounts) => {
       maxPayout,
       busdBalance,
       nftRewards,
-      lastAction
+      lastAction,
+      level,
     });
   }
-
+console.log(response)
   return response;
 };
