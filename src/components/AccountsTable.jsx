@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import ToggleButton from "@mui/material/ToggleButton";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Switch from '@mui/material/Switch';
+import {GetArkPrice_Swap} from '../api/arkfi';
 
 function Timer(toDate) {
   var dateEntered = toDate + 86400000;
@@ -38,11 +39,12 @@ function Timer(toDate) {
   }
 }
 
-export default function BasicTable({ accounts }) {
+export default function AccountsTable({ accounts }) {
   const [totals, setTotals] = useState([]);
   const [timers, setTimers] = useState([]);
   const [selected, setSelected] = React.useState(false);
   const [isBusd, setIsBusd] = useState(false);
+  const [arkPrice, setArkPrice] = useState(0)
   
   const updateTimers = () => {
     let _timers = {};
@@ -53,6 +55,15 @@ export default function BasicTable({ accounts }) {
 
     setTimers(_timers);
   };
+  
+  useEffect(() => {
+    const getArkPrice = async () => {
+      const arkPrice = await GetArkPrice_Swap();
+      setArkPrice(arkPrice);
+    }
+    getArkPrice();
+    
+  }, [])
 
   useEffect(() => {
     const balanceTotal = accounts.reduce(
@@ -98,7 +109,12 @@ export default function BasicTable({ accounts }) {
       updateTimers();
       return () => clearInterval(timerInterval);
     }, 1000);
+    
+    
   }, [accounts]);
+  
+  const displayValue = (amount) => isBusd ? '$' + parseFloat(amount * arkPrice).toFixed(2) : amount;
+  
 
   return (
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
@@ -122,16 +138,16 @@ export default function BasicTable({ accounts }) {
                 {row.account}
               </TableCell>
               <TableCell align="right">{Timer(row.lastAction)}</TableCell>
-              <TableCell align="right">{row.principalBalance}</TableCell>
-              <TableCell align="right">{row.walletBalance}</TableCell>
+              <TableCell align="right">{displayValue(row.principalBalance)}</TableCell>
+              <TableCell align="right">{displayValue(row.walletBalance)}</TableCell>
               <TableCell align="right">{row.busdBalance}</TableCell>
-              <TableCell align="right">{row.availableRewards}</TableCell>
+              <TableCell align="right">{displayValue(row.availableRewards)}</TableCell>
               <TableCell align="right">{row.maxCwr}</TableCell>
               <TableCell align="right">{row.roi}%</TableCell>
-              <TableCell align="right">{row.deposits}</TableCell>
+              <TableCell align="right">{displayValue(row.deposits)}</TableCell>
               <TableCell align="right">{row.ndv}</TableCell>
-              <TableCell align="right">{row.maxPayout}</TableCell>
-              <TableCell align="right">{row.nftRewards}</TableCell>
+              <TableCell align="right">{displayValue(row.maxPayout)}</TableCell>
+              <TableCell align="right">{displayValue(row.nftRewards)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
