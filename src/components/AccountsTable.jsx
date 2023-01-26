@@ -123,7 +123,7 @@ export default function AccountsTable({ accounts }) {
   
   const handleResponse = (response) => {
     setOpenDialog(false);
-    setConfirm(response);
+    removeWallet(response);
   }
   
   const openConfirmationDialog = (account) => {
@@ -131,10 +131,9 @@ export default function AccountsTable({ accounts }) {
     setSelectedRow(account);
   }
   
-  const removeWallet = () => {
-    console.log(selectedAccount, confirm)
+  const removeWallet = (isConfirmed) => {
     setOpenDialog(false);
-    if (!confirm) {
+    if (!isConfirmed) {
       return false;
     }
     const stored = JSON.parse(localStorage.getItem('arkFiWallets'))
@@ -185,7 +184,7 @@ export default function AccountsTable({ accounts }) {
         </TableBody>
       </Table>
     </TableContainer>
-      {openDialog && <ConfirmationDialog isOpen={openDialog} handleResponse={removeWallet}/>}
+      {openDialog && <ConfirmationDialog handleResponse={handleResponse}/>}
     </>
   );
 }
