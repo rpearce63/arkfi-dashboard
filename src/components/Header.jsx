@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <header className="App-header">
       <h1 className="page-title">ArkFi Multi-Wallet Dashboard</h1>
-      <h2 className="page-title">Ark Price: {arkPrice}</h2>
+      <h2 className="page-title">Ark Price: ${arkPrice}</h2>
     </header>
   );
 };

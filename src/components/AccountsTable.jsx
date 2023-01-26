@@ -117,18 +117,18 @@ export default function AccountsTable({ accounts }) {
   
 
   return (
-    <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
+    <TableContainer component={Paper} sx={{ marginTop: "2em" }}><Switch
+          onChange={() => setIsBusd(!isBusd)}
+          />$ 
       <Table
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
         aria-label="simple table"
       >
         
-        <Switch
-          onChange={() => setIsBusd(!isBusd)}
-          />$ 
-        <TableHeader />
+        
+        <TableHeader ></TableHeader>
         <TableBody>
-          <TotalsHeader accounts={accounts} totals={totals} />
+          <TotalsHeader accounts={accounts} totals={totals} displayValue={displayValue} />
           {accounts.map((row) => (
             <TableRow
               key={row.account}
@@ -178,21 +178,21 @@ const TableHeader = () => {
   );
 };
 
-const TotalsHeader = ({ accounts, totals }) => {
+const TotalsHeader = ({ accounts, totals, displayValue }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>{accounts.length}</TableCell>
       <TableCell></TableCell>
-      <TableCell align="right">{totals.balanceTotal}</TableCell>
-      <TableCell align="right">{totals.walletTotal}</TableCell>
+      <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
+      <TableCell align="right">{displayValue(totals.walletTotal)}</TableCell>
       <TableCell align="right">{totals.busdTotal}</TableCell>
-      <TableCell align="right">{totals.availTotal}</TableCell>
+      <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
       <TableCell></TableCell>
-      <TableCell align="right">{totals.depositsTotal}</TableCell>
+      <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
       <TableCell></TableCell>
-      <TableCell align="right">{totals.maxPayoutTotal}</TableCell>
-      <TableCell align="right">{totals.nftRewardsTotal}</TableCell>
+      <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
+      <TableCell align="right">{displayValue(totals.nftRewardsTotal)}</TableCell>
     </TableRow>
   );
 };
