@@ -10,10 +10,8 @@ export default ({ addWallet }) => {
     !!address && addWallet(address);
     setAddress("");
   };
-  
-  const loadFile = () => {
-    
-  }
+
+  const loadFile = () => {};
 
   return (
     <>
@@ -43,7 +41,10 @@ export default ({ addWallet }) => {
           <Button variant="contained" onClick={processAddress}>
             Add Wallet
           </Button>
-          <Button variant="contained">Load Backup</Button>
+          <Button variant="contained" component="label">
+            Load Backup
+            <input type="file" hidden />
+          </Button>
         </Stack>
       </Box>{" "}
     </>
