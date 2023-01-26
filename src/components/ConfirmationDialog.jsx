@@ -6,25 +6,25 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ConfirmationDialog() {
-  const [open, setOpen] = React.useState(false);
+export default function ConfirmationDialog({isOpen, handleResponse}) {
+  const [open, setOpen] = React.useState(isOpen);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleAgree = () => {
+    setOpen(false);
+    handleResponse(true)
   };
 
-  const handleClose = () => {
+  const handleCancel = () => {
     setOpen(false);
+    handleResponse(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
+      
       <Dialog
         open={open}
-        onClose={handleClose}
+        
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -37,8 +37,8 @@ export default function ConfirmationDialog() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleCancel}>Cancel</Button>
+          <Button onClick={handleAgree} autoFocus>
             OK
           </Button>
         </DialogActions>

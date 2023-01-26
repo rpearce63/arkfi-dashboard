@@ -11,6 +11,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Switch from '@mui/material/Switch';
 import {GetArkPrice_Swap} from '../api/arkfi';
+import ConfirmationDialog from './ConfirmationDialog';
 
 function Timer(toDate) {
   var dateEntered = toDate + 86400000;
@@ -46,6 +47,7 @@ export default function AccountsTable({ accounts }) {
   const [isBusd, setIsBusd] = useState(false);
   const [arkPrice, setArkPrice] = useState(0)
   //const [wallets, setWallets] = useState([]);
+  const [confirm, setConfirm] = useState(false);
   
   const updateTimers = () => {
     let _timers = {};
@@ -116,6 +118,9 @@ export default function AccountsTable({ accounts }) {
   }, [accounts]);
   
   const displayValue = (amount) => isBusd ? '$' + parseFloat(amount * arkPrice).toFixed(2) : parseFloat(amount).toFixed(2);
+  
+  const handleResponse = (response) => response;
+  
   const removeWallet = (account) => {
     if (!window.confirm("Delete row?")) {
       return false;
@@ -129,6 +134,7 @@ export default function AccountsTable({ accounts }) {
   }
   
   return (
+    <>
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}><Switch
           onChange={() => setIsBusd(!isBusd)}
           />$ 
@@ -167,6 +173,8 @@ export default function AccountsTable({ accounts }) {
         </TableBody>
       </Table>
     </TableContainer>
+      <ConfirmationDialog isOpen={confirm} handleResonse={removeWallet}/>
+    </>
   );
 }
 
