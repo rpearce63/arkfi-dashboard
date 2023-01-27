@@ -6,7 +6,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 export default ({handleSwitch, backupData}) => {
   
   return (
-  <>
+  <div className="controls">
       <span className="ml-1 inter-bold">ARK</span>
       <Switch onChange={handleSwitch}/>
       <span className="inter-bold mr-1">USD</span>
@@ -15,8 +15,9 @@ export default ({handleSwitch, backupData}) => {
         variant="outlined" 
         size="small" 
         color="success"
-        startIcon={<FileDownloadIcon color="success"/>}
+        startIcon={<FileDownloadIcon 
+        color="success"/>}
         onClick={backupData}>Backup</Button>
-    </>
+    </div>
   )
 }

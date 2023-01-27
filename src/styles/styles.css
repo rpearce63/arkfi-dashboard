@@ -2557,3 +2557,7 @@ input[type=number] {
 .App-header {
   margin-left: 20px
 }
+
+.controls {
+  padding: 5px 0
+}
