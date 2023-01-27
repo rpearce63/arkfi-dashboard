@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 
 export default ({ addWallet }) => {
   const [address, setAddress] = useState("");
+
   const processAddress = () => {
     !!address && addWallet(address);
     setAddress("");
@@ -13,7 +14,7 @@ export default ({ addWallet }) => {
 
   const loadFile = (event) => {
     event.target.files[0].text().then((t) => {
-      console.log(t)
+      console.log(t);
       localStorage.setItem("arkFiWallets", t);
     });
     window.location.reload(true);
@@ -44,10 +45,19 @@ export default ({ addWallet }) => {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
-          <Button variant="contained" onClick={processAddress}>
+          <Button
+            variant="contained"
+            onClick={processAddress}
+            disabled={!address}
+          >
             Add Wallet
           </Button>
-          <Button variant="contained" component="label">
+          <Button
+            variant="outlined"
+            component="label"
+            size="small"
+            color="success"
+          >
             Load Backup
             <input type="file" hidden onChange={loadFile} />
           </Button>

@@ -15,7 +15,7 @@ export default ({handleSwitch, backupData}) => {
         variant="outlined" 
         size="small" 
         color="success"
-        startIcon={<FileDownloadIcon/>}
+        startIcon={<FileDownloadIcon color="success"/>}
         onClick={backupData}>Backup</Button>
     </>
   )

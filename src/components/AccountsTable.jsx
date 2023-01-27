@@ -14,6 +14,8 @@ import {GetArkPrice_Swap, backupData} from '../api/arkfi';
 import ConfirmationDialog from './ConfirmationDialog';
 import Button from '@mui/material/Button';
 import Controls from './Controls';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+
 
 function Timer(toDate) {
   var dateEntered = toDate + 86400000;
@@ -172,7 +174,9 @@ export default function AccountsTable({ accounts }) {
               key={row.account}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell className="remove-row" onClick={() => openConfirmationDialog(row.account)}>x</TableCell>
+              <TableCell className="remove-row" onClick={() => openConfirmationDialog(row.account)}>
+              <RemoveCircleOutlineIcon  sx={{fontSize: "14px"}}/>
+              </TableCell>
               <TableCell component="th" scope="row">
                 {formatAddress(row.account)}
               </TableCell>
