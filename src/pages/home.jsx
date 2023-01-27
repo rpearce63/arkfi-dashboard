@@ -36,7 +36,7 @@ export default () => {
   };
 
   return (
-    <Container maxWidth={false}>
+    <Container maxWidth="xl">
       <AddWallet addWallet={addWallet} />
       <AccountsTable accounts={acctData} />
     </Container>

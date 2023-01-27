@@ -154,7 +154,8 @@ export default function AccountsTable({ accounts }) {
 
   const formatAddress = (address) =>
     `${address.substring(0, 5)}...${address.slice(-5)}`;
-
+  const formatCurrency = (amount) => isBusd ? "$" + amount : amount;
+  
   return (
     <>
       <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
@@ -172,6 +173,7 @@ export default function AccountsTable({ accounts }) {
               accounts={accounts}
               totals={totals}
               displayValue={displayValue}
+              formatCurrency={formatCurrency}
             />
             {accounts.map((row) => (
               <TableRow
@@ -196,7 +198,7 @@ export default function AccountsTable({ accounts }) {
                 <TableCell align="right">
                   {displayValue(row.walletBalance)}
                 </TableCell>
-                <TableCell align="right">{row.busdBalance}</TableCell>
+                <TableCell align="right">{formatCurrency(row.busdBalance)}</TableCell>
                 <TableCell align="right">
                   {displayValue(row.availableRewards)}
                 </TableCell>
@@ -249,7 +251,7 @@ const TableHeader = () => {
   );
 };
 
-const TotalsHeader = ({ accounts, totals, displayValue }) => {
+const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>Totals</TableCell>
@@ -257,7 +259,7 @@ const TotalsHeader = ({ accounts, totals, displayValue }) => {
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.walletTotal)}</TableCell>
-      <TableCell align="right">{totals.busdTotal}</TableCell>
+      <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
       <TableCell></TableCell>
