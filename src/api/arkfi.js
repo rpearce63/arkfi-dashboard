@@ -399,7 +399,7 @@ export async function GetArkPrice_Swap() {
   try {
     var _val = await contractBscSwap.methods.getCurrentPriceInUSD().call();
     _val = web3.utils.fromWei(_val);
-    const arkPrice = Number(_val);
+    //const arkPrice = Number(_val);
     return Number(_val).toFixed(2);
   } catch {
     return 0;
@@ -410,8 +410,8 @@ const GetBusdBalance = async () => {
   try {
     var _val = await contractBscBUSD.methods.balanceOf(account).call();
     _val = web3.utils.fromWei(_val);
-    const busdBalance = Number(_val);
-    return busdBalance.toFixed(2);
+    // const busdBalance = Number(_val);
+    return Number(_val).toFixed(2);
   } catch {
     return 0;
   }

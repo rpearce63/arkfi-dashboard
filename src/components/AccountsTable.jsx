@@ -83,7 +83,7 @@ export default function AccountsTable({ accounts }) {
       0
     );
     const busdTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.busdBalance),
+      (total, account) => total + Number(account.busdBalance),
       0
     );
     const availTotal = accounts.reduce(
@@ -154,6 +154,7 @@ export default function AccountsTable({ accounts }) {
 
   const formatAddress = (address) =>
     `${address.substring(0, 5)}...${address.slice(-5)}`;
+  
   const formatCurrency = (amount) => isBusd ? "$" + amount : amount;
   
   return (
