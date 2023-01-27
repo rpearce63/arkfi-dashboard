@@ -237,7 +237,7 @@ const TableHeader = () => {
         <TableCell align="right">Balance</TableCell>
         <TableCell align="right">Wallet Balance</TableCell>
         <TableCell align="right">BUSD</TableCell>
-        <TableCell align="right">Available</TableCell>
+        <TableCell align="right">Available Rewards</TableCell>
         <TableCell align="right">CWR</TableCell>
         <TableCell align="right">Daily ROI</TableCell>
         <TableCell align="right">Total Deposits</TableCell>
