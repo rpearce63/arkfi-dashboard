@@ -209,7 +209,7 @@ const TableHeader = () => {
       <TableRow>
         <TableCell></TableCell>
         <TableCell>Account</TableCell>
-        <TableCell>Countdown</TableCell>
+        <TableCell>Rewards Timer</TableCell>
         <TableCell align="right">Balance</TableCell>
         <TableCell align="right">Wallet Balance</TableCell>
         <TableCell align="right">BUSD</TableCell>
