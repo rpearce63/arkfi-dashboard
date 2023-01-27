@@ -203,7 +203,7 @@ export default function AccountsTable({ accounts }) {
                   {displayValue(row.availableRewards)}
                 </TableCell>
                 <TableCell align="right">{row.maxCwr}</TableCell>
-                <TableCell align="right">{row.roi}%</TableCell>
+                <TableCell align="right">{row.roi}%  ({displayValue(parseFloat(row.principalBalance * .02).toFixed(2))})</TableCell>
                 <TableCell align="right">
                   {displayValue(row.deposits)}
                 </TableCell>
