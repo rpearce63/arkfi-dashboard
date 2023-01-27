@@ -107,7 +107,7 @@ export default function AccountsTable({ accounts }) {
       0
     );
     const dailyEarnedTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.principalBalance * .02),
+      (total, account) => total + parseFloat(account.principalBalance) * (parseFloat(account.roi) / 100),
       0
     );
     setTotals({
