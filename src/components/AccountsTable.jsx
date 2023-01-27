@@ -230,7 +230,7 @@ const TableHeader = () => {
 const TotalsHeader = ({ accounts, totals, displayValue }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
-      <TableCell></TableCell>
+      <TableCell>Totals</TableCell>
       <TableCell>{accounts.length}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
