@@ -150,6 +150,8 @@ export default function AccountsTable({ accounts }) {
     window.location.reload(false);
   }
   
+  const formatAddress = address => `${address.substring(0,5)}...${address.slice(-5)}`
+  
   return (
     <>
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
@@ -172,7 +174,7 @@ export default function AccountsTable({ accounts }) {
             >
               <TableCell className="remove-row" onClick={() => openConfirmationDialog(row.account)}>x</TableCell>
               <TableCell component="th" scope="row">
-                {row.account}
+                {formatAddress(row.account)}
               </TableCell>
               
               <TableCell align="right">{Timer(row.lastAction)}</TableCell>
