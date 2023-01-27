@@ -13,6 +13,7 @@ import Switch from '@mui/material/Switch';
 import {GetArkPrice_Swap, backupData} from '../api/arkfi';
 import ConfirmationDialog from './ConfirmationDialog';
 import Button from '@mui/material/Button';
+import Controls from './Controls';
 
 function Timer(toDate) {
   var dateEntered = toDate + 86400000;
