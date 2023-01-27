@@ -157,8 +157,7 @@ export default function AccountsTable({ accounts }) {
     <>
     <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
       
-      <span className="ml-1 inter-bold">ARK</span><Switch onChange={() => setIsBusd(!isBusd)}/><span className="inter-bold">USD</span>
-      <Button onClick={backupData}>Backup</Button>
+      <Controls handleSwitch={() => setIsBusd(!isBusd)} backupData={backupData}/>
       <Table
         sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
         aria-label="simple table"
