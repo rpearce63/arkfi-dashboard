@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Router, Link } from "wouter";
 import Header from "./components/Header";
+import Container from '@mui/material/Container';
 
 /**
  * This code defines the react app
@@ -26,14 +27,14 @@ export default function Home() {
   return (
     <Router>
       <Seo />
-      <main role="main" className="wrapper">
+      <Container maxWidth="xl">
         <Header />
         <div className="content">
           {/* Router specifies which component to insert here as the main content */}
           <PageRouter />
         </div>
-      </main>
-      {/* Footer links to Home and About, Link elements matched in router.jsx */}
+        
+        {/* Footer links to Home and About, Link elements matched in router.jsx */}
       <footer className="footer">
         
           <div>
@@ -51,6 +52,8 @@ export default function Home() {
         
         
       </footer>
+      </Container>
+      
     </Router>
   );
 }
