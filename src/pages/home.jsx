@@ -24,7 +24,7 @@ export default () => {
 
   useEffect(() => {
     getInitData();
-    const interval = setInterval(() => getInitData(), 10000)
+    const interval = setInterval(() => getInitData(), 30000)
   }, []);
   
   

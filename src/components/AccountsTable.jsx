@@ -83,7 +83,7 @@ export default function AccountsTable({ accounts }) {
       0
     );
     const busdTotal = accounts.reduce(
-      (total, account) => total + Number(account.busdBalance),
+      (total, account) => total + parseFloat(account.busdBalance),
       0
     );
     const availTotal = accounts.reduce(
@@ -106,6 +106,10 @@ export default function AccountsTable({ accounts }) {
       (total, account) => total + parseFloat(account.airdropsReceived),
       0
     );
+    const dailyEarnedTotal = accounts.reduce(
+      (total, account) => total + parseFloat(account.principalBalance * .02),
+      0
+    );
     setTotals({
       ...totals,
       balanceTotal,
@@ -116,6 +120,7 @@ export default function AccountsTable({ accounts }) {
       maxPayoutTotal,
       nftRewardsTotal,
       airdropsReceivedTotal,
+      dailyEarnedTotal
     });
 
     const timerInterval = setInterval(() => {
@@ -155,7 +160,10 @@ export default function AccountsTable({ accounts }) {
   const formatAddress = (address) =>
     `${address.substring(0, 5)}...${address.slice(-5)}`;
   
-  const formatCurrency = (amount) => isBusd ? "$" + amount : amount;
+  const formatCurrency = (amount) => {
+    const _val = parseFloat(amount).toFixed(2);
+    return isBusd ? "$" + _val : _val;
+  }
   
   return (
     <>
@@ -263,7 +271,7 @@ const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency }) => {
       <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
-      <TableCell></TableCell>
+      <TableCell align="right">{displayValue(totals.dailyEarnedTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
