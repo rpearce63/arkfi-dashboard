@@ -173,12 +173,14 @@ export default function AccountsTable({ accounts }) {
         <Controls
           handleSwitch={() => setIsBusd(!isBusd)}
           backupData={backupData}
+          setIndluceNfts={setIncludeNfts}
+          setIncludeBonds={setIncludeBonds}
         />
         <Table
           sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
           aria-label="simple table"
         >
-          <TableHeader></TableHeader>
+          <TableHeader includeBonds={includeBonds}></TableHeader>
           <TableBody>
             <TotalsHeader
               accounts={accounts}
@@ -228,8 +230,10 @@ export default function AccountsTable({ accounts }) {
                 <TableCell align="right">
                   {displayValue(row.airdropsReceived)}
                 </TableCell>
-                <TableCell align="right">{row.bondShares}</TableCell>
-                <TableCell align="right">${row.bondValue}</TableCell>
+                
+                {includeBonds && <><TableCell align="right">{row.bondShares}</TableCell>
+                    <TableCell align="right">${row.bondValue}</TableCell></>}
+                
               </TableRow>
             ))}
           </TableBody>
@@ -240,7 +244,7 @@ export default function AccountsTable({ accounts }) {
   );
 }
 
-const TableHeader = () => {
+const TableHeader = ({includeBonds}) => {
   return (
     <TableHead>
       <TableRow>
@@ -259,8 +263,12 @@ const TableHeader = () => {
         <TableCell align="right">Max Payout</TableCell>
         <TableCell align="right">NFT Rewards</TableCell>
         <TableCell align="right">Airdrops Received</TableCell>
+        {includeBonds && 
+          <>
         <TableCell align="right">Bond Shares</TableCell>
         <TableCell align="right">Bond Value</TableCell>
+          </>
+        }
       </TableRow>
     </TableHead>
   );
