@@ -55,7 +55,7 @@ export default function AccountsTable({ accounts }) {
   const [selectedRow, setSelectedRow] = useState("");
   const [includeBonds, setIncludeBonds] = useState(false);
   const [includeNfts, setIncludeNfts] = useState(false);
-  
+
   const updateTimers = () => {
     let _timers = {};
     for (const account of accounts) {
@@ -109,7 +109,9 @@ export default function AccountsTable({ accounts }) {
       0
     );
     const dailyEarnedTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.principalBalance) * (parseFloat(account.roi) / 100),
+      (total, account) =>
+        total +
+        parseFloat(account.principalBalance) * (parseFloat(account.roi) / 100),
       0
     );
     setTotals({
@@ -122,7 +124,7 @@ export default function AccountsTable({ accounts }) {
       maxPayoutTotal,
       nftRewardsTotal,
       airdropsReceivedTotal,
-      dailyEarnedTotal
+      dailyEarnedTotal,
     });
 
     const timerInterval = setInterval(() => {
@@ -161,26 +163,29 @@ export default function AccountsTable({ accounts }) {
 
   const formatAddress = (address) =>
     `${address.substring(0, 5)}...${address.slice(-5)}`;
-  
+
   const formatCurrency = (amount) => {
     const _val = parseFloat(amount).toFixed(2);
     return isBusd ? "$" + _val : _val;
-  }
-  
+  };
+
   return (
     <>
       <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
         <Controls
           handleSwitch={() => setIsBusd(!isBusd)}
           backupData={backupData}
-          setIndluceNfts={setIncludeNfts}
-          setIncludeBonds={setIncludeBonds}
+          setIndluceNfts={() => setIncludeNfts(!includeNfts)}
+          setIncludeBonds={() => setIncludeBonds(!includeBonds)}
         />
         <Table
           sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
           aria-label="simple table"
         >
-          <TableHeader includeBonds={includeBonds}></TableHeader>
+          <TableHeader
+            includeBonds={includeBonds}
+            includeNfts={includeNfts}
+          ></TableHeader>
           <TableBody>
             <TotalsHeader
               accounts={accounts}
@@ -211,12 +216,20 @@ export default function AccountsTable({ accounts }) {
                 <TableCell align="right">
                   {displayValue(row.walletBalance)}
                 </TableCell>
-                <TableCell align="right">{formatCurrency(row.busdBalance)}</TableCell>
+                <TableCell align="right">
+                  {formatCurrency(row.busdBalance)}
+                </TableCell>
                 <TableCell align="right">
                   {displayValue(row.availableRewards)}
                 </TableCell>
                 <TableCell align="right">{row.maxCwr}</TableCell>
-                <TableCell align="right">{row.roi}%  ({displayValue(parseFloat(row.principalBalance * .02).toFixed(2))})</TableCell>
+                <TableCell align="right">
+                  {row.roi}% (
+                  {displayValue(
+                    parseFloat(row.principalBalance * 0.02).toFixed(2)
+                  )}
+                  )
+                </TableCell>
                 <TableCell align="right">
                   {displayValue(row.deposits)}
                 </TableCell>
@@ -224,16 +237,21 @@ export default function AccountsTable({ accounts }) {
                 <TableCell align="right">
                   {displayValue(row.maxPayout)}
                 </TableCell>
-                <TableCell align="right">
-                  {displayValue(row.nftRewards)}
-                </TableCell>
+                {includeNfts && (
+                  <TableCell align="right">
+                    {displayValue(row.nftRewards)}
+                  </TableCell>
+                )}
                 <TableCell align="right">
                   {displayValue(row.airdropsReceived)}
                 </TableCell>
-                
-                {includeBonds && <><TableCell align="right">{row.bondShares}</TableCell>
-                    <TableCell align="right">${row.bondValue}</TableCell></>}
-                
+
+                {includeBonds && (
+                  <>
+                    <TableCell align="right">{row.bondShares}</TableCell>
+                    <TableCell align="right">${row.bondValue}</TableCell>
+                  </>
+                )}
               </TableRow>
             ))}
           </TableBody>
@@ -244,7 +262,7 @@ export default function AccountsTable({ accounts }) {
   );
 }
 
-const TableHeader = ({includeBonds}) => {
+const TableHeader = ({ includeBonds, includeNfts }) => {
   return (
     <TableHead>
       <TableRow>
@@ -261,14 +279,14 @@ const TableHeader = ({includeBonds}) => {
         <TableCell align="right">NDV</TableCell>
 
         <TableCell align="right">Max Payout</TableCell>
-        <TableCell align="right">NFT Rewards</TableCell>
+        {includeNfts && <TableCell align="right">NFT Rewards</TableCell>}
         <TableCell align="right">Airdrops Received</TableCell>
-        {includeBonds && 
+        {includeBonds && (
           <>
-        <TableCell align="right">Bond Shares</TableCell>
-        <TableCell align="right">Bond Value</TableCell>
+            <TableCell align="right">Bond Shares</TableCell>
+            <TableCell align="right">Bond Value</TableCell>
           </>
-        }
+        )}
       </TableRow>
     </TableHead>
   );
@@ -285,7 +303,9 @@ const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency }) => {
       <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
-      <TableCell align="right">{displayValue(totals.dailyEarnedTotal)}</TableCell>
+      <TableCell align="right">
+        {displayValue(totals.dailyEarnedTotal)}
+      </TableCell>
       <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>

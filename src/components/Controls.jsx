@@ -12,18 +12,7 @@ export default ({
   setIncludeNfts,
   setIncludeBonds,
 }) => {
-  const [bonds, setBonds] = useState(false);
-  const [nfts, setNfts] = useState(false);
-
-  const handleBondsChange = () => {
-    setBonds(!bonds);
-    setIncludeBonds(!bonds);
-  };
-
-  const handlNftsChange = () => {
-    setNfts(!nfts);
-    setIncludeNfts(!nfts);
-  };
+  
 
   return (
     <div className="controls">
@@ -37,6 +26,7 @@ export default ({
         color="success"
         startIcon={<FileDownloadIcon color="success" />}
         onClick={backupData}
+        sx={{marginRight: "1em"}}
       >
         Backup
       </Button>
@@ -50,9 +40,9 @@ export default ({
         <FormControlLabel
           control={<Checkbox />}
           label="Include Bonds"
-          onChange={handleBondsChange}
+          onChange={setIncludeBonds}
         />
-      </FormGroup>
+      
     </div>
   );
 };
