@@ -176,8 +176,8 @@ export default function AccountsTable({ accounts }) {
         <Controls
           handleSwitch={() => setIsBusd(!isBusd)}
           backupData={backupData}
-          setIncludeNfts={() => setIncludeNfts(!includeNfts)}
-          setIncludeBonds={() => setIncludeBonds(!includeBonds)}
+          toggleNfts={() => setIncludeNfts(!includeNfts)}
+          toggleBonds={() => setIncludeBonds(!includeBonds)}
         />
         <Table
           sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
@@ -193,6 +193,8 @@ export default function AccountsTable({ accounts }) {
               totals={totals}
               displayValue={displayValue}
               formatCurrency={formatCurrency}
+              includeNfts={includeNfts}
+              includeBonds={includeBonds}
             />
             {accounts.map((row) => (
               <TableRow
@@ -293,7 +295,7 @@ const TableHeader = ({ includeBonds, includeNfts }) => {
   );
 };
 
-const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency }) => {
+const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency, includeNfts, includeBonds }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>Totals</TableCell>
@@ -310,14 +312,18 @@ const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency }) => {
       <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
-      <TableCell align="right">
+      {includeNfts && <TableCell align="right">
         {displayValue(totals.nftRewardsTotal)}
-      </TableCell>
+      </TableCell>}
       <TableCell align="right">
         {displayValue(totals.airdropsReceivedTotal)}
       </TableCell>
+      {includeBonds && 
+        <>
       <TableCell></TableCell>
       <TableCell></TableCell>
+        </>
+      }
     </TableRow>
   );
 };

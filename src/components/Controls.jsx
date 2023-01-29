@@ -9,8 +9,8 @@ import Checkbox from "@mui/material/Checkbox";
 export default ({
   handleSwitch,
   backupData,
-  setIncludeNfts,
-  setIncludeBonds,
+  toggleNfts,
+  toggleBonds,
 }) => {
   
 
@@ -33,12 +33,12 @@ export default ({
 
       
         <FormControlLabel
-          control={<Checkbox onChange={setIncludeNfts}/>}
+          control={<Checkbox onChange={toggleNfts}/>}
           label="Include NFTs"
           
         />
         <FormControlLabel
-          control={<Checkbox onChange={setIncludeBonds}/>}
+          control={<Checkbox onChange={toggleBonds}/>}
           label="Include Bonds"
           
         />
