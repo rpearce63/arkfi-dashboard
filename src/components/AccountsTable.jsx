@@ -226,6 +226,7 @@ export default function AccountsTable({ accounts }) {
                 <TableCell align="right">
                   {displayValue(row.airdropsReceived)}
                 </TableCell>
+                <TableCell align="right">${row.bondValue}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -255,6 +256,7 @@ const TableHeader = () => {
         <TableCell align="right">Max Payout</TableCell>
         <TableCell align="right">NFT Rewards</TableCell>
         <TableCell align="right">Airdrops Received</TableCell>
+        <TableCell align="right">Bond Value</TableCell>
       </TableRow>
     </TableHead>
   );

@@ -431,6 +431,18 @@ async function GetClaimableRewards_Legacy() {
   }
 }
 
+async function GetShares_Bond() {
+    try {
+        var _val = await contractBscBond.methods.shares(account).call();
+        _val = web3.utils.fromWei(_val);
+        const bondBalance = Math.floor(Number(_val) * 1000) / 1000;
+        return Number(_val).toFixed(2);
+    }
+    catch {
+        return 0;
+    }
+}
+
 export const backupData = async () => {
   const opts = {
     types: [{
@@ -474,7 +486,9 @@ export const initData = async (accounts) => {
     const level = await GetLevelForInvestor_Vault();
     const newDeposits = await GetNewDeposits_Vault();
     const airdropsReceived = await GetAirdropsReceived_Vault();
-
+    const bondValue = await GetBondValue_Vault();
+    const bondShares = await GetShares_Bond();
+    
     response.push({
       account: wallet,
       availableRewards,
@@ -490,9 +504,12 @@ export const initData = async (accounts) => {
       lastAction,
       level,
       newDeposits,
-      airdropsReceived
+      airdropsReceived,
+      bondValue,
+      bondShares
+      
     });
   }
-  
+  console.log(response)
   return response;
 };
