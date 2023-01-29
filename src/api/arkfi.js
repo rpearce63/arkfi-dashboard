@@ -11,7 +11,7 @@ import {
   contractBscBond
 } from "./vars";
 
-const web3 = web3bsc; //new Web3(Web3.givenProvider);
+const web3 = new Web3(Web3.givenProvider);
 
 let account = "";
 
