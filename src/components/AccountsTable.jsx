@@ -169,13 +169,14 @@ export default function AccountsTable({ accounts }) {
     return isBusd ? "$" + _val : _val;
   };
 
+  console.log('nfts: ', includeNfts, ' bonds: ', includeBonds)
   return (
     <>
       <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
         <Controls
           handleSwitch={() => setIsBusd(!isBusd)}
           backupData={backupData}
-          setIndluceNfts={() => setIncludeNfts(!includeNfts)}
+          setIncludeNfts={() => setIncludeNfts(!includeNfts)}
           setIncludeBonds={() => setIncludeBonds(!includeBonds)}
         />
         <Table

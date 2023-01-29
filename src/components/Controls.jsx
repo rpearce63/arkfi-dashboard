@@ -33,14 +33,14 @@ export default ({
 
       
         <FormControlLabel
-          control={<Checkbox />}
+          control={<Checkbox onChange={setIncludeNfts}/>}
           label="Include NFTs"
-          onChange={setIncludeNfts}
+          
         />
         <FormControlLabel
-          control={<Checkbox />}
+          control={<Checkbox onChange={setIncludeBonds}/>}
           label="Include Bonds"
-          onChange={setIncludeBonds}
+          
         />
       
     </div>
