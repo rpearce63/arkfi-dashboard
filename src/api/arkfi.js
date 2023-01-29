@@ -8,7 +8,9 @@ import {
   contractBscSwap,
   contractBscBUSD,
   contractBscLegacy,
+  contractBscBond
 } from "./vars";
+
 const web3 = web3bsc; //new Web3(Web3.givenProvider);
 
 let account = "";
