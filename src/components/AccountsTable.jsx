@@ -53,7 +53,9 @@ export default function AccountsTable({ accounts }) {
   //const [confirm, setConfirm] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState("");
-
+  const [includeBonds, setIncludeBonds] = useState(false);
+  const [includeNfts, setIncludeNfts] = useState(false);
+  
   const updateTimers = () => {
     let _timers = {};
     for (const account of accounts) {

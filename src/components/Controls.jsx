@@ -2,8 +2,11 @@ import React from 'react';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
-export default ({handleSwitch, backupData}) => {
+export default ({handleSwitch, backupData, setIncludeNfts, setIncludeBonds}) => {
   
   return (
   <div className="controls">
@@ -18,6 +21,11 @@ export default ({handleSwitch, backupData}) => {
         startIcon={<FileDownloadIcon 
         color="success"/>}
         onClick={backupData}>Backup</Button>
+      
+      <FormGroup>
+      <FormControlLabel control={<Checkbox />} label="Include NFTs" />
+      <FormControlLabel control={<Checkbox />} label="Include Bonds" />
+    </FormGroup>
     </div>
   )
 }
