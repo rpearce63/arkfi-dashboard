@@ -510,6 +510,5 @@ export const initData = async (accounts) => {
       
     });
   }
-  console.log(response)
   return response;
 };
