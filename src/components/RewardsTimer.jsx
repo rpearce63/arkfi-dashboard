@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 
-export default (toDate) => {
+export default ({toDate}) => {
   
   
   
+  const updateTimer = () =>{
   var dateEntered = toDate + 86400000;
+  console.log('date: ', toDate, dateEntered)
   var now = new Date();
   var difference = dateEntered - now.getTime();
 
@@ -27,6 +29,8 @@ export default (toDate) => {
     const minutesText = minutes < 10 ? "0" + minutes : minutes;
     const secondsText = seconds < 10 ? "0" + seconds : seconds;
     return hourText + ":" + minutesText + ":" + secondsText;
-  }
+  }}
+  
+  return updateTimer();
 
 }

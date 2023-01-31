@@ -17,32 +17,7 @@ import Controls from "./Controls";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import RewardsTimer from './RewardsTimer';
 
-function Timer(toDate) {
-  var dateEntered = toDate + 86400000;
-  var now = new Date();
-  var difference = dateEntered - now.getTime();
 
-  if (difference <= 0) {
-    //$("#vaulttimer").text("00:00:00");
-    //clearInterval(rewardsTimer);
-    const haltTimer = true;
-    return "00:00:00";
-  } else {
-    var seconds = Math.floor(difference / 1000);
-    var minutes = Math.floor(seconds / 60);
-    var hours = Math.floor(minutes / 60);
-    var days = Math.floor(hours / 24);
-
-    hours %= 24;
-    minutes %= 60;
-    seconds %= 60;
-
-    const hourText = hours < 10 ? "0" + hours : hours;
-    const minutesText = minutes < 10 ? "0" + minutes : minutes;
-    const secondsText = seconds < 10 ? "0" + seconds : seconds;
-    return hourText + ":" + minutesText + ":" + secondsText;
-  }
-}
 
 export default function AccountsTable({ accounts }) {
   const [totals, setTotals] = useState([]);
@@ -56,16 +31,6 @@ export default function AccountsTable({ accounts }) {
   const [selectedRow, setSelectedRow] = useState("");
   const [includeBonds, setIncludeBonds] = useState(false);
   const [includeNfts, setIncludeNfts] = useState(false);
-
-  const updateTimers = () => {
-    let _timers = {};
-    for (const account of accounts) {
-      const timer = Timer(account.lastAction);
-      _timers = { ..._timers, [account.account]: timer };
-    }
-
-    setTimers(_timers);
-  };
 
   useEffect(() => {
     const getArkPrice = async () => {
