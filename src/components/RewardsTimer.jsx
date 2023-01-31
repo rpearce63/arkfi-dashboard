@@ -6,7 +6,7 @@ export default ({toDate}) => {
   
   const updateTimer = () =>{
   var dateEntered = toDate + 86400000;
-  console.log('date: ', toDate, dateEntered)
+  //console.log('date: ', toDate, dateEntered)
   var now = new Date();
   var difference = dateEntered - now.getTime();
 
@@ -33,7 +33,10 @@ export default ({toDate}) => {
   
   useEffect(() => {
     updateTimer();
-    const timerInterval = set
+    const interval = setInterval(() => {
+      updateTimer();
+      return () => clearInterval(interval);
+    })
   },[])
   
   
