@@ -10,9 +10,10 @@ const Header = () => {
   };
   useEffect(() => {
     getArkPrice();
-    setInterval(() => {
+    const priceInterval = setInterval(() => {
       getArkPrice();
     }, 60000);
+    return () => clearInterval(priceInterval)
   }, []);
 
   return (

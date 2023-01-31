@@ -127,10 +127,10 @@ export default function AccountsTable({ accounts }) {
       dailyEarnedTotal,
     });
 
-    const timerInterval = setInterval(() => {
-      updateTimers();
-      return () => clearInterval(timerInterval);
-    }, 1000);
+    // const timerInterval = setInterval(() => {
+    //   //updateTimers();
+    //   return () => clearInterval(timerInterval);
+    // }, 1000);
   }, [accounts]);
 
   const displayValue = (amount) =>
