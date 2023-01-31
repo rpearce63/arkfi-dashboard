@@ -15,6 +15,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import Button from "@mui/material/Button";
 import Controls from "./Controls";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import RewardsTimer from './RewardsTimer';
 
 function Timer(toDate) {
   var dateEntered = toDate + 86400000;
@@ -211,7 +212,7 @@ export default function AccountsTable({ accounts }) {
                   {formatAddress(row.account)}
                 </TableCell>
 
-                <TableCell align="right">{Timer(row.lastAction)}</TableCell>
+                <TableCell align="right"><RewardsTimer toDate={row.lastAction}/></TableCell>
                 <TableCell align="right">
                   {displayValue(row.principalBalance)}
                 </TableCell>

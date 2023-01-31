@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 
-export default () => {
+export default (toDate) => {
   
   
-  function Timer(toDate) {
+  
   var dateEntered = toDate + 86400000;
   var now = new Date();
   var difference = dateEntered - now.getTime();
@@ -28,5 +28,5 @@ export default () => {
     const secondsText = seconds < 10 ? "0" + seconds : seconds;
     return hourText + ":" + minutesText + ":" + secondsText;
   }
-}
+
 }
