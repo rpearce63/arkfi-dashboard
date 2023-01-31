@@ -31,13 +31,13 @@ export default function AccountsTable({ accounts }) {
   const [selectedRow, setSelectedRow] = useState("");
   const [includeBonds, setIncludeBonds] = useState(false);
   const [includeNfts, setIncludeNfts] = useState(false);
-
-  useEffect(() => {
-    const getUpdatedArkPrice = async () => {
+const getUpdatedArkPrice = async () => {
       console.log('get ark price for table')
       const arkPrice = await getArkPrice();
       setArkPrice(arkPrice);
     };
+  useEffect(() => {
+    
     getUpdatedArkPrice();
   }, []);
 
@@ -92,6 +92,8 @@ export default function AccountsTable({ accounts }) {
       airdropsReceivedTotal,
       dailyEarnedTotal,
     });
+    
+    getUpdatedArkPrice();
 
   }, [accounts]);
 
