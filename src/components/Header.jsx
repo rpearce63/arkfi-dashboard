@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import {getArkPrice} from "../api/utils"
+import { getArkPrice } from "../api/utils";
 
 const Header = () => {
   const [arkPrice, setArkPrice] = useState(0);
   const [displayPrice, setDisplayPrice] = useState(0);
-  
+
   const getUpdatedArkPrice = async () => {
     const price = await getArkPrice();
     setArkPrice(price);
@@ -14,16 +14,18 @@ const Header = () => {
     const priceInterval = setInterval(() => {
       getUpdatedArkPrice();
     }, 60000);
-    return () => clearInterval(priceInterval)
+    return () => clearInterval(priceInterval);
   }, []);
-  
+
   useEffect(() => {
-    
     const increment = setInterval(() => {
-        setDisplayPrice(displayPrice + .01);
+      console.log('arkPrice: ', arkPrice)
+      setDisplayPrice((prev) => {
+         return prev + 0.01;
+      });
       return () => clearInterval(increment);
-    }, 100)
-  },[arkPrice])
+    }, 1000);
+  }, [arkPrice]);
 
   return (
     <header className="App-header">
