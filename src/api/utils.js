@@ -35,10 +35,8 @@ export const backupData = async () => {
 
 export const getArkPrice = async () => {
   if(cache.has('arkPrice')) {
-    console.log('cache hit')
     return cache.get('arkPrice')
   }
-  console.log('refreshing arkPrice')
   const arkPrice =  await GetArkPrice_Swap();
   cache.set('arkPrice', arkPrice);
   return arkPrice;

@@ -11,14 +11,12 @@ import ToggleButton from "@mui/material/ToggleButton";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Switch from "@mui/material/Switch";
 import { GetArkPrice_Swap } from "../api/arkfi";
-import {backupData, getArkPrice} from "../api/utils"
+import { backupData, getArkPrice } from "../api/utils";
 import ConfirmationDialog from "./ConfirmationDialog";
 import Button from "@mui/material/Button";
 import Controls from "./Controls";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import RewardsTimer from './RewardsTimer';
-
-
+import RewardsTimer from "./RewardsTimer";
 
 export default function AccountsTable({ accounts }) {
   const [totals, setTotals] = useState([]);
@@ -26,18 +24,17 @@ export default function AccountsTable({ accounts }) {
   const [selected, setSelected] = React.useState(false);
   const [isBusd, setIsBusd] = useState(false);
   const [arkPrice, setArkPrice] = useState(0);
-  
+
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState("");
   const [includeBonds, setIncludeBonds] = useState(false);
   const [includeNfts, setIncludeNfts] = useState(false);
-const getUpdatedArkPrice = async () => {
-      console.log('get ark price for table')
-      const arkPrice = await getArkPrice();
-      setArkPrice(arkPrice);
-    };
+
+  const getUpdatedArkPrice = async () => {
+    const arkPrice = await getArkPrice();
+    setArkPrice(arkPrice);
+  };
   useEffect(() => {
-    
     getUpdatedArkPrice();
   }, []);
 
@@ -92,9 +89,8 @@ const getUpdatedArkPrice = async () => {
       airdropsReceivedTotal,
       dailyEarnedTotal,
     });
-    
-    getUpdatedArkPrice();
 
+    getUpdatedArkPrice();
   }, [accounts]);
 
   const displayValue = (amount) =>
@@ -120,7 +116,7 @@ const getUpdatedArkPrice = async () => {
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w !== selectedRow);
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
-    
+
     window.location.reload(false);
   };
 
@@ -174,7 +170,9 @@ const getUpdatedArkPrice = async () => {
                   {formatAddress(row.account)}
                 </TableCell>
 
-                <TableCell align="right"><RewardsTimer toDate={row.lastAction}/></TableCell>
+                <TableCell align="right">
+                  <RewardsTimer toDate={row.lastAction} />
+                </TableCell>
                 <TableCell align="right">
                   {displayValue(row.principalBalance)}
                 </TableCell>
@@ -257,7 +255,14 @@ const TableHeader = ({ includeBonds, includeNfts }) => {
   );
 };
 
-const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency, includeNfts, includeBonds }) => {
+const TotalsHeader = ({
+  accounts,
+  totals,
+  displayValue,
+  formatCurrency,
+  includeNfts,
+  includeBonds,
+}) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>Totals</TableCell>
@@ -274,18 +279,20 @@ const TotalsHeader = ({ accounts, totals, displayValue, formatCurrency, includeN
       <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
-      {includeNfts && <TableCell align="right">
-        {displayValue(totals.nftRewardsTotal)}
-      </TableCell>}
+      {includeNfts && (
+        <TableCell align="right">
+          {displayValue(totals.nftRewardsTotal)}
+        </TableCell>
+      )}
       <TableCell align="right">
         {displayValue(totals.airdropsReceivedTotal)}
       </TableCell>
-      {includeBonds && 
+      {includeBonds && (
         <>
-      <TableCell></TableCell>
-      <TableCell></TableCell>
+          <TableCell></TableCell>
+          <TableCell></TableCell>
         </>
-      }
+      )}
     </TableRow>
   );
 };
