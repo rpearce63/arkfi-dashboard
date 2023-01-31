@@ -29,7 +29,7 @@ export default ({ addWallet }) => {
           borderRadius: "5px",
         }}
       >
-        <Stack spacing={2} direction="row">
+        
           <TextField
             size="small"
             id="add-wallet"
@@ -38,6 +38,7 @@ export default ({ addWallet }) => {
             sx={{
               backgroundColor: "white",
               marginRight: "1em",
+              marginBottom: "1em",
               width: "55ch",
               borderRadius: "5px",
             }}
@@ -49,6 +50,7 @@ export default ({ addWallet }) => {
             variant="contained"
             onClick={processAddress}
             disabled={!address}
+            sx={{marginRight: "1em"}}
           >
             Add Wallet
           </Button>
@@ -61,7 +63,7 @@ export default ({ addWallet }) => {
             Load Backup
             <input type="file" hidden onChange={loadFile} />
           </Button>
-        </Stack>
+        
       </Box>{" "}
     </>
   );
