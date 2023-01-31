@@ -3,7 +3,8 @@ import {getArkPrice} from "../api/utils"
 
 const Header = () => {
   const [arkPrice, setArkPrice] = useState(0);
-
+  const [displayPrice, setDisplayPrice] = useState(0);
+  
   const getUpdatedArkPrice = async () => {
     const price = await getArkPrice();
     setArkPrice(price);
@@ -15,11 +16,19 @@ const Header = () => {
     }, 60000);
     return () => clearInterval(priceInterval)
   }, []);
+  
+  useEffect(() => {
+    
+    const increment = setInterval(() => {
+        setDisplayPrice(displayPrice + .01);
+      return () => clearInterval(increment);
+    }, 100)
+  },[arkPrice])
 
   return (
     <header className="App-header">
       <h1 className="page-title">ArkFi Multi-Wallet Dashboard</h1>
-      <h2 className="page-title">Ark Price: ${arkPrice}</h2>
+      <h2 className="page-title">Ark Price: ${displayPrice}</h2>
     </header>
   );
 };

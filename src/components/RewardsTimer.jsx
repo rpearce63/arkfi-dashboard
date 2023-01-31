@@ -36,7 +36,7 @@ export default ({toDate}) => {
     const interval = setInterval(() => {
       updateTimer();
       return () => clearInterval(interval);
-    })
+    },1000)
   },[])
   
   
