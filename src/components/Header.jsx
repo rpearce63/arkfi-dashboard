@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
-import { GetArkPrice_Swap } from "../api/arkfi";
+import {getArkPrice} from "../api/utils"
 
 const Header = () => {
   const [arkPrice, setArkPrice] = useState(0);
 
-  const getArkPrice = async () => {
+  const getUpdatedArkPrice = async () => {
     console.log('get ark price for header')
-    const price = await GetArkPrice_Swap();
+    const price = await getArkPrice();
     setArkPrice(price);
   };
   useEffect(() => {
-    getArkPrice();
+    getUpdatedArkPrice();
     const priceInterval = setInterval(() => {
-      getArkPrice();
+      getUpdatedArkPrice();
     }, 60000);
     return () => clearInterval(priceInterval)
   }, []);

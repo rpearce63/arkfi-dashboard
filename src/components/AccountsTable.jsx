@@ -11,7 +11,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Switch from "@mui/material/Switch";
 import { GetArkPrice_Swap } from "../api/arkfi";
-import {backupData} from "../api/utils"
+import {backupData, getArkPrice} from "../api/utils"
 import ConfirmationDialog from "./ConfirmationDialog";
 import Button from "@mui/material/Button";
 import Controls from "./Controls";
@@ -33,12 +33,12 @@ export default function AccountsTable({ accounts }) {
   const [includeNfts, setIncludeNfts] = useState(false);
 
   useEffect(() => {
-    const getArkPrice = async () => {
+    const getUpdatedArkPrice = async () => {
       console.log('get ark price for table')
-      const arkPrice = await GetArkPrice_Swap();
+      const arkPrice = await getArkPrice();
       setArkPrice(arkPrice);
     };
-    getArkPrice();
+    getUpdatedArkPrice();
   }, []);
 
   useEffect(() => {
