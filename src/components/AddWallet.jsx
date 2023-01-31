@@ -27,6 +27,7 @@ export default ({ addWallet }) => {
           backgroundColor: "lightgrey",
           padding: "10px ",
           borderRadius: "5px",
+          
         }}
       >
         
@@ -46,8 +47,10 @@ export default ({ addWallet }) => {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
+        
           <Button
             variant="contained"
+            size="small"
             onClick={processAddress}
             disabled={!address}
             sx={{marginRight: "1em"}}
