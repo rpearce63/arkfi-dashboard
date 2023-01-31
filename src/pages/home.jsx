@@ -14,7 +14,7 @@ export default () => {
   const [acctData, setAcctData] = useState([]);
 
   const getInitData = async () => {
-    
+    console.log('getting data')
     const savedData = [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
     localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]))
     const accountInfo = await initData(savedData);
@@ -24,7 +24,10 @@ export default () => {
 
   useEffect(() => {
     getInitData();
-    const interval = setInterval(() => getInitData(), 30000)
+    const interval = setInterval(() => {
+      const dataInterval = getInitData();
+      return () => clearInterval(dataInterval);
+    }, 30000)
   }, []);
   
   

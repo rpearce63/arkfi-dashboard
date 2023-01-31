@@ -25,8 +25,7 @@ export default function AccountsTable({ accounts }) {
   const [selected, setSelected] = React.useState(false);
   const [isBusd, setIsBusd] = useState(false);
   const [arkPrice, setArkPrice] = useState(0);
-  //const [wallets, setWallets] = useState([]);
-  //const [confirm, setConfirm] = useState(false);
+  
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState("");
   const [includeBonds, setIncludeBonds] = useState(false);
@@ -93,10 +92,6 @@ export default function AccountsTable({ accounts }) {
       dailyEarnedTotal,
     });
 
-    // const timerInterval = setInterval(() => {
-    //   //updateTimers();
-    //   return () => clearInterval(timerInterval);
-    // }, 1000);
   }, [accounts]);
 
   const displayValue = (amount) =>
@@ -122,8 +117,7 @@ export default function AccountsTable({ accounts }) {
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w !== selectedRow);
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
-    //const updatedWallets = accounts.filter(w => w.account !== account);
-    //setWallets(() => [...updatedWallets]);
+    
     window.location.reload(false);
   };
 
