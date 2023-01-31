@@ -25,8 +25,8 @@ export default () => {
   useEffect(() => {
     getInitData();
     const interval = setInterval(() => {
-      const dataInterval = getInitData();
-      return () => clearInterval(dataInterval);
+      getInitData();
+      return () => clearInterval(interval);
     }, 30000)
   }, []);
   

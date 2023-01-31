@@ -5,6 +5,7 @@ const Header = () => {
   const [arkPrice, setArkPrice] = useState(0);
 
   const getArkPrice = async () => {
+    console.log('get ark price for header')
     const price = await GetArkPrice_Swap();
     setArkPrice(price);
   };

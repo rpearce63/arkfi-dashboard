@@ -10,7 +10,8 @@ import Paper from "@mui/material/Paper";
 import ToggleButton from "@mui/material/ToggleButton";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Switch from "@mui/material/Switch";
-import { GetArkPrice_Swap, backupData } from "../api/arkfi";
+import { GetArkPrice_Swap } from "../api/arkfi";
+import {backupData} from "../api/utils"
 import ConfirmationDialog from "./ConfirmationDialog";
 import Button from "@mui/material/Button";
 import Controls from "./Controls";
@@ -33,7 +34,7 @@ export default function AccountsTable({ accounts }) {
 
   useEffect(() => {
     const getArkPrice = async () => {
-      //setWallets(() => [...accounts]);
+      console.log('get ark price for table')
       const arkPrice = await GetArkPrice_Swap();
       setArkPrice(arkPrice);
     };
