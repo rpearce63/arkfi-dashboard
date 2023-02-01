@@ -31,6 +31,7 @@ const Header = () => {
           prefix="$"
         />
       </h1>
+      <hr/>
     </header>
   );
 };
