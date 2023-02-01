@@ -16,6 +16,9 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import Button from "@mui/material/Button";
 import Controls from "./Controls";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+
 import RewardsTimer from "./RewardsTimer";
 
 export default function AccountsTable({ accounts }) {
@@ -160,7 +163,7 @@ export default function AccountsTable({ accounts }) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell>
-                  <RemoveCircleOutlineIcon
+                  <DeleteOutlineOutlinedIcon
                     className="remove-row"
                     onClick={() => openConfirmationDialog(row.account)}
                     sx={{ fontSize: "14px" }}
