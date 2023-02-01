@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <header className="App-header">
       <h1 className="page-title">ArkFi Multi-Wallet Dashboard</h1>
-      <h2 className="page-title">
+      <h1 className="page-title">
         Ark Price:{" "}
         <Countup
           start={0}
@@ -30,7 +30,7 @@ const Header = () => {
           className="page-title"
           prefix="$"
         />
-      </h2>
+      </h1>
     </header>
   );
 };
