@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getArkPrice } from "../api/utils";
+import Countup from 'react-countup';
 
 const Header = () => {
   const [arkPrice, setArkPrice] = useState(0);
@@ -19,7 +20,7 @@ const Header = () => {
   return (
     <header className="App-header">
       <h1 className="page-title">ArkFi Multi-Wallet Dashboard</h1>
-      <h2 className="page-title">Ark Price: ${arkPrice}</h2>
+      <h2 className="page-title">Ark Price: <Countup start={0} end={arkPrice} decimals={2} duration={3}/></h2>
     </header>
   );
 };
