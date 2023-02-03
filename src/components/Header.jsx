@@ -26,7 +26,7 @@ const Header = () => {
           start={0}
           end={arkPrice}
           decimals={2}
-          duration={2}
+          duration={1}
           className="page-title"
           prefix="$"
         />
