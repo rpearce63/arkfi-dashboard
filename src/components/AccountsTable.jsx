@@ -100,7 +100,7 @@ export default function AccountsTable({ accounts }) {
 
   const displayValue = (amount, tax = 0) =>
     isBusd
-      ? "$" + parseFloat((amount* (1 - tax  * arkPrice) )).toFixed(2)
+      ? "$" + parseFloat((amount * (1 - tax))  * arkPrice ).toFixed(2)
       : parseFloat(amount).toFixed(2);
 
   const handleResponse = (response) => {
