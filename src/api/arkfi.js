@@ -443,7 +443,25 @@ async function GetShares_Bond() {
     }
 }
 
+async function GetNFTOfOwner_Legacy() {
+    try {
+        var _val = await contractBscLegacy.methods.tokenOfOwnerByIndex(account, 0).call();
+        return _val;
+    }
+    catch {
+        return "";
+    }
+}
 
+async function GetLevelNFT_Legacy(nftId) {
+    try {
+        var _val = await contractBscLegacy.methods.levelOfNft(nftId).call();
+        return Number(_val)
+    }
+    catch {
+        return 0;
+    }
+}
 
 async function GetRefLevelForUser_Syndicate() {
     var bondValue = Number(await GetBondValue_Vault());
@@ -502,6 +520,7 @@ export const initData = async (accounts) => {
     const airdropsReceived = await GetAirdropsReceived_Vault();
     const bondValue = await GetBondValue_Vault();
     const bondShares = await GetShares_Bond();
+    const refLevel = await GetRefLevelForUser_Syndicate();
     
     response.push({
       account: wallet,
@@ -520,7 +539,8 @@ export const initData = async (accounts) => {
       newDeposits,
       airdropsReceived,
       bondValue,
-      bondShares
+      bondShares,
+      refLevel
       
     });
   }

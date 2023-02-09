@@ -18,6 +18,8 @@ import Controls from "./Controls";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import RewardsTimer from "./RewardsTimer";
 
@@ -217,7 +219,9 @@ export default function AccountsTable({ accounts }) {
                     <TableCell align="right">{row.bondShares}</TableCell>
                     <TableCell align="right">${row.bondValue}</TableCell>
                   </>
+                  
                 )}
+                <TableCell>{row.refLevel >= 1 ? <CheckRoundedIcon sx={{color: "green"}}/> : <CloseRoundedIcon sx={{color: "red"}}/>}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -253,6 +257,7 @@ const TableHeader = ({ includeBonds, includeNfts }) => {
             <TableCell align="right">Bond Value</TableCell>
           </>
         )}
+        <TableCell>Spark Elig</TableCell>
       </TableRow>
     </TableHead>
   );
