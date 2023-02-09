@@ -444,6 +444,43 @@ async function GetShares_Bond() {
 }
 
 
+
+async function GetRefLevelForUser_Syndicate() {
+    var bondValue = Number(await GetBondValue_Vault());
+    var nftId = await GetNFTOfOwner_Legacy();
+    var nftValue = await GetLevelNFT_Legacy(nftId);
+    switch (nftValue) {
+        default:
+            nftValue = 0;
+            break;
+        case 1:
+            nftValue = 1000;
+            break;
+        case 2:
+            nftValue = 4000;
+            break;
+        case 3:
+            nftValue = 10000;
+            break;
+    }
+
+    bondValue += nftValue;
+
+    var values = [250, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
+    var level = 0;
+
+    for (let _val in values) {
+        if (bondValue >= values[_val]) {
+            level++;
+        } else {
+            break;
+        }
+    }
+
+    return level;
+}
+
+
 export const initData = async (accounts) => {
   const response = [];
   for (const wallet of accounts) {
