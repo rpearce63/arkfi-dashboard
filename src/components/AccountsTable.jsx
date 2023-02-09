@@ -98,9 +98,9 @@ export default function AccountsTable({ accounts }) {
     getUpdatedArkPrice();
   }, [accounts]);
 
-  const displayValue = (amount) =>
+  const displayValue = (amount, tax = 0) =>
     isBusd
-      ? "$" + parseFloat(amount * arkPrice).toFixed(2)
+      ? "$" + parseFloat((amount* (1 - tax  * arkPrice) )).toFixed(2)
       : parseFloat(amount).toFixed(2);
 
   const handleResponse = (response) => {
@@ -182,7 +182,7 @@ export default function AccountsTable({ accounts }) {
                   {displayValue(row.principalBalance)}
                 </TableCell>
                 <TableCell align="right">
-                  {displayValue(row.walletBalance)}
+                  {displayValue(row.walletBalance, .13)}
                 </TableCell>
                 <TableCell align="right">
                   {formatCurrency(row.busdBalance)}
