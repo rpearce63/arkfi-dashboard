@@ -277,7 +277,7 @@ const TotalsHeader = ({
       <TableCell>{accounts.length}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
-      <TableCell align="right">{displayValue(totals.walletTotal)}</TableCell>
+      <TableCell align="right">{displayValue(totals.walletTotal, .13)}</TableCell>
       <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
