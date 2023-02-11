@@ -149,6 +149,7 @@ export default function AccountsTable({ accounts }) {
           <TableHeader
             includeBonds={includeBonds}
             includeNfts={includeNfts}
+            isBusd={isBusd}
           ></TableHeader>
           <TableBody>
             <TotalsHeader
@@ -232,7 +233,7 @@ export default function AccountsTable({ accounts }) {
   );
 }
 
-const TableHeader = ({ includeBonds, includeNfts }) => {
+const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
   return (
     <TableHead>
       <TableRow>
@@ -240,7 +241,7 @@ const TableHeader = ({ includeBonds, includeNfts }) => {
         <TableCell>Account</TableCell>
         <TableCell align="right">Rewards Timer</TableCell>
         <TableCell align="right">Balance</TableCell>
-        <TableCell align="right">Wallet Balance</TableCell>
+        <TableCell align="right">Wallet Balance {isBusd ? "(After Tax)" : ""}</TableCell>
         <TableCell align="right">BUSD</TableCell>
         <TableCell align="right">Available Rewards</TableCell>
         <TableCell align="right">CWR</TableCell>
