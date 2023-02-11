@@ -521,6 +521,7 @@ export const initData = async (accounts) => {
     const bondValue = await GetBondValue_Vault();
     const bondShares = await GetShares_Bond();
     const refLevel = await GetRefLevelForUser_Syndicate();
+    const nftLevel = await GetLevelNFT_Legacy();
     
     response.push({
       account: wallet,
