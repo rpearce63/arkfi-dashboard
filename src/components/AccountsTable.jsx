@@ -207,9 +207,12 @@ export default function AccountsTable({ accounts }) {
                   {displayValue(row.maxPayout)}
                 </TableCell>
                 {includeNfts && (
+                  <>
                   <TableCell align="right">
                     {displayValue(row.nftRewards)}
                   </TableCell>
+                  <TableCell>{row.nftLevel}</TableCell>
+                  </>
                 )}
                 <TableCell align="right">
                   {displayValue(row.airdropsReceived)}
@@ -250,7 +253,12 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell align="right">NDV</TableCell>
 
         <TableCell align="right">Max Payout</TableCell>
-        {includeNfts && <TableCell align="right">NFT Rewards</TableCell>}
+        {includeNfts && 
+          <>
+          <TableCell align="right">NFT Rewards</TableCell>
+        <TableCell align="right">NFT Level</TableCell>
+          </>
+        }
         <TableCell align="right">Airdrops Received</TableCell>
         {includeBonds && (
           <>
@@ -289,9 +297,12 @@ const TotalsHeader = ({
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
       {includeNfts && (
+        <>
         <TableCell align="right">
           {displayValue(totals.nftRewardsTotal)}
         </TableCell>
+        <TableCell></TableCell>
+        </>
       )}
       <TableCell align="right">
         {displayValue(totals.airdropsReceivedTotal)}

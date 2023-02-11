@@ -522,6 +522,7 @@ export const initData = async (accounts) => {
     const bondShares = await GetShares_Bond();
     const refLevel = await GetRefLevelForUser_Syndicate();
     const nftLevel = await GetLevelNFT_Legacy();
+
     
     response.push({
       account: wallet,
@@ -541,7 +542,8 @@ export const initData = async (accounts) => {
       airdropsReceived,
       bondValue,
       bondShares,
-      refLevel
+      refLevel,
+      nftLevel
       
     });
   }
