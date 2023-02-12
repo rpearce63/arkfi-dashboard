@@ -183,7 +183,7 @@ export default function AccountsTable({ accounts }) {
                   {displayValue(row.principalBalance)}
                 </TableCell>
                 <TableCell align="right">
-                  {displayValue(row.walletBalance, .13)}
+                  {isBusd ? "$" + row.expectedBusd : row.walletBalance}
                 </TableCell>
                 <TableCell align="right">
                   {formatCurrency(row.busdBalance)}
