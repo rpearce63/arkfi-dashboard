@@ -498,6 +498,35 @@ async function GetRefLevelForUser_Syndicate() {
     return level;
 }
 
+async function HasAccount_Vault() {
+    try {
+        var _val = await contractBscVault.methods.hasAccount(account).call();
+        return _val;
+    } catch {
+        return false;
+    }
+}
+
+async function ExpectedBUSDFromARK_Swap(amount) {
+    try {
+        var hasAcc = await HasAccount_Vault();
+        var _amount = web3.utils.toWei(amount);
+        var _val;
+
+        if (hasAcc) {
+            _val = await contractBscSwap.methods.expectedBUSDFromARK(_amount).call();
+            _val = web3.utils.fromWei(_val);
+        } else {
+            _val = await contractBscSwap.methods.expectedBUSDFromARKWithDumpTax(_amount).call();
+            _val = web3.utils.fromWei(_val);
+        }
+
+        return Number(_val).toFixed(2);
+    }
+    catch {
+        return 0;
+    }
+}
 
 export const initData = async (accounts) => {
   const response = [];
@@ -522,6 +551,7 @@ export const initData = async (accounts) => {
     const bondShares = await GetShares_Bond();
     const refLevel = await GetRefLevelForUser_Syndicate();
     const nftLevel = await GetLevelNFT_Legacy();
+    const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance)
 
     
     response.push({
@@ -543,7 +573,8 @@ export const initData = async (accounts) => {
       bondValue,
       bondShares,
       refLevel,
-      nftLevel
+      nftLevel,
+      expectedBusd
       
     });
   }
