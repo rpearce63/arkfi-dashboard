@@ -528,6 +528,8 @@ async function ExpectedBUSDFromARK_Swap(amount) {
     }
 }
 
+const nftLevels = ["None", "Silver", "Gold", "Platinum"];
+
 export const initData = async (accounts) => {
   const response = [];
   for (const wallet of accounts) {
@@ -574,7 +576,7 @@ export const initData = async (accounts) => {
       bondValue,
       bondShares,
       refLevel,
-      nftLevel: ["None", "Silver", "Gold", "Platinum"][nftLevel],
+      nftLevel: nftLevels[nftLevel],
       expectedBusd
       
     });

@@ -256,7 +256,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         {includeNfts && 
           <>
           <TableCell align="right">NFT Rewards</TableCell>
-        <TableCell align="right">NFT Level</TableCell>
+        <TableCell align="right">NFT Held</TableCell>
           </>
         }
         <TableCell align="right">Airdrops Received</TableCell>
