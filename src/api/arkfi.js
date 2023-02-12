@@ -550,7 +550,8 @@ export const initData = async (accounts) => {
     const bondValue = await GetBondValue_Vault();
     const bondShares = await GetShares_Bond();
     const refLevel = await GetRefLevelForUser_Syndicate();
-    const nftLevel = await GetLevelNFT_Legacy();
+    const nftId = await GetNFTOfOwner_Legacy();
+    const nftLevel = await GetLevelNFT_Legacy(nftId);
     const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance)
 
     
@@ -573,7 +574,7 @@ export const initData = async (accounts) => {
       bondValue,
       bondShares,
       refLevel,
-      nftLevel,
+      nftLevel: ["None", "Silver", "Gold", "Platinum"][nftLevel],
       expectedBusd
       
     });
