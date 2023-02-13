@@ -211,7 +211,7 @@ export default function AccountsTable({ accounts }) {
                   <TableCell align="right">
                     {displayValue(row.nftRewards)}
                   </TableCell>
-                  <TableCell>{row.nftLevel}</TableCell>
+                  <TableCell align="right">{row.nftLevel}</TableCell>
                   </>
                 )}
                 <TableCell align="right">
