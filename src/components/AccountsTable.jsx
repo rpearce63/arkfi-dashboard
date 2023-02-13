@@ -244,7 +244,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell>Account</TableCell>
         <TableCell align="right">Rewards Timer</TableCell>
         <TableCell align="right">Balance</TableCell>
-        <TableCell align="right">Wallet Balance {isBusd ? "(After Tax)" : ""}</TableCell>
+        <TableCell align="right">Wallet Balance {isBusd ? <span><br/>(After Tax)</span> : ""}</TableCell>
         <TableCell align="right">BUSD</TableCell>
         <TableCell align="right">Available Rewards</TableCell>
         <TableCell align="right">CWR</TableCell>
@@ -312,7 +312,9 @@ const TotalsHeader = ({
           <TableCell></TableCell>
           <TableCell></TableCell>
         </>
+        
       )}
+      <TableCell></TableCell>
     </TableRow>
   );
 };
