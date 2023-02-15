@@ -41,9 +41,9 @@ export default function Home() {
             Brought to you by the creator of{" "}
             <a
               href="https://drip-mw-dashboard.com"
-              style={{ color: "lightgrey" }}
+              className="white-link"
               target="_blank"
-              noreferrer="true"
+              rel="noreferer"
             >
               Drip Multi-Wallet Dashboard
             </a>

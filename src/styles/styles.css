@@ -2562,10 +2562,10 @@ input[type=number] {
 }
 
 .white-link {
-  color: white
+  color: lightGrey
 }
 
 .white-link:hover {
   color: white;
-  font-weight: bold
+  font-weight: bold;
 }
