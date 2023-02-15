@@ -48,7 +48,7 @@ export default function Home() {
               Drip Multi-Wallet Dashboard
             </a>
           </div>
-          <div>Donations: 0x1ff661243cb97384102a69a466c887b4cC12d72a</div>
+        <div><a className="white-link" href="https://app.arkfi.io/swap?ref=0x1ff661243cb97384102a69a466c887b4cc12d72a">Referral Link</a> and Donations: 0x1ff661243cb97384102a69a466c887b4cC12d72a</div>
         
         
       </footer>

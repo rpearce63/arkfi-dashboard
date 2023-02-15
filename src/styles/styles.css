@@ -2560,3 +2560,12 @@ input[type=number] {
 .controls {
   padding: 5px 0
 }
+
+.white-link {
+  color: white
+}
+
+.white-link:hover {
+  color: white;
+  font-weight: 600
+}
