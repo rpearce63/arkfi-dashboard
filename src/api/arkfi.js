@@ -529,7 +529,8 @@ async function ExpectedBUSDFromARK_Swap(amount) {
 }
 
 const getDownline = async () => {
-  const refTree = await axios.post("https://api.arkfi.io/downline", {"investor": account})
+  const response = await axios.post("https://api.arkfi.io/downline", {"investor": account})
+  const refTree = response.data.data;
   const directs = refTree.data.data ? Object.keys(refTree.data.data).length : 0;
   console.log('directs: ', directs, refTree)
   return directs;
@@ -538,6 +539,7 @@ const getDownline = async () => {
 const nftLevels = ["None", "Silver", "Gold", "Platinum"];
 
 export const initData = async (accounts) => {
+  console.log('getting data')
   const response = [];
   for (const wallet of accounts) {
     account = wallet;
