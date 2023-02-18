@@ -530,7 +530,7 @@ async function ExpectedBUSDFromARK_Swap(amount) {
 
 const getDownline = async () => {
   const refTree = await axios.post("https://api.arkfi.io/downline", {"investor": account})
-  const directs = refTree.data ? Object.keys(refTree.data).length : 0;
+  const directs = refTree.data.data ? Object.keys(refTree.data.data).length : 0;
   console.log('directs: ', directs, refTree)
   return directs;
 } 
@@ -562,7 +562,7 @@ export const initData = async (accounts) => {
     const nftId = await GetNFTOfOwner_Legacy();
     const nftLevel = await GetLevelNFT_Legacy(nftId);
     const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance)
-    const directs = await getDownline()
+    //const directs = await getDownline()
 
     
     response.push({
@@ -586,7 +586,7 @@ export const initData = async (accounts) => {
       refLevel,
       nftLevel: nftLevels[nftLevel],
       expectedBusd,
-      directs
+      //directs
       
     });
   }
