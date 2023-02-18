@@ -563,7 +563,7 @@ export const initData = async (accounts) => {
     const nftId = await GetNFTOfOwner_Legacy();
     const nftLevel = await GetLevelNFT_Legacy(nftId);
     const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance)
-    const directs = await getDownline()
+    //const directs = await getDownline()
 
     
     response.push({
