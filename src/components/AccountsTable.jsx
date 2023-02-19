@@ -24,6 +24,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import RewardsTimer from "./RewardsTimer";
 
 export default function AccountsTable({ accounts }) {
+  const [rows, setRows] = useState([]);
   const [totals, setTotals] = useState([]);
   const [timers, setTimers] = useState([]);
   const [selected, setSelected] = React.useState(false);
@@ -40,6 +41,7 @@ export default function AccountsTable({ accounts }) {
     setArkPrice(arkPrice);
   };
   useEffect(() => {
+    setRows([...accounts])
     getUpdatedArkPrice();
   }, []);
 
@@ -160,7 +162,7 @@ export default function AccountsTable({ accounts }) {
               includeNfts={includeNfts}
               includeBonds={includeBonds}
             />
-            {accounts.map((row) => (
+            {rows.map((row) => (
               <TableRow
                 key={row.account}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
