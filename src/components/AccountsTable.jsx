@@ -41,11 +41,12 @@ export default function AccountsTable({ accounts }) {
     setArkPrice(arkPrice);
   };
   useEffect(() => {
-    setRows([...accounts])
+    
     getUpdatedArkPrice();
   }, []);
 
   useEffect(() => {
+    setRows([...accounts])
     const balanceTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.principalBalance),
       0
@@ -162,7 +163,7 @@ export default function AccountsTable({ accounts }) {
               includeNfts={includeNfts}
               includeBonds={includeBonds}
             />
-            {rows.map((row) => (
+            {accounts.map((row) => (
               <TableRow
                 key={row.account}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

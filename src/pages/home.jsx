@@ -36,6 +36,19 @@ export default () => {
     getInitData();
     
   };
+  
+  const removeWallet = (address) => {
+//     setOpenDialog(false);
+//     if (!isConfirmed) {
+//       return false;
+//     }
+    const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
+    const updated = stored.filter((w) => w !== address);
+    localStorage.setItem("arkFiWallets", JSON.stringify(updated));
+    getInitData();
+
+//     window.location.reload(false);
+  };
 
   return (
     <>
