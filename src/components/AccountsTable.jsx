@@ -41,45 +41,45 @@ export default function AccountsTable({ accounts }) {
     setArkPrice(arkPrice);
   };
   useEffect(() => {
-    
+    setRows([...accounts])
     getUpdatedArkPrice();
-  }, []);
+  }, [accounts]);
 
   useEffect(() => {
-    setRows([...accounts])
-    const balanceTotal = accounts.reduce(
+    
+    const balanceTotal = rows.reduce(
       (total, account) => total + parseFloat(account.principalBalance),
       0
     );
-    const walletTotal = accounts.reduce(
+    const walletTotal = rows.reduce(
       (total, account) => total + parseFloat(account.walletBalance),
       0
     );
-    const busdTotal = accounts.reduce(
+    const busdTotal = rows.reduce(
       (total, account) => total + parseFloat(account.busdBalance),
       0
     );
-    const availTotal = accounts.reduce(
+    const availTotal = rows.reduce(
       (total, account) => total + parseFloat(account.availableRewards),
       0
     );
-    const depositsTotal = accounts.reduce(
+    const depositsTotal = rows.reduce(
       (total, account) => total + parseFloat(account.deposits),
       0
     );
-    const maxPayoutTotal = accounts.reduce(
+    const maxPayoutTotal = rows.reduce(
       (total, account) => total + parseFloat(account.maxPayout),
       0
     );
-    const nftRewardsTotal = accounts.reduce(
+    const nftRewardsTotal = rows.reduce(
       (total, account) => total + parseFloat(account.nftRewards),
       0
     );
-    const airdropsReceivedTotal = accounts.reduce(
+    const airdropsReceivedTotal = rows.reduce(
       (total, account) => total + parseFloat(account.airdropsReceived),
       0
     );
-    const dailyEarnedTotal = accounts.reduce(
+    const dailyEarnedTotal = rows.reduce(
       (total, account) =>
         total +
         parseFloat(account.principalBalance) * (parseFloat(account.roi) / 100),
@@ -99,7 +99,7 @@ export default function AccountsTable({ accounts }) {
     });
 
     getUpdatedArkPrice();
-  }, [accounts]);
+  }, [rows]);
 
   const displayValue = (amount, tax = 0) =>
     isBusd
@@ -124,8 +124,8 @@ export default function AccountsTable({ accounts }) {
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w !== selectedRow);
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
-
-    window.location.reload(false);
+    setRows([...rows.filter(row => row.account !== selectedRow)])
+    //window.location.reload(false);
   };
 
   const formatAddress = (address) =>
@@ -156,14 +156,14 @@ export default function AccountsTable({ accounts }) {
           ></TableHeader>
           <TableBody>
             <TotalsHeader
-              accounts={accounts}
+              accounts={rows}
               totals={totals}
               displayValue={displayValue}
               formatCurrency={formatCurrency}
               includeNfts={includeNfts}
               includeBonds={includeBonds}
             />
-            {accounts.map((row) => (
+            {rows.map((row) => (
               <TableRow
                 key={row.account}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
