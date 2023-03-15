@@ -155,8 +155,9 @@ export default function AccountsTable({ accounts }) {
             includeNfts={includeNfts}
             isBusd={isBusd}
           ></TableHeader>
+          
           {rows.length === 0 ? (
-            <Box sx={{ display: "flex", margin: "auto" }}>
+            <Box sx={{ position: "absolute", left: "50%" }}>
               <CircularProgress />
             </Box>
           ) : (
