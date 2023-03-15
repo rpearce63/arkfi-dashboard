@@ -16,10 +16,12 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import Button from "@mui/material/Button";
 import Controls from "./Controls";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 import RewardsTimer from "./RewardsTimer";
 
@@ -41,12 +43,11 @@ export default function AccountsTable({ accounts }) {
     setArkPrice(arkPrice);
   };
   useEffect(() => {
-    setRows([...accounts])
+    setRows([...accounts]);
     getUpdatedArkPrice();
   }, [accounts]);
 
   useEffect(() => {
-    
     const balanceTotal = rows.reduce(
       (total, account) => total + parseFloat(account.principalBalance),
       0
@@ -103,7 +104,7 @@ export default function AccountsTable({ accounts }) {
 
   const displayValue = (amount, tax = 0) =>
     isBusd
-      ? "$" + parseFloat((amount * (1 - tax))  * arkPrice ).toFixed(2)
+      ? "$" + parseFloat(amount * (1 - tax) * arkPrice).toFixed(2)
       : parseFloat(amount).toFixed(2);
 
   const handleResponse = (response) => {
@@ -124,7 +125,7 @@ export default function AccountsTable({ accounts }) {
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w !== selectedRow);
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
-    setRows([...rows.filter(row => row.account !== selectedRow)])
+    setRows([...rows.filter((row) => row.account !== selectedRow)]);
     //window.location.reload(false);
   };
 
@@ -154,84 +155,95 @@ export default function AccountsTable({ accounts }) {
             includeNfts={includeNfts}
             isBusd={isBusd}
           ></TableHeader>
-          <TableBody>
-            <TotalsHeader
-              accounts={rows}
-              totals={totals}
-              displayValue={displayValue}
-              formatCurrency={formatCurrency}
-              includeNfts={includeNfts}
-              includeBonds={includeBonds}
-            />
-            {rows.map((row) => (
-              <TableRow
-                key={row.account}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell>
-                  <DeleteOutlineOutlinedIcon
-                    className="remove-row"
-                    onClick={() => openConfirmationDialog(row.account)}
-                    sx={{ fontSize: "14px" }}
-                  />
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {formatAddress(row.account)}
-                </TableCell>
-
-                <TableCell align="right">
-                  <RewardsTimer toDate={row.lastAction} />
-                </TableCell>
-                <TableCell align="right">
-                  {displayValue(row.principalBalance)}
-                </TableCell>
-                <TableCell align="right">
-                  {isBusd ? "$" + row.expectedBusd : row.walletBalance}
-                </TableCell>
-                <TableCell align="right">
-                  {formatCurrency(row.busdBalance)}
-                </TableCell>
-                <TableCell align="right">
-                  {displayValue(row.availableRewards)}
-                </TableCell>
-                <TableCell align="right">{row.maxCwr}</TableCell>
-                <TableCell align="right">
-                  {row.roi}% (
-                  {displayValue(
-                    parseFloat(row.principalBalance * 0.02).toFixed(2)
-                  )}
-                  )
-                </TableCell>
-                <TableCell align="right">
-                  {displayValue(row.deposits)}
-                </TableCell>
-                <TableCell align="right">{row.ndv}</TableCell>
-                <TableCell align="right">
-                  {displayValue(row.maxPayout)}
-                </TableCell>
-                {includeNfts && (
-                  <>
-                  <TableCell align="right">
-                    {displayValue(row.nftRewards)}
+          {rows.length === 0 ? (
+            <Box sx={{ display: "flex", margin: "auto" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <TableBody>
+              <TotalsHeader
+                accounts={rows}
+                totals={totals}
+                displayValue={displayValue}
+                formatCurrency={formatCurrency}
+                includeNfts={includeNfts}
+                includeBonds={includeBonds}
+              />
+              {rows.map((row) => (
+                <TableRow
+                  key={row.account}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell>
+                    <DeleteOutlineOutlinedIcon
+                      className="remove-row"
+                      onClick={() => openConfirmationDialog(row.account)}
+                      sx={{ fontSize: "14px" }}
+                    />
                   </TableCell>
-                  <TableCell align="right">{row.nftLevel}</TableCell>
-                  </>
-                )}
-                <TableCell align="right">
-                  {displayValue(row.airdropsReceived)}
-                </TableCell>
+                  <TableCell component="th" scope="row">
+                    {formatAddress(row.account)}
+                  </TableCell>
 
-                {includeBonds && (
-                  <>
-                    <TableCell align="right">{row.bondShares}</TableCell>
-                    <TableCell align="right">${row.bondValue}</TableCell>
-                  </>
-                  
-                )}
-                <TableCell>{row.refLevel >= 1 ? <CheckRoundedIcon sx={{color: "green"}}/> : <CloseRoundedIcon sx={{color: "red"}}/>}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+                  <TableCell align="right">
+                    <RewardsTimer toDate={row.lastAction} />
+                  </TableCell>
+                  <TableCell align="right">
+                    {displayValue(row.principalBalance)}
+                  </TableCell>
+                  <TableCell align="right">
+                    {isBusd ? "$" + row.expectedBusd : row.walletBalance}
+                  </TableCell>
+                  <TableCell align="right">
+                    {formatCurrency(row.busdBalance)}
+                  </TableCell>
+                  <TableCell align="right">
+                    {displayValue(row.availableRewards)}
+                  </TableCell>
+                  <TableCell align="right">{row.maxCwr}</TableCell>
+                  <TableCell align="right">
+                    {row.roi}% (
+                    {displayValue(
+                      parseFloat(row.principalBalance * 0.02).toFixed(2)
+                    )}
+                    )
+                  </TableCell>
+                  <TableCell align="right">
+                    {displayValue(row.deposits)}
+                  </TableCell>
+                  <TableCell align="right">{row.ndv}</TableCell>
+                  <TableCell align="right">
+                    {displayValue(row.maxPayout)}
+                  </TableCell>
+                  {includeNfts && (
+                    <>
+                      <TableCell align="right">
+                        {displayValue(row.nftRewards)}
+                      </TableCell>
+                      <TableCell align="right">{row.nftLevel}</TableCell>
+                    </>
+                  )}
+                  <TableCell align="right">
+                    {displayValue(row.airdropsReceived)}
+                  </TableCell>
+
+                  {includeBonds && (
+                    <>
+                      <TableCell align="right">{row.bondShares}</TableCell>
+                      <TableCell align="right">${row.bondValue}</TableCell>
+                    </>
+                  )}
+                  <TableCell>
+                    {row.refLevel >= 1 ? (
+                      <CheckRoundedIcon sx={{ color: "green" }} />
+                    ) : (
+                      <CloseRoundedIcon sx={{ color: "red" }} />
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
       {openDialog && <ConfirmationDialog handleResponse={handleResponse} />}
@@ -247,7 +259,17 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell>Account</TableCell>
         <TableCell align="right">Rewards Timer</TableCell>
         <TableCell align="right">Balance</TableCell>
-        <TableCell align="right">Wallet Balance {isBusd ? <span><br/>(After Tax)</span> : ""}</TableCell>
+        <TableCell align="right">
+          Wallet Balance{" "}
+          {isBusd ? (
+            <span>
+              <br />
+              (After Tax)
+            </span>
+          ) : (
+            ""
+          )}
+        </TableCell>
         <TableCell align="right">BUSD</TableCell>
         <TableCell align="right">Available Rewards</TableCell>
         <TableCell align="right">CWR</TableCell>
@@ -256,12 +278,12 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell align="right">NDV</TableCell>
 
         <TableCell align="right">Max Payout</TableCell>
-        {includeNfts && 
+        {includeNfts && (
           <>
-          <TableCell align="right">NFT Rewards</TableCell>
-        <TableCell align="right">NFT Held</TableCell>
+            <TableCell align="right">NFT Rewards</TableCell>
+            <TableCell align="right">NFT Held</TableCell>
           </>
-        }
+        )}
         <TableCell align="right">Airdrops Received</TableCell>
         {includeBonds && (
           <>
@@ -289,7 +311,9 @@ const TotalsHeader = ({
       <TableCell>{accounts.length}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
-      <TableCell align="right">{displayValue(totals.walletTotal, .13)}</TableCell>
+      <TableCell align="right">
+        {displayValue(totals.walletTotal, 0.13)}
+      </TableCell>
       <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
@@ -301,10 +325,10 @@ const TotalsHeader = ({
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
       {includeNfts && (
         <>
-        <TableCell align="right">
-          {displayValue(totals.nftRewardsTotal)}
-        </TableCell>
-        <TableCell></TableCell>
+          <TableCell align="right">
+            {displayValue(totals.nftRewardsTotal)}
+          </TableCell>
+          <TableCell></TableCell>
         </>
       )}
       <TableCell align="right">
@@ -315,7 +339,6 @@ const TotalsHeader = ({
           <TableCell></TableCell>
           <TableCell></TableCell>
         </>
-        
       )}
       <TableCell></TableCell>
     </TableRow>
