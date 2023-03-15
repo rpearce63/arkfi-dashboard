@@ -157,7 +157,7 @@ export default function AccountsTable({ accounts }) {
           ></TableHeader>
           
           {rows.length === 0 ? (
-            <Box sx={{ position: "absolute", left: "50%" }}>
+            <Box sx={{ position: "absolute", left: "50%", top: "50%" }}>
               <CircularProgress />
             </Box>
           ) : (
