@@ -205,7 +205,7 @@ export default function AccountsTable({ accounts }) {
                   <TableCell align="right">
                     {row.roi}% (
                     {displayValue(
-                      parseFloat(row.principalBalance * 0.02).toFixed(2)
+                      parseFloat(row.principalBalance * (row.roi/100)).toFixed(2)
                     )}
                     )
                   </TableCell>
