@@ -87,7 +87,7 @@ async function GetExpectedCWR_Vault() {
 
 async function GetROI_Vault() {
   try {
-    var _val = await contractBscVault.methods.checkRoi(account).call();
+    var _val = await contractBscVault.methods.roi(account).call();
     return Number(_val) / 10;
   } catch {
     return 0;
