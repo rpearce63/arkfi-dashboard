@@ -550,7 +550,7 @@ export const getBnbPrice = async () => {
       )
       .then((response) => response.data.wbnb.usd);
   const bnbPrice = await fetchBnbPrice();
-  return bnbPrice;
+  return Number(bnbPrice).toFixed(2);
 };
 
 
@@ -593,7 +593,7 @@ export const initData = async (accounts) => {
     const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance);
     //const directs = await getDownline()
     const bnbBalance = await getBnbBalance();
-    const bnbPrice = await getBnbPrice();
+    
 
     response.push({
       account: wallet,
@@ -618,7 +618,7 @@ export const initData = async (accounts) => {
       expectedBusd,
       //directs
       bnbBalance,
-      bnbPrice
+      
     });
   }
   return response;

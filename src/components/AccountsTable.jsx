@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper";
 import ToggleButton from "@mui/material/ToggleButton";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import Switch from "@mui/material/Switch";
-import { GetArkPrice_Swap } from "../api/arkfi";
+import { GetArkPrice_Swap, getBnbPrice } from "../api/arkfi";
 import { backupData, getArkPrice } from "../api/utils";
 import ConfirmationDialog from "./ConfirmationDialog";
 import Button from "@mui/material/Button";
@@ -32,6 +32,7 @@ export default function AccountsTable({ accounts }) {
   const [selected, setSelected] = React.useState(false);
   const [isBusd, setIsBusd] = useState(false);
   const [arkPrice, setArkPrice] = useState(0);
+  const [bnbPrice, setBnbPrice] = useState(0);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState("");
@@ -42,9 +43,16 @@ export default function AccountsTable({ accounts }) {
     const arkPrice = await getArkPrice();
     setArkPrice(arkPrice);
   };
+  
+  const getCurrentBnbPrice = async () => {
+    const _bnbPrice = await getBnbPrice();
+    setBnbPrice(_bnbPrice);
+  }
+  
   useEffect(() => {
     setRows([...accounts]);
     getUpdatedArkPrice();
+    getCurrentBnbPrice();
   }, [accounts]);
 
   useEffect(() => {
@@ -174,6 +182,8 @@ export default function AccountsTable({ accounts }) {
                 formatCurrency={formatCurrency}
                 includeNfts={includeNfts}
                 includeBonds={includeBonds}
+                bnbPrice={bnbPrice}
+                isBusd
               />
               {rows.map((row) => (
                 <TableRow
@@ -201,7 +211,7 @@ export default function AccountsTable({ accounts }) {
                     {isBusd ? "$" + row.expectedBusd : row.walletBalance}
                   </TableCell>
                   <TableCell align="right">
-                    {formatCurrency(row.bnbBalance)}
+                    {formatCurrency(isBusd ? row.bnbBalance * bnbPrice : row.bnbBalance)}
                   </TableCell>
                   <TableCell align="right">
                     {formatCurrency(row.busdBalance)}
@@ -314,6 +324,8 @@ const TotalsHeader = ({
   formatCurrency,
   includeNfts,
   includeBonds,
+  bnbPrice,
+  isBusd
 }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
@@ -324,7 +336,7 @@ const TotalsHeader = ({
       <TableCell align="right">
         {displayValue(totals.walletTotal, 0.13)}
       </TableCell>
-      <TableCell align="right">{formatCurrency(totals.bnbTotal)}</TableCell>
+      <TableCell align="right">{formatCurrency(isBusd ? totals.bnbTotal * bnbPrice : totals.bnbTotal)}</TableCell>
       <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
