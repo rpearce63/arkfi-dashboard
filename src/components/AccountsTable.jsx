@@ -183,7 +183,7 @@ export default function AccountsTable({ accounts }) {
                 includeNfts={includeNfts}
                 includeBonds={includeBonds}
                 bnbPrice={bnbPrice}
-                isBusd
+                isBusd={isBusd}
               />
               {rows.map((row) => (
                 <TableRow
