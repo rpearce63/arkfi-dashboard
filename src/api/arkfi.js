@@ -541,6 +541,19 @@ const getBnbBalance = async () => {
   }
 };
 
+export const getBnbPrice = async () => {
+  const fetchBnbPrice = async () =>
+    axios
+      .get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=wbnb&vs_currencies=usd",
+        { retry: 2, retryDelay: 1000 }
+      )
+      .then((response) => response.data.wbnb.usd);
+  const bnbPrice = await fetchBnbPrice();
+  return bnbPrice;
+};
+
+
 const getDownline = async () => {
   const response = await axios.post("https://api.arkfi.io/downline", {
     investor: account,
@@ -580,6 +593,7 @@ export const initData = async (accounts) => {
     const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance);
     //const directs = await getDownline()
     const bnbBalance = await getBnbBalance();
+    const bnbPrice = await getBnbPrice();
 
     response.push({
       account: wallet,
@@ -604,6 +618,7 @@ export const initData = async (accounts) => {
       expectedBusd,
       //directs
       bnbBalance,
+      bnbPrice
     });
   }
   return response;
