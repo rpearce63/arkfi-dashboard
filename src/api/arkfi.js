@@ -8,7 +8,7 @@ import {
   contractBscSwap,
   contractBscBUSD,
   contractBscLegacy,
-  contractBscBond
+  contractBscBond,
 } from "./vars";
 
 const web3 = new Web3(Web3.givenProvider);
@@ -432,118 +432,128 @@ async function GetClaimableRewards_Legacy() {
 }
 
 async function GetShares_Bond() {
-    try {
-        var _val = await contractBscBond.methods.shares(account).call();
-        _val = web3.utils.fromWei(_val);
-        const bondBalance = Math.floor(Number(_val) * 1000) / 1000;
-        return Number(_val).toFixed(2);
-    }
-    catch {
-        return 0;
-    }
+  try {
+    var _val = await contractBscBond.methods.shares(account).call();
+    _val = web3.utils.fromWei(_val);
+    const bondBalance = Math.floor(Number(_val) * 1000) / 1000;
+    return Number(_val).toFixed(2);
+  } catch {
+    return 0;
+  }
 }
 
 async function GetNFTOfOwner_Legacy() {
-    try {
-        var _val = await contractBscLegacy.methods.tokenOfOwnerByIndex(account, 0).call();
-        return _val;
-    }
-    catch {
-        return "";
-    }
+  try {
+    var _val = await contractBscLegacy.methods
+      .tokenOfOwnerByIndex(account, 0)
+      .call();
+    return _val;
+  } catch {
+    return "";
+  }
 }
 
 async function GetLevelNFT_Legacy(nftId) {
-    try {
-        var _val = await contractBscLegacy.methods.levelOfNft(nftId).call();
-        return Number(_val)
-    }
-    catch {
-        return 0;
-    }
+  try {
+    var _val = await contractBscLegacy.methods.levelOfNft(nftId).call();
+    return Number(_val);
+  } catch {
+    return 0;
+  }
 }
 
 async function GetRefLevelForUser_Syndicate() {
-    var bondValue = Number(await GetBondValue_Vault());
-    var nftId = await GetNFTOfOwner_Legacy();
-    var nftValue = await GetLevelNFT_Legacy(nftId);
-    switch (nftValue) {
-        default:
-            nftValue = 0;
-            break;
-        case 1:
-            nftValue = 1000;
-            break;
-        case 2:
-            nftValue = 4000;
-            break;
-        case 3:
-            nftValue = 10000;
-            break;
+  var bondValue = Number(await GetBondValue_Vault());
+  var nftId = await GetNFTOfOwner_Legacy();
+  var nftValue = await GetLevelNFT_Legacy(nftId);
+  switch (nftValue) {
+    default:
+      nftValue = 0;
+      break;
+    case 1:
+      nftValue = 1000;
+      break;
+    case 2:
+      nftValue = 4000;
+      break;
+    case 3:
+      nftValue = 10000;
+      break;
+  }
+
+  bondValue += nftValue;
+
+  var values = [
+    250, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000,
+    9000, 10000,
+  ];
+  var level = 0;
+
+  for (let _val in values) {
+    if (bondValue >= values[_val]) {
+      level++;
+    } else {
+      break;
     }
+  }
 
-    bondValue += nftValue;
-
-    var values = [250, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
-    var level = 0;
-
-    for (let _val in values) {
-        if (bondValue >= values[_val]) {
-            level++;
-        } else {
-            break;
-        }
-    }
-
-    return level;
+  return level;
 }
 
 async function HasAccount_Vault() {
-    try {
-        var _val = await contractBscVault.methods.hasAccount(account).call();
-        return _val;
-    } catch {
-        return false;
-    }
+  try {
+    var _val = await contractBscVault.methods.hasAccount(account).call();
+    return _val;
+  } catch {
+    return false;
+  }
 }
 
 async function ExpectedBUSDFromARK_Swap(amount) {
-    try {
-        var hasAcc = await HasAccount_Vault();
-        var _amount = web3.utils.toWei(amount);
-        var _val;
+  try {
+    var hasAcc = await HasAccount_Vault();
+    var _amount = web3.utils.toWei(amount);
+    var _val;
 
-        if (hasAcc) {
-            _val = await contractBscSwap.methods.expectedBUSDFromARK(_amount).call();
-            _val = web3.utils.fromWei(_val);
-        } else {
-            _val = await contractBscSwap.methods.expectedBUSDFromARKWithDumpTax(_amount).call();
-            _val = web3.utils.fromWei(_val);
-        }
+    if (hasAcc) {
+      _val = await contractBscSwap.methods.expectedBUSDFromARK(_amount).call();
+      _val = web3.utils.fromWei(_val);
+    } else {
+      _val = await contractBscSwap.methods
+        .expectedBUSDFromARKWithDumpTax(_amount)
+        .call();
+      _val = web3.utils.fromWei(_val);
+    }
 
-        return Number(_val).toFixed(2);
-    }
-    catch {
-        return 0;
-    }
+    return Number(_val).toFixed(2);
+  } catch {
+    return 0;
+  }
 }
 
 const getBnbBalance = async () => {
-  const balance = await web3.eth.getBalance(account);
-  return Number(balance / 10e17).toFixed(2);
+  try {
+    var _val = await web3.eth.getBalance(account);
+    _val = web3.utils.fromWei(_val);
+    return Number(_val).toFixed(2);
+  } catch {
+    return 0;
+  }
 };
 
 const getDownline = async () => {
-  const response = await axios.post("https://api.arkfi.io/downline", {"investor": account})
+  const response = await axios.post("https://api.arkfi.io/downline", {
+    investor: account,
+  });
   const refTree = response.data.data;
   const directs = refTree ? Object.keys(refTree).length : 0;
   return directs;
-} 
+};
 
 const nftLevels = ["None", "Silver", "Gold", "Platinum"];
 
 export const initData = async (accounts) => {
-  console.log('getting data')
+  console.log("getting data");
   const response = [];
   for (const wallet of accounts) {
     account = wallet;
@@ -555,7 +565,7 @@ export const initData = async (accounts) => {
     const deposits = await GetDeposits_Vault();
     const roi = await GetROI_Vault();
     const walletBalance = await GetARKBalance_Token();
-    const maxPayout = Math.min(principalBalance * 3, 80000)
+    const maxPayout = Math.min(principalBalance * 3, 80000);
     const busdBalance = await GetBusdBalance();
     const nftRewards = await GetClaimableRewards_Legacy();
     const lastAction = await LastAction_Vault();
@@ -567,10 +577,10 @@ export const initData = async (accounts) => {
     const refLevel = await GetRefLevelForUser_Syndicate();
     const nftId = await GetNFTOfOwner_Legacy();
     const nftLevel = await GetLevelNFT_Legacy(nftId);
-    const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance)
+    const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance);
     //const directs = await getDownline()
     const bnbBalance = await getBnbBalance();
-    
+
     response.push({
       account: wallet,
       availableRewards,
@@ -593,8 +603,7 @@ export const initData = async (accounts) => {
       nftLevel: nftLevels[nftLevel],
       expectedBusd,
       //directs
-      bnbBalance
-      
+      bnbBalance,
     });
   }
   return response;
