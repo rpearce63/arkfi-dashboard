@@ -56,6 +56,10 @@ export default function AccountsTable({ accounts }) {
       (total, account) => total + parseFloat(account.walletBalance),
       0
     );
+    const bnbTotal = rows.reduce(
+      (total, account) => total + parseFloat(account.bnbBalance),
+      0
+    );
     const busdTotal = rows.reduce(
       (total, account) => total + parseFloat(account.busdBalance),
       0
@@ -91,6 +95,7 @@ export default function AccountsTable({ accounts }) {
       balanceTotal,
       walletTotal,
       busdTotal,
+      bnbTotal,
       availTotal,
       depositsTotal,
       maxPayoutTotal,
@@ -196,6 +201,9 @@ export default function AccountsTable({ accounts }) {
                     {isBusd ? "$" + row.expectedBusd : row.walletBalance}
                   </TableCell>
                   <TableCell align="right">
+                    {formatCurrency(row.bnbBalance)}
+                  </TableCell>
+                  <TableCell align="right">
                     {formatCurrency(row.busdBalance)}
                   </TableCell>
                   <TableCell align="right">
@@ -271,6 +279,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
             ""
           )}
         </TableCell>
+        <TableCell align="right">BNB</TableCell>
         <TableCell align="right">BUSD</TableCell>
         <TableCell align="right">Available Rewards</TableCell>
         <TableCell align="right">CWR</TableCell>
@@ -315,6 +324,7 @@ const TotalsHeader = ({
       <TableCell align="right">
         {displayValue(totals.walletTotal, 0.13)}
       </TableCell>
+      <TableCell align="right">{formatCurrency(totals.bnbTotal)}</TableCell>
       <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>

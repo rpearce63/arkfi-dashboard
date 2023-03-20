@@ -260,7 +260,7 @@ async function GetTaxes_Vault() {
 
 async function GetMaxPayout_Vault() {
   try {
-    var _val = await contractBscVault.methods.checkMaxPayout(account).call();
+    var _val = await contractBscVault.methods.checkForMaxPayoutPercent(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
   } catch {
