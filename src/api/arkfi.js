@@ -260,7 +260,7 @@ async function GetTaxes_Vault() {
 
 async function GetMaxPayout_Vault() {
   try {
-    var _val = await contractBscVault.methods.checkForMaxPayoutPercent(account).call();
+    var _val = await contractBscVault.methods.maxPayoutAmount(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
   } catch {
@@ -555,7 +555,7 @@ export const initData = async (accounts) => {
     const deposits = await GetDeposits_Vault();
     const roi = await GetROI_Vault();
     const walletBalance = await GetARKBalance_Token();
-    const maxPayout = await GetMaxPayout_Vault();
+    const maxPayout = Math.min(principalBalance * 3, 80000)
     const busdBalance = await GetBusdBalance();
     const nftRewards = await GetClaimableRewards_Legacy();
     const lastAction = await LastAction_Vault();
