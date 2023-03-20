@@ -528,6 +528,11 @@ async function ExpectedBUSDFromARK_Swap(amount) {
     }
 }
 
+const getBnbBalance = async () => {
+  const balance = await web3.eth.getBalance(account);
+  return Number(balance / 10e17).toFixed(2);
+};
+
 const getDownline = async () => {
   const response = await axios.post("https://api.arkfi.io/downline", {"investor": account})
   const refTree = response.data.data;
@@ -564,7 +569,7 @@ export const initData = async (accounts) => {
     const nftLevel = await GetLevelNFT_Legacy(nftId);
     const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance)
     //const directs = await getDownline()
-
+    const bnbBalance = await getBnbBalance();
     
     response.push({
       account: wallet,
@@ -588,6 +593,7 @@ export const initData = async (accounts) => {
       nftLevel: nftLevels[nftLevel],
       expectedBusd,
       //directs
+      bnbBalance
       
     });
   }
