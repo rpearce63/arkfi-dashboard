@@ -8978,4 +8978,4 @@ export var contractBscBond = new web3bsc.eth.Contract(abiBond, caBond);
 export var contractBscBUSD = new web3bsc.eth.Contract(abiBUSD, caBUSD);
 var contractBscPair = new web3bsc.eth.Contract(abiPair, caPair);
 var contractBscAutoAllo = new web3bsc.eth.Contract(abiAutoAllo, caAutoAllo);
-var contractBscBondPre = new web3.eth.Contract(abiBondPre, caBondPre);
+var contractBscBondPre = new web3bsc.eth.Contract(abiBondPre, caBondPre);

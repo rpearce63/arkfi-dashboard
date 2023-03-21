@@ -9,9 +9,10 @@ import {
   contractBscBUSD,
   contractBscLegacy,
   contractBscBond,
+  pcsRouter
 } from "./vars";
 
-const web3 = new Web3(Web3.givenProvider);
+const web3 = web3bsc;
 
 let account = "";
 
@@ -542,15 +543,10 @@ const getBnbBalance = async () => {
 };
 
 export const getBnbPrice = async () => {
-  const fetchBnbPrice = async () =>
-    axios
-      .get(
-        "https://api.coingecko.com/api/v3/simple/price?ids=wbnb&vs_currencies=usd",
-        { retry: 2, retryDelay: 1000 }
-      )
-      .then((response) => response.data.wbnb.usd);
-  const bnbPrice = await fetchBnbPrice();
-  return Number(bnbPrice).toFixed(2);
+  var bnbInfo = await pcsRouter.methods.getAmountsOut(web3.utils.toWei("1"), ["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c", "0xe9e7cea3dedca5984780bafc599bd69add087d56"]).call();
+  var bnbPrice = Number(web3.utils.fromWei(bnbInfo[1]));
+
+  return bnbPrice;
 };
 
 
