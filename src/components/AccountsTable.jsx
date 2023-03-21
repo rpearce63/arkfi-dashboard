@@ -159,6 +159,11 @@ export default function AccountsTable({ accounts }) {
           toggleNfts={() => setIncludeNfts(!includeNfts)}
           toggleBonds={() => setIncludeBonds(!includeBonds)}
         />
+        {rows.length === 0 ? (
+            <Box sx={{ position: "absolute", left: "50%", top: "50%" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
         <Table
           sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
           aria-label="simple table"
@@ -169,11 +174,7 @@ export default function AccountsTable({ accounts }) {
             isBusd={isBusd}
           ></TableHeader>
           
-          {rows.length === 0 ? (
-            <Box sx={{ position: "absolute", left: "50%", top: "50%" }}>
-              <CircularProgress />
-            </Box>
-          ) : (
+          
             <TableBody>
               <TotalsHeader
                 accounts={rows}
@@ -262,8 +263,8 @@ export default function AccountsTable({ accounts }) {
                 </TableRow>
               ))}
             </TableBody>
-          )}
-        </Table>
+         
+        </Table> )}
       </TableContainer>
       {openDialog && <ConfirmationDialog handleResponse={handleResponse} />}
     </>
