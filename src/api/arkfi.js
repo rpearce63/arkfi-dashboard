@@ -2,7 +2,7 @@ import axios from "axios";
 import Web3 from "web3";
 
 import {
-  web3bsc,
+  web3bsc as web3,
   contractBscToken,
   contractBscVault,
   contractBscSwap,
@@ -12,7 +12,7 @@ import {
   pcsRouter
 } from "./vars";
 
-const web3 = web3bsc;
+//const web3 = web3bsc;
 
 let account = "";
 
