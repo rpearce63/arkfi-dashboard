@@ -80,6 +80,10 @@ export default function AccountsTable({ accounts }) {
       (total, account) => total + parseFloat(account.deposits),
       0
     );
+    const withdrawnTotal = rows.reduce(
+      (total, account) => total + parseFloat(account.withdrawn),
+      0
+    );
     const maxPayoutTotal = rows.reduce(
       (total, account) => total + parseFloat(account.maxPayout),
       0
@@ -110,6 +114,7 @@ export default function AccountsTable({ accounts }) {
       nftRewardsTotal,
       airdropsReceivedTotal,
       dailyEarnedTotal,
+      withdrawnTotal
     });
 
     getUpdatedArkPrice();
@@ -231,6 +236,9 @@ export default function AccountsTable({ accounts }) {
                   <TableCell align="right">
                     {displayValue(row.deposits)}
                   </TableCell>
+                  <TableCell align="right">
+                    {displayValue(row.withdrawn)}
+                  </TableCell>
                   <TableCell align="right">{row.ndv}</TableCell>
                   <TableCell align="right">
                     {displayValue(row.maxPayout)}
@@ -296,6 +304,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell align="right">CWR</TableCell>
         <TableCell align="right">Daily ROI</TableCell>
         <TableCell align="right">Total Deposits</TableCell>
+        <TableCell align="right">Total Withdrawn</TableCell>
         <TableCell align="right">NDV</TableCell>
 
         <TableCell align="right">Max Payout</TableCell>
@@ -345,6 +354,7 @@ const TotalsHeader = ({
         {displayValue(totals.dailyEarnedTotal)}
       </TableCell>
       <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
+      <TableCell align="right">{displayValue(totals.withdrawnTotal)}</TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
       {includeNfts && (

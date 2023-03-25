@@ -589,6 +589,7 @@ export const initData = async (accounts) => {
     const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance);
     //const directs = await getDownline()
     const bnbBalance = await getBnbBalance();
+    const withdrawn = await GetWithdrawn_Vault();
     
 
     response.push({
@@ -614,6 +615,7 @@ export const initData = async (accounts) => {
       expectedBusd,
       //directs
       bnbBalance,
+      withdrawn
       
     });
   }
