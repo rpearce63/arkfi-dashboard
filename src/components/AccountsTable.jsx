@@ -310,7 +310,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell align="right">Max Payout</TableCell>
         {includeNfts && (
           <>
-            <TableCell align="right">NFT BUSD Rewards</TableCell>
+            <TableCell align="right">NFT Rewards (BUSD)</TableCell>
             <TableCell align="right">NFT Held</TableCell>
           </>
         )}
