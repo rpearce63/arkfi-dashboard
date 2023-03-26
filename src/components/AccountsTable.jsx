@@ -290,7 +290,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell align="right">
           Wallet Balance{" "}
           {isBusd ? (
-            <span style={{display: "table", width: "max-content"}}>
+            <span style={{display: "table", width: "max-content", float: "right"}}>
               
               (After Tax)
             </span>
