@@ -246,7 +246,7 @@ export default function AccountsTable({ accounts }) {
                   {includeNfts && (
                     <>
                       <TableCell align="right">
-                        {displayValue(row.nftRewards)}
+                        {formatCurrency(row.nftRewards)}
                       </TableCell>
                       <TableCell align="right">{row.nftLevel}</TableCell>
                     </>
@@ -310,7 +310,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
         <TableCell align="right">Max Payout</TableCell>
         {includeNfts && (
           <>
-            <TableCell align="right">NFT Rewards</TableCell>
+            <TableCell align="right">NFT BUSD Rewards</TableCell>
             <TableCell align="right">NFT Held</TableCell>
           </>
         )}
@@ -360,7 +360,7 @@ const TotalsHeader = ({
       {includeNfts && (
         <>
           <TableCell align="right">
-            {displayValue(totals.nftRewardsTotal)}
+            {formatCurrency(totals.nftRewardsTotal)}
           </TableCell>
           <TableCell></TableCell>
         </>
