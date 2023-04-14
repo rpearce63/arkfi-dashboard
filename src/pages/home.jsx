@@ -23,7 +23,7 @@ export default () => {
     const interval = setInterval(() => {
       getInitData();
       return () => clearInterval(interval);
-    }, 30000)
+    }, 300000)
   }, []);
   
   
