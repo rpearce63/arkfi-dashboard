@@ -22,22 +22,18 @@ export default () => {
     
     localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]));
     const accountsData = [];
- for(const wallet of savedData) {
+    for(const wallet of savedData) {
       const accountInfo = await initData([wallet]);
       if(savedData.includes(wallet)) {
         setAcctData(prev => prev.map(p => p.account === wallet ? accountInfo[0] : p))
-      } 
-   else {
-     accountsData.push(accountInfo[0]);
-     localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData));
-        setAcctData(prev => [...prev, accountInfo[0]])
+      } else {
+       accountsData.push(accountInfo[0]);
+       localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData));
+      setAcctData(prev => [...prev, accountInfo[0]])
       }
-      
-   
-   
+
     }
-    
-    
+
 
   };
 
@@ -65,15 +61,14 @@ export default () => {
   };
   
   const removeWallet = (address) => {
-//     setOpenDialog(false);
-//     if (!isConfirmed) {
-//       return false;
-//     }
+
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w.toLowerCase() !== address.toLowerCase());
+    console.log(updated);
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
     
     const updatedAccountsData = acctData.filter(a => a.account.toLowerCase() !== address.toLowerCase());
+    console.log(updatedAccountsData)
     localStorage.setItem("arkFiAccountsData", JSON.stringify(updatedAccountsData));
     setAcctData(updatedAccountsData)
 
