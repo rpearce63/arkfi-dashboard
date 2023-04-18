@@ -12,10 +12,15 @@ export default () => {
 
   const getInitData = async () => {
     const savedData = [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
-    //localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]))
-    const accountInfo = await initData(savedData);
+    localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]))
+    for(const account of savedData) {
+   const accountInfo = await initData(account);
 
-    accountInfo.length && setAcctData([...accountInfo]);
+    accountInfo.length && setAcctData([...acctData, accountInfo]);
+ }
+//     const accountInfo = await initData(savedData);
+
+//     accountInfo.length && setAcctData([...accountInfo]);
   };
 
   useEffect(() => {
