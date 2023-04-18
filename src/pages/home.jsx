@@ -24,8 +24,8 @@ export default () => {
     const accountsData = [];
  for(const wallet of savedData) {
       const accountInfo = await initData([wallet]);
-      accountsData.push(...accountInfo)
-      setAcctData(prev => [...prev.filter(p => p.account !== wallet), ...accountInfo])
+      accountsData.push(accountInfo[0])
+      setAcctData(prev => [...prev.map(p => p.account === wallet ? accountInfo[0] : p)])
     }
     
     localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData))
