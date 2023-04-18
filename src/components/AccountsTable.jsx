@@ -197,14 +197,16 @@ export default function AccountsTable({ accounts }) {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>
-                    {index + 1}
+                    
                     <DeleteOutlineOutlinedIcon
                       className="remove-row"
                       onClick={() => openConfirmationDialog(row.account)}
                       sx={{ fontSize: "14px" }}
                     />
+                    {` - ${index + 1}`}
                   </TableCell>
                   <TableCell component="th" scope="row">
+                    
                     {formatAddress(row.account)}
                   </TableCell>
 
