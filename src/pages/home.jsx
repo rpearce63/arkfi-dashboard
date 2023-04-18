@@ -25,7 +25,7 @@ export default () => {
  for(const wallet of savedData) {
       const accountInfo = await initData([wallet]);
       if(savedData.includes(wallet)) {
-        setAcctData(prev => [...prev.map(p => p.account === wallet ? accountInfo[0] : p)])
+        setAcctData(prev => prev.map(p => p.account === wallet ? accountInfo[0] : p))
       } 
    else {
         setAcctData(prev => [...prev, accountInfo[0]])
@@ -49,10 +49,11 @@ export default () => {
   }, []);
   
   
-  const addWallet = (address) => {
+  const addWallet = async (address) => {
     const wallets = JSON.parse(localStorage.getItem('arkFiWallets')) || []
     localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...wallets, address])]))
-    getInitData();
+    const accountInfo = await initData([address]);
+    setAcctData(prev => [...prev, accountInfo[0]]);
     
   };
   
@@ -64,7 +65,10 @@ export default () => {
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w !== address);
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
-    getInitData();
+    const accountsData = JSON.parse(localStorage.getItem("arkFiAccountsData"));
+    const updatedAccountsData = accountsData.filter(a => a.account !== address);
+    localStorage.setItem("arkFiAccountsData", JSON.stringify(updatedAccountsData));
+    setAcctData(prev => prev.map(p => p.account !== address))
 
 //     window.location.reload(false);
   };
