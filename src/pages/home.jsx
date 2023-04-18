@@ -13,12 +13,15 @@ export default () => {
   const getInitData = async () => {
     const savedData = [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
     
-    localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]))
+    localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]));
+    const accountsData = [];
  for(const wallet of savedData) {
       const accountInfo = await initData([wallet]);
+      accountsData.push(...accountInfo)
       setAcctData(prev => [...prev.filter(p => p.account !== wallet), ...accountInfo])
     }
-    
+    console.log(accountsData);
+    localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData))
 //     const accountInfo = await initData(savedData);
 
 //     accountInfo.length && setAcctData([...accountInfo]);
