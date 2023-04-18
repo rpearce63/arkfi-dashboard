@@ -27,11 +27,9 @@ export default () => {
       accountsData.push(...accountInfo)
       setAcctData(prev => [...prev.filter(p => p.account !== wallet), ...accountInfo])
     }
-    console.log(accountsData);
+    
     localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData))
-//     const accountInfo = await initData(savedData);
 
-//     accountInfo.length && setAcctData([...accountInfo]);
   };
 
   useEffect(() => {
