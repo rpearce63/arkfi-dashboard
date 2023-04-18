@@ -14,15 +14,13 @@ export default () => {
     const savedData = [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
     
     localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]))
- //    for(const account of savedData) {
- //   const accountInfo = await initData([account]);
- //   console.log(accountInfo)
-    //
- //    accountInfo.length && setAcctData((prev) => [...new Set([...prev, accountInfo[0]])]);
- // }
-    const accountInfo = await initData(savedData);
+ for(const wallet of savedData) {
+      const accountInfo = await initData([wallet]);
+      setAcctData(prev => [...prev.filter(p => p.account !== wallet), ...accountInfo])
+    }
+//     const accountInfo = await initData(savedData);
 
-    accountInfo.length && setAcctData([...accountInfo]);
+//     accountInfo.length && setAcctData([...accountInfo]);
   };
 
   useEffect(() => {
