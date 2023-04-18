@@ -17,6 +17,7 @@ export default () => {
  //    for(const account of savedData) {
  //   const accountInfo = await initData([account]);
  //   console.log(accountInfo)
+    //
  //    accountInfo.length && setAcctData((prev) => [...new Set([...prev, accountInfo[0]])]);
  // }
     const accountInfo = await initData(savedData);
