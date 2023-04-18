@@ -191,12 +191,13 @@ export default function AccountsTable({ accounts }) {
                 bnbPrice={bnbPrice}
                 isBusd={isBusd}
               />
-              {rows.map((row) => (
+              {rows.map((row, index) => (
                 <TableRow
                   key={row.account}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>
+                    {index + 1}
                     <DeleteOutlineOutlinedIcon
                       className="remove-row"
                       onClick={() => openConfirmationDialog(row.account)}
