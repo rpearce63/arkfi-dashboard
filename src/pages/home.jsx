@@ -13,7 +13,7 @@ export default () => {
   
   const initializeData = async () => {
     const accountsData = JSON.parse(localStorage.getItem("arkFiAccountsData"));
-    accountsData?.length && setAcctData(accountsData)
+    accountsData && setAcctData(accountsData)
   }
   
   
@@ -60,7 +60,20 @@ export default () => {
     
   };
   
-  
+  const removeWallet = (address) => {
+
+    const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
+    const updated = stored.filter((w) => w.toLowerCase() !== address.toLowerCase());
+    console.log(updated);
+    localStorage.setItem("arkFiWallets", JSON.stringify(updated));
+    
+    const updatedAccountsData = acctData.filter(a => a.account.toLowerCase() !== address.toLowerCase());
+    console.log(updatedAccountsData)
+    localStorage.setItem("arkFiAccountsData", JSON.stringify(updatedAccountsData));
+    setAcctData(updatedAccountsData)
+
+//     window.location.reload(false);
+  };
 
   return (
     <>
