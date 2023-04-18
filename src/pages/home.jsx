@@ -13,6 +13,7 @@ export default () => {
   
   const initializeData = async () => {
     const accountsData = JSON.parse(localStorage.getItem("arkFiAccountsData"));
+    console.log(accountsData) 
     accountsData && setAcctData(accountsData)
   }
   

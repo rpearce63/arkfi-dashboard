@@ -142,10 +142,9 @@ export default function AccountsTable({ accounts }) {
     }
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w !== selectedRow);
-    console.log(updated)
+    
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
     const updatedRows = [...rows.filter((row) => row.account !== selectedRow)];
-    console.log(updatedRows)
     localStorage.setItem("arkFiAccountsData", JSON.stringify(updatedRows))
     setRows(updatedRows);
     //window.location.reload(false);
