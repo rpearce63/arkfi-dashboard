@@ -28,14 +28,16 @@ export default () => {
         setAcctData(prev => prev.map(p => p.account === wallet ? accountInfo[0] : p))
       } 
    else {
+     accountsData.push(accountInfo[0]);
+     localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData));
         setAcctData(prev => [...prev, accountInfo[0]])
       }
       
    
-   accountsData.push(accountInfo[0])
+   
     }
     
-    localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData))
+    
 
   };
 
@@ -50,12 +52,15 @@ export default () => {
   
   
   const addWallet = async (address) => {
+    if(acctData.some(a => a.account.toLowerCase() === address.toLowerCase())) return;
+    
     const wallets = JSON.parse(localStorage.getItem('arkFiWallets')) || []
-    localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...wallets, address])]))
+    localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...wallets, address.toLowerCase()])]))
     
     const accountInfo = await initData([address]);
-    
+    localStorage.setItem("arkFiAccountsData", JSON.stringify([...acctData, accountInfo[0]]));
     setAcctData([...acctData, accountInfo[0]]);
+    
     
   };
   
@@ -65,10 +70,10 @@ export default () => {
 //       return false;
 //     }
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
-    const updated = stored.filter((w) => w !== address);
+    const updated = stored.filter((w) => w.toLowerCase() !== address.toLowerCase());
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
     
-    const updatedAccountsData = acctData.filter(a => a.account !== address);
+    const updatedAccountsData = acctData.filter(a => a.account.toLowerCase() !== address.toLowerCase());
     localStorage.setItem("arkFiAccountsData", JSON.stringify(updatedAccountsData));
     setAcctData(updatedAccountsData)
 
