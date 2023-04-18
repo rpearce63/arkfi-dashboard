@@ -18,6 +18,7 @@ export default () => {
       const accountInfo = await initData([wallet]);
       setAcctData(prev => [...prev.filter(p => p.account !== wallet), ...accountInfo])
     }
+    
 //     const accountInfo = await initData(savedData);
 
 //     accountInfo.length && setAcctData([...accountInfo]);
