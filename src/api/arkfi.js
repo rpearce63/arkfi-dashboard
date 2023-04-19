@@ -546,6 +546,8 @@ async function HasAccount_Vault() {
 }
 
 async function ExpectedBUSDFromARK_Swap(amount) {
+  console.log('wallet balance: ', amount)
+  
   try {
     var hasAcc = await HasAccount_Vault();
     var _amount = web3.utils.toWei(amount);
@@ -562,8 +564,8 @@ async function ExpectedBUSDFromARK_Swap(amount) {
     }
 
     return Number(_val).toFixed(2);
-  } catch (error) {
-    console.log(error);
+  } catch  {
+    
     return 0;
   }
 }
