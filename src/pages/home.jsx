@@ -19,19 +19,22 @@ export default () => {
   
   const getInitData = async () => {
     const savedData = [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
+    console.log(savedData)
     localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]));
     const accountsData = [];
     for(const wallet of savedData) {
       const accountInfo = await initData([wallet]);
+      accountsData.push(accountInfo[0]);
       if(savedData.includes(wallet)) {
+        console.log('exists')
         setAcctData(prev => prev.map(p => p.account === wallet ? accountInfo[0] : p))
       } else {
-       accountsData.push(accountInfo[0]);
-       localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData));
-      setAcctData(prev => [...prev, accountInfo[0]])
+        console.log('adding')
+        setAcctData(prev => [...prev, accountInfo[0]])
       }
 
     }
+    localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData));
 
 
   };

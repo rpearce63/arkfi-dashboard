@@ -546,7 +546,6 @@ async function HasAccount_Vault() {
 }
 
 async function ExpectedBUSDFromARK_Swap(amount) {
-  console.log('wallet balance: ', amount)
   
   try {
     var hasAcc = await HasAccount_Vault();
