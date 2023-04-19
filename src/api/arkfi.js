@@ -380,17 +380,15 @@ async function GetTotalAccounts_Vault() {
   }
 }
 
-async function GetLevelForInvestor_Vault() {
-  try {
-    var _val = await contractBscVault.methods
-      .getLevelForInvestor(account)
-      .call();
-    _val = web3.utils.fromWei(_val);
-    return Number(_val).toFixed(0);
-  } catch (error) {
-    console.log(error);
-    return 0;
-  }
+
+async function GetLevelOfAccount_Legacy() {
+    try {
+        var _val = await contractBscLegacy.methods.getLevels(account).call();
+        return Number(_val)
+    }
+    catch {
+        return 0;
+    }
 }
 
 async function GetNDVAmountForAcc_Vault(acc) {
@@ -483,13 +481,13 @@ async function GetNFTOfOwner_Legacy() {
       .tokenOfOwnerByIndex(account, 0)
       .call();
     return _val;
-  } catch (error) {
-    console.log(error);
+  } catch  {
     return "";
   }
 }
 
 async function GetLevelNFT_Legacy(nftId) {
+  if(!nftId) return 0;
   try {
     var _val = await contractBscLegacy.methods.levelOfNft(nftId).call();
     return Number(_val);
@@ -622,7 +620,7 @@ export const initData = async (accounts) => {
       const busdBalance = await GetBusdBalance();
       const nftRewards = await GetClaimableRewards_Legacy();
       const lastAction = await LastAction_Vault();
-      const level = await GetLevelForInvestor_Vault();
+      const level = await GetLevelOfAccount_Legacy();
       const newDeposits = await GetNewDeposits_Vault();
       const airdropsReceived = await GetAirdropsReceived_Vault();
       const bondValue = await GetBondValue_Vault();
