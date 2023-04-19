@@ -13,6 +13,7 @@ export default ({ addWallet }) => {
   };
 
   const loadFile = (event) => {
+    console.log("loading wallets")
     event.target.files[0].text().then((t) => {
       console.log(t);
       localStorage.setItem("arkFiWallets", t);
