@@ -26,6 +26,7 @@ export default () => {
     );
     const accountsData = [];
     for (const wallet of savedData) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
       const accountInfo = await initData([wallet]);
       accountsData.push(accountInfo[0]);
 
