@@ -90,7 +90,8 @@ async function GetROI_Vault() {
   try {
     var _val = await contractBscVault.methods.roi(account).call();
     return Number(_val) / 10;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -99,7 +100,8 @@ async function GetReferrerOf_Vault() {
   try {
     var _val = await contractBscVault.methods.referrerOf(account).call();
     return _val;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -109,7 +111,8 @@ async function GetPrincipal_Vault() {
     var _val = await contractBscVault.methods.principalBalance(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -119,7 +122,8 @@ async function GetDeposits_Vault() {
     var _val = await contractBscVault.methods.deposits(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -129,7 +133,8 @@ async function GetDepositsForAddress_Vault(acc) {
     var _val = await contractBscVault.methods.deposits(acc).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -139,7 +144,8 @@ async function GetNewDeposits_Vault() {
     var _val = await contractBscVault.methods.newDeposits(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -149,7 +155,8 @@ async function GetOut_Vault() {
     var _val = await contractBscVault.methods.out(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -159,7 +166,8 @@ async function GetWithdrawn_Vault() {
     var _val = await contractBscVault.methods.withdrawn(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -169,7 +177,8 @@ async function GetAirdropped_Vault() {
     var _val = await contractBscVault.methods.airdropped(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -179,7 +188,8 @@ async function GetAirdroppedForAcc_Vault(acc) {
     var _val = await contractBscVault.methods.airdropped(acc).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -191,7 +201,8 @@ async function GetAirdropBalance_Vault() {
     const airdropBalance = Math.floor(Number(_val) * 1000) / 1000;
     _val = Math.floor(Number(_val) * 100) / 100;
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -201,7 +212,8 @@ async function GetAirdropBalanceForAcc_Vault(acc) {
     var _val = await contractBscVault.methods.airdropBalance(acc).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -211,7 +223,8 @@ async function GetCompounds_Vault() {
     var _val = await contractBscVault.methods.compounds(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -221,7 +234,8 @@ async function GetAirdropsReceived_Vault() {
     var _val = await contractBscVault.methods.airdropsReceived(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -231,7 +245,8 @@ async function GetAirdropsReceivedForAcc_Vault(acc) {
     var _val = await contractBscVault.methods.airdropsReceived(acc).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -241,7 +256,8 @@ async function LastAction_Vault() {
     var _val = await contractBscVault.methods.lastAction(account).call();
     _val = new Date(Number(_val) * 1000);
     return _val.getTime();
-  } catch {
+  } catch (error) {
+    console.log(error);
     return new Date().getTime();
   }
 }
@@ -254,7 +270,8 @@ async function GetTaxes_Vault() {
     var _val3 = Number(_val) + Number(_val2);
 
     return _val3;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 10;
   }
 }
@@ -264,7 +281,8 @@ async function GetMaxPayout_Vault() {
     var _val = await contractBscVault.methods.maxPayoutAmount(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -273,7 +291,8 @@ async function GetTax_Vault() {
   try {
     var _val = await contractBscVault.methods.tax(account).call();
     return Number(_val).toFixed(0);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -283,7 +302,8 @@ async function GetCWR_Vault() {
     var _val = await contractBscVault.methods.cwr(account).call();
     return (Number(_val) / 1000).toFixed(3);
     //return (Math.floor(Number(_val) / 10) / 100).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -293,7 +313,8 @@ async function GetReferalRewards_Vault() {
     var _val = await contractBscVault.methods.directRewards(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -303,7 +324,8 @@ async function GetRoundRobinRewards_Vault() {
     var _val = await contractBscVault.methods.roundRobinRewards(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -316,7 +338,8 @@ async function GetTotalRewards_Vault() {
     _val2 = web3.utils.fromWei(_val2);
     _val = Number(_val) + Number(_val2);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -326,7 +349,8 @@ async function GetBondValue_Vault() {
     var _val = await contractBscVault.methods.getBondValue(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -340,7 +364,8 @@ async function CalculateUSDValueOfBond_Vault(amount) {
     _val = web3.utils.fromWei(_val);
 
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -349,7 +374,8 @@ async function GetTotalAccounts_Vault() {
   try {
     var _val = await contractBscVault.methods.totalAccounts().call();
     return _val;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -361,7 +387,8 @@ async function GetLevelForInvestor_Vault() {
       .call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(0);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -371,7 +398,8 @@ async function GetNDVAmountForAcc_Vault(acc) {
     var _val = await contractBscVault.methods.checkNdv(acc).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -381,7 +409,8 @@ async function GetNDVAmount_Vault() {
     var _val = await contractBscVault.methods.checkNdv(account).call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -393,7 +422,8 @@ async function GetARKBalance_Token(dec = 2) {
     const arkBalance2 = Math.floor(Number(_val));
     const arkBalance = Math.floor(Number(_val) * 100) / 100;
     return Number(_val).toFixed(dec);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -404,7 +434,8 @@ export async function GetArkPrice_Swap() {
     _val = web3.utils.fromWei(_val);
     //const arkPrice = Number(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -415,7 +446,8 @@ const GetBusdBalance = async () => {
     _val = web3.utils.fromWei(_val);
     // const busdBalance = Number(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 };
@@ -427,7 +459,8 @@ async function GetClaimableRewards_Legacy() {
       .call();
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -438,7 +471,8 @@ async function GetShares_Bond() {
     _val = web3.utils.fromWei(_val);
     const bondBalance = Math.floor(Number(_val) * 1000) / 1000;
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -449,7 +483,8 @@ async function GetNFTOfOwner_Legacy() {
       .tokenOfOwnerByIndex(account, 0)
       .call();
     return _val;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return "";
   }
 }
@@ -458,7 +493,8 @@ async function GetLevelNFT_Legacy(nftId) {
   try {
     var _val = await contractBscLegacy.methods.levelOfNft(nftId).call();
     return Number(_val);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -505,7 +541,8 @@ async function HasAccount_Vault() {
   try {
     var _val = await contractBscVault.methods.hasAccount(account).call();
     return _val;
-  } catch {
+  } catch (error) {
+    console.log(error);
     return false;
   }
 }
@@ -527,7 +564,8 @@ async function ExpectedBUSDFromARK_Swap(amount) {
     }
 
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 }
@@ -537,7 +575,8 @@ const getBnbBalance = async () => {
     var _val = await web3.eth.getBalance(account);
     _val = web3.utils.fromWei(_val);
     return Number(_val).toFixed(2);
-  } catch {
+  } catch (error) {
+    console.log(error);
     return 0;
   }
 };
