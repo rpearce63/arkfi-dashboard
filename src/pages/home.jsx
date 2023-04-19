@@ -20,7 +20,6 @@ export default () => {
   const getInitData = async () => {
     const savedData =
       [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
-    console.log(savedData);
     localStorage.setItem(
       "arkFiWallets",
       JSON.stringify([...new Set([...savedData])])
