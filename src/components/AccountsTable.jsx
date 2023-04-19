@@ -25,8 +25,7 @@ import Box from "@mui/material/Box";
 
 import RewardsTimer from "./RewardsTimer";
 
-export default function AccountsTable({ accounts }) {
-  const [rows, setRows] = useState([]);
+export default function AccountsTable({ accounts, removeAcct }) {
   const [totals, setTotals] = useState([]);
   const [timers, setTimers] = useState([]);
   const [selected, setSelected] = React.useState(false);
@@ -50,53 +49,52 @@ export default function AccountsTable({ accounts }) {
   }
   
   useEffect(() => {
-    setRows([...accounts]);
     getUpdatedArkPrice();
     getCurrentBnbPrice();
   }, [accounts]);
 
   useEffect(() => {
-    const balanceTotal = rows.reduce(
+    const balanceTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.principalBalance),
       0
     );
-    const walletTotal = rows.reduce(
+    const walletTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.walletBalance),
       0
     );
-    const bnbTotal = rows.reduce(
+    const bnbTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.bnbBalance),
       0
     );
-    const busdTotal = rows.reduce(
+    const busdTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.busdBalance),
       0
     );
-    const availTotal = rows.reduce(
+    const availTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.availableRewards),
       0
     );
-    const depositsTotal = rows.reduce(
+    const depositsTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.deposits),
       0
     );
-    const withdrawnTotal = rows.reduce(
+    const withdrawnTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.withdrawn),
       0
     );
-    const maxPayoutTotal = rows.reduce(
+    const maxPayoutTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.maxPayout),
       0
     );
-    const nftRewardsTotal = rows.reduce(
+    const nftRewardsTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.nftRewards),
       0
     );
-    const airdropsReceivedTotal = rows.reduce(
+    const airdropsReceivedTotal = accounts.reduce(
       (total, account) => total + parseFloat(account.airdropsReceived),
       0
     );
-    const dailyEarnedTotal = rows.reduce(
+    const dailyEarnedTotal = accounts.reduce(
       (total, account) =>
         total +
         parseFloat(account.principalBalance) * (parseFloat(account.roi) / 100),
@@ -118,7 +116,7 @@ export default function AccountsTable({ accounts }) {
     });
 
     getUpdatedArkPrice();
-  }, [rows]);
+  }, [accounts]);
 
   const displayValue = (amount, tax = 0) =>
     isBusd
@@ -140,14 +138,8 @@ export default function AccountsTable({ accounts }) {
     if (!isConfirmed) {
       return false;
     }
-    const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
-    const updated = stored.filter((w) => w !== selectedRow);
-    
-    localStorage.setItem("arkFiWallets", JSON.stringify(updated));
-    const updatedRows = [...rows.filter((row) => row.account !== selectedRow)];
-    localStorage.setItem("arkFiAccountsData", JSON.stringify(updatedRows))
-    setRows(updatedRows);
-    //window.location.reload(false);
+    removeAcct(selectedRow)
+
   };
 
   const formatAddress = (address) =>
@@ -167,7 +159,7 @@ export default function AccountsTable({ accounts }) {
           toggleNfts={() => setIncludeNfts(!includeNfts)}
           toggleBonds={() => setIncludeBonds(!includeBonds)}
         />
-        {rows.length === 0 ? (
+        {accounts.length === 0 ? (
             <Box sx={{ position: "absolute", left: "50%", top: "50%" }}>
               <CircularProgress />
             </Box>
@@ -185,7 +177,7 @@ export default function AccountsTable({ accounts }) {
           
             <TableBody>
               <TotalsHeader
-                accounts={rows}
+                accounts={accounts}
                 totals={totals}
                 displayValue={displayValue}
                 formatCurrency={formatCurrency}
@@ -194,7 +186,7 @@ export default function AccountsTable({ accounts }) {
                 bnbPrice={bnbPrice}
                 isBusd={isBusd}
               />
-              {rows.map((row, index) => (
+              {accounts.map((row, index) => (
                 <TableRow
                   key={row.account}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

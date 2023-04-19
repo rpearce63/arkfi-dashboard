@@ -562,7 +562,6 @@ const getDownline = async () => {
 const nftLevels = ["None", "Silver", "Gold", "Platinum"];
 
 export const initData = async (accounts) => {
-  console.log(new Date() + " - getting data for " + accounts[0]);
   const response = [];
   for (const wallet of accounts) {
     account = wallet;

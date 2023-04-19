@@ -13,14 +13,12 @@ export default () => {
   
   const initializeData = async () => {
     const accountsData = JSON.parse(localStorage.getItem("arkFiAccountsData"));
-    console.log(accountsData) 
-    accountsData && setAcctData(accountsData)
+    accountsData?.length && setAcctData(accountsData)
   }
   
   
   const getInitData = async () => {
     const savedData = [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
-    
     localStorage.setItem('arkFiWallets', JSON.stringify([...new Set([...savedData])]));
     const accountsData = [];
     for(const wallet of savedData) {
@@ -65,21 +63,18 @@ export default () => {
 
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter((w) => w.toLowerCase() !== address.toLowerCase());
-    console.log(updated);
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
     
     const updatedAccountsData = acctData.filter(a => a.account.toLowerCase() !== address.toLowerCase());
-    console.log(updatedAccountsData)
     localStorage.setItem("arkFiAccountsData", JSON.stringify(updatedAccountsData));
     setAcctData(updatedAccountsData)
-
-//     window.location.reload(false);
   };
 
   return (
     <>
-      <AddWallet addWallet={addWallet} />
-      <AccountsTable accounts={acctData} />
+      <AddWallet addWallet={addWallet}/>
+      <AccountsTable accounts={acctData} removeAcct={removeWallet}/>
+      
     </>
   );
 };
