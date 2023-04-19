@@ -23,7 +23,7 @@ export default () => {
       JSON.stringify([...new Set([...savedData])])
     );
     const accountsData = [];
-    const startTime = new Date();
+    const startTime = new Date().getTime();
     for (const wallet of savedData) {
       //await new Promise((resolve) => setTimeout(resolve, 2000));
       const accountInfo = await initData([wallet]);
@@ -38,8 +38,8 @@ export default () => {
         });
       }
     }
-    const endTime = new Date();
-    console.log('data retrieved in ' + endTime - startTime + " seconds")
+    const endTime = new Date().getTime();
+    console.log('data retrieved in ' + (endTime - startTime)/1000 + " seconds")
     localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData));
     setLoading(false);
   };
