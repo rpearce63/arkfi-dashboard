@@ -50,7 +50,7 @@ export default () => {
     const interval = setInterval(() => {
       loading || getInitData();
       return () => clearInterval(interval);
-    }, 300000);
+    }, 120000);
   }, []);
 
   const addWallet = async (address) => {
