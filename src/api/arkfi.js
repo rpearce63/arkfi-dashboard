@@ -58,7 +58,7 @@ async function GetAvailableRewards_Vault() {
     return Number(_val).toFixed(2);
   } catch (error) {
     console.log(error);
-    throw error;
+    return 0;
   }
 }
 
@@ -607,7 +607,7 @@ const nftLevels = ["None", "Silver", "Gold", "Platinum"];
 export const initData = async (accounts) => {
   console.log("loading data for ", accounts[0]);
   const response = [];
-  try {
+  //try {
     for (const wallet of accounts) {
       account = wallet;
 
@@ -661,9 +661,9 @@ export const initData = async (accounts) => {
         withdrawn,
       });
     }
-  } catch (err) {
-    console.log(err)
-    return "";
-  }
+  // } catch (err) {
+  //   console.log(err)
+  //   return "";
+  // }
   return response;
 };
