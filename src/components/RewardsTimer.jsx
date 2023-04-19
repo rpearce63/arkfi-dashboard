@@ -33,7 +33,7 @@ export default ({ toDate }) => {
       updateTimer();
       return () => clearInterval(interval);
     }, 1000);
-  }, []);
+  }, [toDate]);
 
   return <span>{time}</span>;
 };
