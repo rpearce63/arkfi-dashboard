@@ -143,7 +143,21 @@ const cwrPresets = {
 var selectedCWR = cwrPresets[1.0];
 
 var web3 = new Web3(Web3.givenProvider);
-export var web3bsc = new Web3(new Web3.providers.HttpProvider(rpcs.BSC.url));
+//export var web3bsc = new Web3(new Web3.providers.HttpProvider(rpcs.BSC.url));
+const options = {
+  reconnect: {
+    auto: true,
+    delay: 5000, // ms
+    maxAttempts: 5,
+    onTimeout: false,
+  },
+};
+export const web3bsc = new Web3(
+  new Web3.providers.WebsocketProvider(
+    "wss://ws-nd-545-991-262.p2pify.com/26d4d56490e1d55a2a05b198dbca102d",
+    options
+  )
+);
 var account = "";
 
 //SALES
