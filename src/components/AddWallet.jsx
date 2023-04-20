@@ -20,6 +20,13 @@ export default ({ addWallet }) => {
     });
     window.location.reload(true);
   };
+  
+  const clearTable = () => {
+    if (!window.confirm("This will clear your current list. Are you sure?"))
+        return false;
+    localStorage.clear();
+    window.location.reload(true);
+  }
 
   return (
     <>
@@ -66,6 +73,17 @@ export default ({ addWallet }) => {
           >
             Load Backup
             <input type="file" hidden onChange={loadFile} />
+          </Button>
+        
+        <Button
+            variant="outlined"
+            component="label"
+            size="small"
+            color="success"
+            onClick={clearTable}
+          >
+            Clear Table
+            
           </Button>
         
       </Box>{" "}
