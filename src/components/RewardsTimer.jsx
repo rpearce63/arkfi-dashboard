@@ -27,16 +27,13 @@ export default ({ toDate }) => {
     }
   };
 
-  useEffect(() => {
-    updateTimer();
-    
-  }, []);
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const interval = setInterval(() => {
       updateTimer();
       return () => clearInterval(interval);
     }, 1000);
+  
+  useEffect(() => {
+    updateTimer();
   },[toDate])
 
   return <span>{time}</span>;
