@@ -29,11 +29,15 @@ export default ({ toDate }) => {
 
   useEffect(() => {
     updateTimer();
+    
+  }, []);
+  
+  useEffect(() => {
     const interval = setInterval(() => {
       updateTimer();
       return () => clearInterval(interval);
     }, 1000);
-  }, [toDate]);
+  },[toDate])
 
   return <span>{time}</span>;
 };
