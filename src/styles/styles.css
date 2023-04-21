@@ -87,6 +87,9 @@ body {
     background: var(--bg2);
     
 }
+.main-container {
+  max-width: 90%;
+}
 
 .grotesk {
     font-family: SpaceGrotesk !important, sans-serif;

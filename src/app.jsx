@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <Router>
       <Seo />
-      <Container maxWidth="false">
+      <Container maxWidth="false" className="main-container">
         <Header />
         <div className="content">
           {/* Router specifies which component to insert here as the main content */}
