@@ -30,8 +30,8 @@ export default () => {
       accountsData.push(accountInfo[0]);
       if (accountInfo[0].deposits > 0) {
         setAcctData((prev) => {
-          if (prev.some((p) => p.account === wallet)) {
-            return prev.map((p) => (p.account === wallet ? accountInfo[0] : p));
+          if (prev.some((p) => p.account.toLowerCase() === wallet.toLowerCase())) {
+            return prev.map((p) => (p.account.toLowerCase() === wallet.toLowerCase() ? accountInfo[0] : p));
           } else {
             return [...prev, accountInfo[0]];
           }
@@ -40,7 +40,7 @@ export default () => {
     }
     const endTime = new Date().getTime();
     console.log('data retrieved in ' + (endTime - startTime)/1000 + " seconds")
-    localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData));
+    localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData.map(a => ({...a, account: a.account.toLowerCase()}))));
     setLoading(false);
   };
 
