@@ -20,7 +20,7 @@ export default () => {
       [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
     localStorage.setItem(
       "arkFiWallets",
-      JSON.stringify([...new Set([...savedData])])
+      JSON.stringify([...new Set([...savedData].map(t => t.toLowerCase()))])
     );
     const accountsData = [];
     const startTime = new Date().getTime();
