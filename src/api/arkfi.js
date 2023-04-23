@@ -1,6 +1,8 @@
 import axios from "axios";
 import Web3 from "web3";
 
+import {getPlayerStats} from './arkFiVaultReader';
+
 import {
   web3bsc as web3,
   contractBscToken,
@@ -27,6 +29,8 @@ var selectRatios = {
   withdraw: 0,
   airdrop: 0,
 };
+
+const arkVaultReader = 
 
 async function GetYourReferrer_Vault() {
   try {
@@ -497,10 +501,10 @@ async function GetLevelNFT_Legacy(nftId) {
   }
 }
 
-async function GetRefLevelForUser_Syndicate() {
-  var bondValue = Number(await GetBondValue_Vault());
-  var nftId = await GetNFTOfOwner_Legacy();
-  var nftValue = await GetLevelNFT_Legacy(nftId);
+async function GetRefLevelForUser_Syndicate(bondValue, nftValue) {
+  //var bondValue = Number(await GetBondValue_Vault());
+  //var nftId = await GetNFTOfOwner_Legacy();
+  //var nftValue = await GetLevelNFT_Legacy(nftId);
   switch (nftValue) {
     default:
       nftValue = 0;
@@ -545,10 +549,10 @@ async function HasAccount_Vault() {
   }
 }
 
-async function ExpectedBUSDFromARK_Swap(amount) {
+async function ExpectedBUSDFromARK_Swap(amount, hasAcc) {
   
   try {
-    var hasAcc = await HasAccount_Vault();
+    //var hasAcc = true;//await HasAccount_Vault();
     var _amount = web3.utils.toWei(amount);
     var _val;
 
@@ -609,30 +613,32 @@ export const initData = async (accounts) => {
   //try {
     for (const wallet of accounts) {
       account = wallet;
+      const playerStats = await getPlayerStats(wallet);
 
-      const availableRewards = await GetAvailableRewards_Vault();
-      const principalBalance = await GetPrincipal_Vault();
-      const maxCwr = await GetCWR_Vault();
-      const ndv = await GetNDVAmount_Vault();
-      const deposits = await GetDeposits_Vault();
-      const roi = await GetROI_Vault();
-      const walletBalance = await GetARKBalance_Token();
+      const availableRewards = playerStats.availableRewards / 10e17;//await GetAvailableRewards_Vault();
+      const principalBalance = playerStats.principalBalance / 10e17;//await GetPrincipal_Vault();
+      const maxCwr = playerStats.cwr / 1000; //await GetCWR_Vault();
+      const ndv = playerStats.ndv / 10e17;//await GetNDVAmount_Vault();
+      const deposits = playerStats.deposits / 10e17;//await GetDeposits_Vault();
+      const roi = playerStats.roi / 10;//await GetROI_Vault();
+      const walletBalance = playerStats.walletBalance / 10e17;//await GetARKBalance_Token();
       const maxPayout = Math.min(principalBalance * 3, 80000);
       const busdBalance = await GetBusdBalance();
-      const nftRewards = await GetClaimableRewards_Legacy();
-      const lastAction = await LastAction_Vault();
-      const level = await GetLevelOfAccount_Legacy();
-      const newDeposits = await GetNewDeposits_Vault();
-      const airdropsReceived = await GetAirdropsReceived_Vault();
-      const bondValue = await GetBondValue_Vault();
-      const bondShares = await GetShares_Bond();
-      const refLevel = await GetRefLevelForUser_Syndicate();
-      const nftId = await GetNFTOfOwner_Legacy();
-      const nftLevel = await GetLevelNFT_Legacy(nftId);
-      const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance);
+      const nftRewards = playerStats.nftData.nftRewards / 10e17;//await GetClaimableRewards_Legacy();
+      const lastAction = playerStats.lastAction;//await LastAction_Vault();
+      const level = playerStats.nftData.nftLevel;//await GetLevelOfAccount_Legacy();
+      const newDeposits = playerStats.newDeposits / 10e17;//await GetNewDeposits_Vault();
+      const airdropsReceived = playerStats.airdropsReceived / 10e17;//await GetAirdropsReceived_Vault();
+      const bondValue = playerStats.bondData.bondValue / 10e17;//await GetBondValue_Vault();
+      const bondShares = playerStats.bondData.bondBalance / 10e17;//await GetShares_Bond();
+      const nftLevel = playerStats.nftData.nftLevel;//await GetLevelNFT_Legacy(nftId);
+      const refLevel = await GetRefLevelForUser_Syndicate(bondValue, nftLevel);
+      //const nftId = await GetNFTOfOwner_Legacy();
+      const hasAccount = principalBalance + newDeposits >= 10 * 10e17;
+      const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance, hasAccount);
       //const directs = await getDownline()
       const bnbBalance = await getBnbBalance();
-      const withdrawn = await GetWithdrawn_Vault();
+      const withdrawn = playerStats.withdrawn / 10e17;//await GetWithdrawn_Vault();
 
       response.push({
         account: wallet,

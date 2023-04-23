@@ -212,7 +212,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
                     {displayValue(row.principalBalance)}
                   </TableCell>
                   <TableCell align="right">
-                    {isBusd ? "$" + row.expectedBusd : row.walletBalance}
+                    {isBusd ? "$" + row.expectedBusd : displayValue(row.walletBalance)}
                   </TableCell>
                   <TableCell align="right">
                     {formatCurrency(isBusd ? row.bnbBalance * bnbPrice : row.bnbBalance)}
@@ -237,7 +237,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
                   <TableCell align="right">
                     {displayValue(row.withdrawn)}
                   </TableCell>
-                  <TableCell align="right">{row.ndv}</TableCell>
+                  <TableCell align="right">{displayValue(row.ndv)}</TableCell>
                   <TableCell align="right">
                     {displayValue(row.maxPayout)}
                   </TableCell>
@@ -255,8 +255,8 @@ export default function AccountsTable({ accounts, removeAcct }) {
 
                   {includeBonds && (
                     <>
-                      <TableCell align="right">{row.bondShares}</TableCell>
-                      <TableCell align="right">${row.bondValue}</TableCell>
+                      <TableCell align="right">{displayValue(row.bondShares)}</TableCell>
+                      <TableCell align="right">${displayValue(row.bondValue)}</TableCell>
                     </>
                   )}
                   <TableCell>
