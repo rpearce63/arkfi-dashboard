@@ -550,10 +550,9 @@ async function HasAccount_Vault() {
 }
 
 async function ExpectedBUSDFromARK_Swap(amount, hasAcc) {
-  console.log(amount, hasAcc)
   try {
     //var hasAcc = true;//await HasAccount_Vault();
-    var _amount = web3.utils.toWei(amount);
+    var _amount = web3.utils.toWei(amount.toString());
     var _val;
 
     if (hasAcc) {
