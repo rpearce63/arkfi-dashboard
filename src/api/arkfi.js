@@ -255,9 +255,9 @@ async function GetAirdropsReceivedForAcc_Vault(acc) {
   }
 }
 
-async function LastAction_Vault() {
+async function LastAction_Vault(lastAction) {
   try {
-    var _val = await contractBscVault.methods.lastAction(account).call();
+    var _val = lastAction;//await contractBscVault.methods.lastAction(account).call();
     _val = new Date(Number(_val) * 1000);
     return _val.getTime();
   } catch (error) {
@@ -625,7 +625,7 @@ export const initData = async (accounts) => {
       const maxPayout = Math.min(principalBalance * 3, 80000);
       const busdBalance = await GetBusdBalance();
       const nftRewards = playerStats.nftData.nftRewards / 10e17;//await GetClaimableRewards_Legacy();
-      const lastAction = playerStats.lastAction;//await LastAction_Vault();
+      const lastAction = LastAction_Vault(playerStats.lastAction);//await LastAction_Vault();
       const level = playerStats.nftData.nftLevel;//await GetLevelOfAccount_Legacy();
       const newDeposits = playerStats.newDeposits / 10e17;//await GetNewDeposits_Vault();
       const airdropsReceived = playerStats.airdropsReceived / 10e17;//await GetAirdropsReceived_Vault();
