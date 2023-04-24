@@ -28,7 +28,7 @@ export default () => {
       //await new Promise((resolve) => setTimeout(resolve, 2000));
       const accountInfo = await initData([wallet]);
       accountsData.push(accountInfo[0]);
-      if (accountInfo[0].deposits > 0) {
+      if (accountInfo[0].deposits >= 0) {
         setAcctData((prev) => {
           if (prev.some((p) => p.account.toLowerCase() === wallet.toLowerCase())) {
             return prev.map((p) => (p.account.toLowerCase() === wallet.toLowerCase() ? accountInfo[0] : p));

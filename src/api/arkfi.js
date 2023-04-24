@@ -550,7 +550,7 @@ async function HasAccount_Vault() {
 }
 
 async function ExpectedBUSDFromARK_Swap(amount, hasAcc) {
-  
+  console.log(amount, hasAcc)
   try {
     //var hasAcc = true;//await HasAccount_Vault();
     var _amount = web3.utils.toWei(amount);
@@ -567,8 +567,8 @@ async function ExpectedBUSDFromARK_Swap(amount, hasAcc) {
     }
 
     return Number(_val).toFixed(2);
-  } catch  {
-    
+  } catch (err){
+    console.log(err)
     return 0;
   }
 }
@@ -634,7 +634,7 @@ export const initData = async (accounts) => {
       const nftLevel = playerStats.nftData.nftLevel;//await GetLevelNFT_Legacy(nftId);
       const refLevel = await GetRefLevelForUser_Syndicate(bondValue, nftLevel);
       //const nftId = await GetNFTOfOwner_Legacy();
-      const hasAccount = principalBalance + newDeposits >= 10 * 10e17;
+      const hasAccount = principalBalance + newDeposits >= 10;
       const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance, hasAccount);
       //const directs = await getDownline()
       const bnbBalance = await getBnbBalance();
