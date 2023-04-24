@@ -567,7 +567,6 @@ async function ExpectedBUSDFromARK_Swap(amount, hasAcc) {
 
     return Number(_val).toFixed(2);
   } catch (err){
-    console.log(err)
     return 0;
   }
 }
