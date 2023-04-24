@@ -625,7 +625,7 @@ export const initData = async (accounts) => {
       const maxPayout = Math.min(principalBalance * 3, 80000);
       const busdBalance = await GetBusdBalance();
       const nftRewards = playerStats.nftData.nftRewards / 10e17;//await GetClaimableRewards_Legacy();
-      const lastAction = LastAction_Vault(playerStats.lastAction);//await LastAction_Vault();
+      const lastAction = await LastAction_Vault(playerStats.lastAction);//await LastAction_Vault();
       const level = playerStats.nftData.nftLevel;//await GetLevelOfAccount_Legacy();
       const newDeposits = playerStats.newDeposits / 10e17;//await GetNewDeposits_Vault();
       const airdropsReceived = playerStats.airdropsReceived / 10e17;//await GetAirdropsReceived_Vault();
