@@ -180,5 +180,6 @@ export const getPlayerStats = async (address) => {
   const playerStats = await arkFiVaultReader.methods
     .getInvestorStats(address)
     .call();
+  console.log(playerStats);
   return playerStats;
 };
