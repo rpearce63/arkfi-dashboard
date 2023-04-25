@@ -8,7 +8,7 @@ export default ({ toDate }) => {
     var now = new Date();
     var difference = dateEntered - now.getTime();
 
-    if (difference <= 0) {
+    if (difference < 0) {
       setTime("00:00:00");
     } else {
       var seconds = Math.floor(difference / 1000);
@@ -29,7 +29,7 @@ export default ({ toDate }) => {
 
   const interval = setInterval(() => {
       updateTimer();
-      return () => clearInterval(interval);
+      
     }, 1000);
   
   useEffect(() => {
