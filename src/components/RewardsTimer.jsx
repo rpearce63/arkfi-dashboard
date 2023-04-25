@@ -34,6 +34,7 @@ export default ({ toDate }) => {
   
   useEffect(() => {
     updateTimer();
+    return () => clearInterval(interval);
   },[toDate])
 
   return <span>{time}</span>;
