@@ -71,6 +71,7 @@ export default ({ addWallet }) => {
             component="label"
             size="small"
             color="success"
+            sx={{marginRight: "1em"}}
           >
             Load Backup
             <input type="file" hidden onChange={loadFile} />
