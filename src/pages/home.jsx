@@ -46,7 +46,7 @@ export default () => {
 
   useEffect(() => {
     initializeData();
-    setTimeout(() => getInitData(), 5000);
+    setTimeout(() => getInitData(), 2000);
     const interval = setInterval(() => {
       loading || getInitData();
       
