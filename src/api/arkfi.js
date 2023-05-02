@@ -504,9 +504,8 @@ async function GetLevelNFT_Legacy(nftId) {
 
 async function GetRefLevelForUser_Syndicate(bondValue, _nftValue) {
   //var bondValue = Number(await GetBondValue_Vault());
-  var nftId = await GetNFTOfOwner_Legacy();
-  let nftValue = await GetLevelNFT_Legacy(nftId);
-  console.log(nftValue)
+  //var nftId = await GetNFTOfOwner_Legacy();
+  let nftValue = _nftValue;//await GetLevelNFT_Legacy(nftId);
   switch (nftValue) {
     
     case 1:
@@ -629,8 +628,8 @@ export const initData = async (accounts) => {
       const airdropsReceived = playerStats.airdropsReceived / 10e17;//await GetAirdropsReceived_Vault();
       const bondValue = playerStats.bondData.bondValue / 10e17;//await GetBondValue_Vault();
       const bondShares = playerStats.bondData.bondBalance / 10e17;//await GetShares_Bond();
-      const nftId = await GetNFTOfOwner_Legacy();
-      const nftLevel = await GetLevelNFT_Legacy(nftId);
+      //const nftId = await GetNFTOfOwner_Legacy();
+      const nftLevel = playerStats.nftData.nftLevel;//await GetLevelNFT_Legacy(nftId);
       const refLevel = await GetRefLevelForUser_Syndicate(bondValue, nftLevel);
       
       const hasAccount = principalBalance + newDeposits >= 10;
@@ -669,6 +668,5 @@ export const initData = async (accounts) => {
   //   console.log(err)
   //   return "";
   // }
-  console.log(response)
   return response;
 };

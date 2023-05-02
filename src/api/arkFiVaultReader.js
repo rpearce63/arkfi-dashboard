@@ -182,18 +182,16 @@ const arkFiVaultReadersABI = [
 		"type": "function"
 	}
 ];
-const arkiFiVaultReaderAddress = "0x743b73A419Cf806DB3B0B479122f73Be30014d4e";
+const arkiFiVaultReaderAddress = "0xc6C4224Fef0bfEe407005E4B93F541c2b45844F4";
 const arkFiVaultReader = new web3bsc.eth.Contract(
   arkFiVaultReadersABI,
   arkiFiVaultReaderAddress
 );
 
 export const getPlayerStats = async (address) => {
-  console.log('calling contract for ', address)
   const playerStats = await arkFiVaultReader.methods
     .getInvestorStats(address)
     .call();
-  console.log(playerStats)
   const {vaultData, bondData, nftData} = playerStats;
   return {...vaultData, bondData, nftData};
 };
