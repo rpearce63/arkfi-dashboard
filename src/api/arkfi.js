@@ -501,16 +501,12 @@ async function GetLevelNFT_Legacy(nftId) {
   }
 }
 
-async function GetRefLevelForUser_Syndicate(bondValue, nftValue) {
-   console.log('reflevel: ', bondValue, nftValue)
+async function GetRefLevelForUser_Syndicate(bondValue, _nftValue) {
   //var bondValue = Number(await GetBondValue_Vault());
   //var nftId = await GetNFTOfOwner_Legacy();
-  //var nftValue = await GetLevelNFT_Legacy(nftId);
-  
+  let nftValue = Number(_nftValue); //await GetLevelNFT_Legacy(nftId);
   switch (nftValue) {
-    default:
-      nftValue = 0;
-      break;
+    
     case 1:
       nftValue = 1000;
       break;
@@ -520,10 +516,12 @@ async function GetRefLevelForUser_Syndicate(bondValue, nftValue) {
     case 3:
       nftValue = 10000;
       break;
+    default:
+      nftValue = 0;
+      break;
   }
-
   bondValue += nftValue;
-
+  console.log(bondValue)
   var values = [
     250, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000,
     9000, 10000,
