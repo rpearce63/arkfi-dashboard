@@ -189,9 +189,11 @@ const arkFiVaultReader = new web3bsc.eth.Contract(
 );
 
 export const getPlayerStats = async (address) => {
+  console.log('calling contract for ', address)
   const playerStats = await arkFiVaultReader.methods
     .getInvestorStats(address)
     .call();
+  console.log(playerStats)
   const {vaultData, bondData, nftData} = playerStats;
   return {...vaultData, bondData, nftData};
 };
