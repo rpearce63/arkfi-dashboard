@@ -505,6 +505,7 @@ async function GetRefLevelForUser_Syndicate(bondValue, nftValue) {
   //var bondValue = Number(await GetBondValue_Vault());
   //var nftId = await GetNFTOfOwner_Legacy();
   //var nftValue = await GetLevelNFT_Legacy(nftId);
+  
   switch (nftValue) {
     default:
       nftValue = 0;
@@ -668,5 +669,6 @@ export const initData = async (accounts) => {
   //   console.log(err)
   //   return "";
   // }
+  console.log(response)
   return response;
 };
