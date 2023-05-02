@@ -485,7 +485,8 @@ async function GetNFTOfOwner_Legacy() {
       .tokenOfOwnerByIndex(account, 0)
       .call();
     return _val;
-  } catch  {
+  } catch  (err){
+    console.log(err.message)
     return "";
   }
 }
