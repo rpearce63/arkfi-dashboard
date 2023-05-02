@@ -505,6 +505,7 @@ async function GetRefLevelForUser_Syndicate(bondValue, _nftValue) {
   //var bondValue = Number(await GetBondValue_Vault());
   var nftId = await GetNFTOfOwner_Legacy();
   let nftValue = await GetLevelNFT_Legacy(nftId);
+  console.log(nftValue)
   switch (nftValue) {
     
     case 1:
