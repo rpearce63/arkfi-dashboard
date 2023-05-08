@@ -182,7 +182,7 @@ const arkFiVaultReadersABI = [
 		"type": "function"
 	}
 ];
-const arkiFiVaultReaderAddress = "0xc6C4224Fef0bfEe407005E4B93F541c2b45844F4";
+const arkiFiVaultReaderAddress = "0x21e9aA7EF2FC9215b7AbbcF0A6ec42fe90B3BdFE";
 const arkFiVaultReader = new web3bsc.eth.Contract(
   arkFiVaultReadersABI,
   arkiFiVaultReaderAddress
