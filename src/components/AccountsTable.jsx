@@ -59,7 +59,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
       0
     );
     const walletTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.walletBalance),
+      (total, account) => total + Number(account.walletBalance),
       0
     );
     const bnbTotal = accounts.reduce(
