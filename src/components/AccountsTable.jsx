@@ -101,7 +101,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
       0
     );
     setTotals({
-      ...totals,
+      //...totals,
       balanceTotal,
       walletTotal,
       busdTotal,
