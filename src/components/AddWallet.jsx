@@ -49,7 +49,7 @@ export default ({ addWallet }) => {
               backgroundColor: "white",
               marginRight: "1em",
               marginBottom: "1em",
-              width: "55ch",
+              maxWidth: "55ch",
               borderRadius: "5px",
             }}
             fullWidth
