@@ -55,7 +55,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
 
   useEffect(() => {
     const balanceTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.principalBalance),
+      (total, account) => total + Number(account.principalBalance),
       0
     );
     const walletTotal = accounts.reduce(
@@ -63,41 +63,41 @@ export default function AccountsTable({ accounts, removeAcct }) {
       0
     );
     const bnbTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.bnbBalance),
+      (total, account) => total + Number(account.bnbBalance),
       0
     );
     const busdTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.busdBalance),
+      (total, account) => total + Number(account.busdBalance),
       0
     );
     const availTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.availableRewards),
+      (total, account) => total + Number(account.availableRewards),
       0
     );
     const depositsTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.deposits),
+      (total, account) => total + Number(account.deposits),
       0
     );
     const withdrawnTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.withdrawn),
+      (total, account) => total + Number(account.withdrawn),
       0
     );
     const maxPayoutTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.maxPayout),
+      (total, account) => total + Number(account.maxPayout),
       0
     );
     const nftRewardsTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.nftRewards),
+      (total, account) => total + Number(account.nftRewards),
       0
     );
     const airdropsReceivedTotal = accounts.reduce(
-      (total, account) => total + parseFloat(account.airdropsReceived),
+      (total, account) => total + Number(account.airdropsReceived),
       0
     );
     const dailyEarnedTotal = accounts.reduce(
       (total, account) =>
         total +
-        parseFloat(account.principalBalance) * (parseFloat(account.roi) / 100),
+        Number(account.principalBalance) * (Number(account.roi) / 100),
       0
     );
     setTotals({
