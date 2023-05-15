@@ -5,6 +5,8 @@ import AccountsTable from "../components/AccountsTable";
 import AddWallet from "../components/AddWallet";
 import { initData } from "../api/arkfi";
 
+import Example from "../components/TheTable";
+
 export default () => {
   const [acctData, setAcctData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +22,7 @@ export default () => {
       [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
     localStorage.setItem(
       "arkFiWallets",
-      JSON.stringify([...new Set([...savedData].map(t => t.toLowerCase()))])
+      JSON.stringify([...new Set([...savedData].map((t) => t.toLowerCase()))])
     );
     const accountsData = [];
     const startTime = new Date().getTime();
@@ -30,8 +32,14 @@ export default () => {
       accountsData.push(accountInfo[0]);
       if (accountInfo[0].deposits >= 0) {
         setAcctData((prev) => {
-          if (prev.some((p) => p.account.toLowerCase() === wallet.toLowerCase())) {
-            return prev.map((p) => (p.account.toLowerCase() === wallet.toLowerCase() ? accountInfo[0] : p));
+          if (
+            prev.some((p) => p.account.toLowerCase() === wallet.toLowerCase())
+          ) {
+            return prev.map((p) =>
+              p.account.toLowerCase() === wallet.toLowerCase()
+                ? { ...p, ...accountInfo[0] }
+                : p
+            );
           } else {
             return [...prev, accountInfo[0]];
           }
@@ -39,8 +47,15 @@ export default () => {
       }
     }
     const endTime = new Date().getTime();
-    console.log('data retrieved in ' + (endTime - startTime)/1000 + " seconds")
-    localStorage.setItem("arkFiAccountsData", JSON.stringify(accountsData.map(a => ({...a, account: a.account.toLowerCase()}))));
+    console.log(
+      "data retrieved in " + (endTime - startTime) / 1000 + " seconds"
+    );
+    localStorage.setItem(
+      "arkFiAccountsData",
+      JSON.stringify(
+        accountsData.map((a) => ({ ...a, account: a.account.toLowerCase() }))
+      )
+    );
     setLoading(false);
   };
 
@@ -49,9 +64,8 @@ export default () => {
     setTimeout(() => getInitData(), 2000);
     const interval = setInterval(() => {
       loading || getInitData();
-      
     }, 300000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -93,7 +107,8 @@ export default () => {
   return (
     <>
       <AddWallet addWallet={addWallet} />
-      <AccountsTable accounts={acctData} removeAcct={removeWallet} />
+      <Example data={acctData} />
+      {/* <AccountsTable accounts={acctData} removeAcct={removeWallet} /> */}
     </>
   );
 };

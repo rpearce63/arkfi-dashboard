@@ -6,14 +6,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-export default ({
-  handleSwitch,
-  backupData,
-  toggleNfts,
-  toggleBonds,
-}) => {
-  
-
+export default ({ handleSwitch, backupData, toggleNfts, toggleBonds }) => {
   return (
     <div className="controls">
       <span className="ml-1 inter-bold">ARK</span>
@@ -26,23 +19,19 @@ export default ({
         color="success"
         startIcon={<FileDownloadIcon color="success" />}
         onClick={backupData}
-        sx={{marginRight: "1em"}}
+        sx={{ marginRight: "1em" }}
       >
         Backup
       </Button>
 
-      
-        <FormControlLabel
-          control={<Checkbox onChange={toggleNfts}/>}
-          label="Include NFTs"
-          
-        />
-        <FormControlLabel
-          control={<Checkbox onChange={toggleBonds}/>}
-          label="Include Bonds"
-          
-        />
-      
+      <FormControlLabel
+        control={<Checkbox onChange={toggleNfts} />}
+        label="Include NFTs"
+      />
+      <FormControlLabel
+        control={<Checkbox onChange={toggleBonds} />}
+        label="Include Bonds"
+      />
     </div>
   );
 };

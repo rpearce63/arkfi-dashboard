@@ -42,12 +42,12 @@ export default function AccountsTable({ accounts, removeAcct }) {
     const arkPrice = await getArkPrice();
     setArkPrice(arkPrice);
   };
-  
+
   const getCurrentBnbPrice = async () => {
     const _bnbPrice = await getBnbPrice();
     setBnbPrice(_bnbPrice);
-  }
-  
+  };
+
   useEffect(() => {
     getUpdatedArkPrice();
     getCurrentBnbPrice();
@@ -82,6 +82,10 @@ export default function AccountsTable({ accounts, removeAcct }) {
       (total, account) => total + Number(account.withdrawn),
       0
     );
+    const ndvTotal = accounts.reduce(
+      (total, account) => total + Number(account.ndv),
+      0
+    );
     const maxPayoutTotal = accounts.reduce(
       (total, account) => total + Number(account.maxPayout),
       0
@@ -96,8 +100,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
     );
     const dailyEarnedTotal = accounts.reduce(
       (total, account) =>
-        total +
-        Number(account.principalBalance) * (Number(account.roi) / 100),
+        total + Number(account.principalBalance) * (Number(account.roi) / 100),
       0
     );
     setTotals({
@@ -108,11 +111,12 @@ export default function AccountsTable({ accounts, removeAcct }) {
       bnbTotal,
       availTotal,
       depositsTotal,
+      ndvTotal,
       maxPayoutTotal,
       nftRewardsTotal,
       airdropsReceivedTotal,
       dailyEarnedTotal,
-      withdrawnTotal
+      withdrawnTotal,
     });
 
     getUpdatedArkPrice();
@@ -138,8 +142,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
     if (!isConfirmed) {
       return false;
     }
-    removeAcct(selectedRow)
-
+    removeAcct(selectedRow);
   };
 
   const formatAddress = (address) =>
@@ -160,21 +163,20 @@ export default function AccountsTable({ accounts, removeAcct }) {
           toggleBonds={() => setIncludeBonds(!includeBonds)}
         />
         {accounts.length === 0 ? (
-            <Box sx={{ position: "absolute", left: "50%", top: "50%" }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-        <Table
-          sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
-          aria-label="simple table"
-        >
-          <TableHeader
-            includeBonds={includeBonds}
-            includeNfts={includeNfts}
-            isBusd={isBusd}
-          ></TableHeader>
-          
-          
+          <Box sx={{ position: "absolute", left: "50%", top: "50%" }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Table
+            sx={{ minWidth: 650, backgroundColor: "AliceBlue" }}
+            aria-label="simple table"
+          >
+            <TableHeader
+              includeBonds={includeBonds}
+              includeNfts={includeNfts}
+              isBusd={isBusd}
+            ></TableHeader>
+
             <TableBody>
               <TotalsHeader
                 accounts={accounts}
@@ -192,7 +194,6 @@ export default function AccountsTable({ accounts, removeAcct }) {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>
-                    
                     <DeleteOutlineOutlinedIcon
                       className="remove-row"
                       onClick={() => openConfirmationDialog(row.account)}
@@ -201,10 +202,9 @@ export default function AccountsTable({ accounts, removeAcct }) {
                     {` - ${index + 1}`}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    
                     {formatAddress(row.account)}
                   </TableCell>
-
+                  <TableCell>{row.label}</TableCell>
                   <TableCell align="right">
                     <RewardsTimer toDate={row.lastAction} />
                   </TableCell>
@@ -212,10 +212,14 @@ export default function AccountsTable({ accounts, removeAcct }) {
                     {displayValue(row.principalBalance)}
                   </TableCell>
                   <TableCell align="right">
-                    {isBusd ? "$" + row.expectedBusd : displayValue(row.walletBalance)}
+                    {isBusd
+                      ? "$" + row.expectedBusd
+                      : displayValue(row.walletBalance)}
                   </TableCell>
                   <TableCell align="right">
-                    {formatCurrency(isBusd ? row.bnbBalance * bnbPrice : row.bnbBalance)}
+                    {formatCurrency(
+                      isBusd ? row.bnbBalance * bnbPrice : row.bnbBalance
+                    )}
                   </TableCell>
                   <TableCell align="right">
                     {formatCurrency(row.busdBalance)}
@@ -227,7 +231,9 @@ export default function AccountsTable({ accounts, removeAcct }) {
                   <TableCell align="right">
                     {row.roi}% (
                     {displayValue(
-                      parseFloat(row.principalBalance * (row.roi/100)).toFixed(2)
+                      parseFloat(
+                        row.principalBalance * (row.roi / 100)
+                      ).toFixed(2)
                     )}
                     )
                   </TableCell>
@@ -255,8 +261,12 @@ export default function AccountsTable({ accounts, removeAcct }) {
 
                   {includeBonds && (
                     <>
-                      <TableCell align="right">{displayValue(row.bondShares)}</TableCell>
-                      <TableCell align="right">${displayValue(row.bondValue)}</TableCell>
+                      <TableCell align="right">
+                        {displayValue(row.bondShares)}
+                      </TableCell>
+                      <TableCell align="right">
+                        ${displayValue(row.bondValue)}
+                      </TableCell>
                     </>
                   )}
                   <TableCell>
@@ -266,11 +276,12 @@ export default function AccountsTable({ accounts, removeAcct }) {
                       <CloseRoundedIcon sx={{ color: "red" }} />
                     )}
                   </TableCell>
+                  <TableCell>{row.roundRobinPosition}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
-         
-        </Table> )}
+          </Table>
+        )}
       </TableContainer>
       {openDialog && <ConfirmationDialog handleResponse={handleResponse} />}
     </>
@@ -283,13 +294,15 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
       <TableRow>
         <TableCell></TableCell>
         <TableCell>Account</TableCell>
+        <TableCell>Label</TableCell>
         <TableCell align="right">Rewards Timer</TableCell>
         <TableCell align="right">Balance</TableCell>
         <TableCell align="right">
           Wallet Balance{" "}
           {isBusd ? (
-            <span style={{display: "table", width: "max-content", float: "right"}}>
-              
+            <span
+              style={{ display: "table", width: "max-content", float: "right" }}
+            >
               (After Tax)
             </span>
           ) : (
@@ -320,6 +333,7 @@ const TableHeader = ({ includeBonds, includeNfts, isBusd }) => {
           </>
         )}
         <TableCell>Spark Elig</TableCell>
+        <TableCell>Round Robin Pos</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -333,18 +347,24 @@ const TotalsHeader = ({
   includeNfts,
   includeBonds,
   bnbPrice,
-  isBusd
+  isBusd,
 }) => {
   return (
     <TableRow sx={{ backgroundColor: "lightgrey" }}>
       <TableCell>Totals</TableCell>
       <TableCell>{accounts.length}</TableCell>
+      <TableCell>
+        <span>Edit</span>
+        <Switch onChange={() => {}} />
+      </TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
       <TableCell align="right">
         {displayValue(totals.walletTotal, 0.13)}
       </TableCell>
-      <TableCell align="right">{formatCurrency(isBusd ? totals.bnbTotal * bnbPrice : totals.bnbTotal)}</TableCell>
+      <TableCell align="right">
+        {formatCurrency(isBusd ? totals.bnbTotal * bnbPrice : totals.bnbTotal)}
+      </TableCell>
       <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
       <TableCell></TableCell>
@@ -353,7 +373,7 @@ const TotalsHeader = ({
       </TableCell>
       <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.withdrawnTotal)}</TableCell>
-      <TableCell></TableCell>
+      <TableCell align="right">{displayValue(totals.ndvTotal)}</TableCell>
       <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
       {includeNfts && (
         <>
@@ -372,6 +392,7 @@ const TotalsHeader = ({
           <TableCell></TableCell>
         </>
       )}
+      <TableCell></TableCell>
       <TableCell></TableCell>
     </TableRow>
   );

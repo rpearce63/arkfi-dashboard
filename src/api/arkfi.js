@@ -1,7 +1,7 @@
 import axios from "axios";
 import Web3 from "web3";
 
-import {getPlayerStats} from './arkFiVaultReader';
+import { getPlayerStats } from "./arkFiVaultReader";
 
 import {
   web3bsc as web3,
@@ -30,9 +30,7 @@ var selectRatios = {
   airdrop: 0,
 };
 
-const arkVaultReader = 
-
-async function GetYourReferrer_Vault() {
+const arkVaultReader = async function GetYourReferrer_Vault() {
   try {
     var _val = await contractBscVault.methods.referrerOf(account).call();
     return _val;
@@ -40,7 +38,7 @@ async function GetYourReferrer_Vault() {
     console.log(error);
     return "";
   }
-}
+};
 
 // async function GetAutoPaidUntil_Vault() {
 //     try {
@@ -257,7 +255,7 @@ async function GetAirdropsReceivedForAcc_Vault(acc) {
 
 async function LastAction_Vault(lastAction) {
   try {
-    var _val = lastAction;//await contractBscVault.methods.lastAction(account).call();
+    var _val = lastAction; //await contractBscVault.methods.lastAction(account).call();
     _val = new Date(Number(_val) * 1000);
     return _val.getTime();
   } catch (error) {
@@ -334,6 +332,18 @@ async function GetRoundRobinRewards_Vault() {
   }
 }
 
+async function GetRoundRobinPosition_Vault() {
+  try {
+    var _val = await contractBscVault.methods
+      .roundRobinPosition(account)
+      .call();
+    return Number(_val);
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+}
+
 async function GetTotalRewards_Vault() {
   try {
     var _val = await contractBscVault.methods.roundRobinRewards(account).call();
@@ -384,15 +394,13 @@ async function GetTotalAccounts_Vault() {
   }
 }
 
-
 async function GetLevelOfAccount_Legacy() {
-    try {
-        var _val = await contractBscLegacy.methods.getLevels(account).call();
-        return Number(_val)
-    }
-    catch {
-        return 0;
-    }
+  try {
+    var _val = await contractBscLegacy.methods.getLevels(account).call();
+    return Number(_val);
+  } catch {
+    return 0;
+  }
 }
 
 async function GetNDVAmountForAcc_Vault(acc) {
@@ -485,14 +493,14 @@ async function GetNFTOfOwner_Legacy() {
       .tokenOfOwnerByIndex(account, 0)
       .call();
     return _val;
-  } catch  (err){
-    console.log(err.message)
+  } catch (err) {
+    console.log(err.message);
     return "";
   }
 }
 
 async function GetLevelNFT_Legacy(nftId) {
-  if(!nftId) return 0;
+  if (!nftId) return 0;
   try {
     var _val = await contractBscLegacy.methods.levelOfNft(nftId).call();
     return Number(_val);
@@ -505,9 +513,8 @@ async function GetLevelNFT_Legacy(nftId) {
 async function GetRefLevelForUser_Syndicate(bondValue, _nftValue) {
   //var bondValue = Number(await GetBondValue_Vault());
   //var nftId = await GetNFTOfOwner_Legacy();
-  let nftValue = Number(_nftValue);//await GetLevelNFT_Legacy(nftId);
+  let nftValue = Number(_nftValue); //await GetLevelNFT_Legacy(nftId);
   switch (nftValue) {
-    
     case 1:
       nftValue = 1000;
       break;
@@ -565,7 +572,7 @@ async function ExpectedBUSDFromARK_Swap(amount, hasAcc) {
     }
 
     return Number(_val).toFixed(2);
-  } catch (err){
+  } catch (err) {
     return 0;
   }
 }
@@ -606,64 +613,69 @@ const nftLevels = ["None", "Silver", "Gold", "Platinum"];
 
 export const initData = async (accounts) => {
   console.log("loading data for ", accounts[0]);
-  const response = [];
+  account = accounts[0];
   //try {
-    for (const wallet of accounts) {
-      account = wallet;
-      const playerStats = await getPlayerStats(wallet);
 
-      const availableRewards = playerStats.availableRewards / 10e17;//await GetAvailableRewards_Vault();
-      const principalBalance = playerStats.principalBalance / 10e17;//await GetPrincipal_Vault();
-      const maxCwr = playerStats.cwr / 1000; //await GetCWR_Vault();
-      const ndv = playerStats.ndv / 10e17;//await GetNDVAmount_Vault();
-      const deposits = playerStats.deposits / 10e17;//await GetDeposits_Vault();
-      const roi = playerStats.roi / 10;//await GetROI_Vault();
-      const walletBalance = playerStats.walletBalance / 10e17;//await GetARKBalance_Token();
-      const maxPayout = Math.min(principalBalance * 3, 80000);
-      const busdBalance = await GetBusdBalance();
-      const nftRewards = playerStats.nftData.nftRewards / 10e17;//await GetClaimableRewards_Legacy();
-      const lastAction = await LastAction_Vault(playerStats.lastAction);//await LastAction_Vault();
-      const level = playerStats.nftData.nftLevel;//await GetLevelOfAccount_Legacy();
-      const newDeposits = playerStats.newDeposits / 10e17;//await GetNewDeposits_Vault();
-      const airdropsReceived = playerStats.airdropsReceived / 10e17;//await GetAirdropsReceived_Vault();
-      const bondValue = playerStats.bondData.bondValue / 10e17;//await GetBondValue_Vault();
-      const bondShares = playerStats.bondData.bondBalance / 10e17;//await GetShares_Bond();
-      //const nftId = await GetNFTOfOwner_Legacy();
-      const nftLevel = playerStats.nftData.nftLevel;//await GetLevelNFT_Legacy(nftId);
-      const refLevel = await GetRefLevelForUser_Syndicate(bondValue, nftLevel);
-      
-      const hasAccount = principalBalance + newDeposits >= 10;
-      const expectedBusd = await ExpectedBUSDFromARK_Swap(walletBalance, hasAccount);
-      //const directs = await getDownline()
-      const bnbBalance = await getBnbBalance();
-      const withdrawn = playerStats.withdrawn / 10e17;//await GetWithdrawn_Vault();
+  const playerStats = await getPlayerStats(account);
 
-      response.push({
-        account: wallet,
-        availableRewards,
-        principalBalance,
-        maxCwr,
-        ndv,
-        deposits,
-        roi,
-        walletBalance,
-        maxPayout,
-        busdBalance,
-        nftRewards,
-        lastAction,
-        level,
-        newDeposits,
-        airdropsReceived,
-        bondValue,
-        bondShares,
-        refLevel,
-        nftLevel: nftLevels[nftLevel],
-        expectedBusd,
-        //directs
-        bnbBalance,
-        withdrawn,
-      });
-    }
+  const availableRewards = playerStats.availableRewards / 10e17; //await GetAvailableRewards_Vault();
+  const principalBalance = playerStats.principalBalance / 10e17; //await GetPrincipal_Vault();
+  const maxCwr = playerStats.cwr / 1000; //await GetCWR_Vault();
+  const ndv = playerStats.ndv / 10e17; //await GetNDVAmount_Vault();
+  const deposits = playerStats.deposits / 10e17; //await GetDeposits_Vault();
+  const roi = playerStats.roi / 10; //await GetROI_Vault();
+  const walletBalance = playerStats.walletBalance / 10e17; //await GetARKBalance_Token();
+  const maxPayout = Math.min(principalBalance * 3, 80000);
+  const busdBalance = await GetBusdBalance();
+  const nftRewards = playerStats.nftData.nftRewards / 10e17; //await GetClaimableRewards_Legacy();
+  const lastAction = await LastAction_Vault(playerStats.lastAction); //await LastAction_Vault();
+  const level = playerStats.nftData.nftLevel; //await GetLevelOfAccount_Legacy();
+  const newDeposits = playerStats.newDeposits / 10e17; //await GetNewDeposits_Vault();
+  const airdropsReceived = playerStats.airdropsReceived / 10e17; //await GetAirdropsReceived_Vault();
+  const bondValue = playerStats.bondData.bondValue / 10e17; //await GetBondValue_Vault();
+  const bondShares = playerStats.bondData.bondBalance / 10e17; //await GetShares_Bond();
+  //const nftId = await GetNFTOfOwner_Legacy();
+  const nftLevel = playerStats.nftData.nftLevel; //await GetLevelNFT_Legacy(nftId);
+  const refLevel = await GetRefLevelForUser_Syndicate(bondValue, nftLevel);
+
+  const hasAccount = principalBalance + newDeposits >= 10;
+  const expectedBusd = await ExpectedBUSDFromARK_Swap(
+    walletBalance,
+    hasAccount
+  );
+  //const directs = await getDownline()
+  const bnbBalance = await getBnbBalance();
+  const withdrawn = playerStats.withdrawn / 10e17; //await GetWithdrawn_Vault();
+  const roundRobinPosition = playerStats.roundRobinPosition;
+
+  const response = [
+    {
+      account,
+      availableRewards,
+      principalBalance,
+      maxCwr,
+      ndv,
+      deposits,
+      roi,
+      walletBalance,
+      maxPayout,
+      busdBalance,
+      nftRewards,
+      lastAction,
+      level,
+      newDeposits,
+      airdropsReceived,
+      bondValue,
+      bondShares,
+      refLevel,
+      nftLevel: nftLevels[nftLevel],
+      expectedBusd,
+      //directs
+      bnbBalance,
+      withdrawn,
+      roundRobinPosition,
+    },
+  ];
   // } catch (err) {
   //   console.log(err)
   //   return "";
