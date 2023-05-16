@@ -37,6 +37,8 @@ export default function AccountsTable({ accounts, removeAcct }) {
   const [selectedRow, setSelectedRow] = useState("");
   const [includeBonds, setIncludeBonds] = useState(false);
   const [includeNfts, setIncludeNfts] = useState(false);
+  const [tableData, setTableData] = useState(accounts);
+  const [label, setLabel] = useState("");
 
   const getUpdatedArkPrice = async () => {
     const arkPrice = await getArkPrice();
@@ -49,6 +51,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
   };
 
   useEffect(() => {
+    setTableData(accounts);
     getUpdatedArkPrice();
     getCurrentBnbPrice();
   }, [accounts]);
@@ -153,6 +156,25 @@ export default function AccountsTable({ accounts, removeAcct }) {
     return isBusd ? "$" + _val : _val;
   };
 
+  const toggleEdit = (index) => {
+    if (tableData[index].isEdit) {
+      tableData[index].label = label;
+      tableData[index].isEdit = false;
+      setLabel("");
+    } else {
+      tableData[index].isEdit = true;
+      setLabel(tableData[index].label);
+    }
+    localStorage.setItem("arkFiAccountsData", JSON.stringify(tableData));
+    localStorage.setItem(
+      "arkFiWallets",
+      JSON.stringify(
+        tableData.map((t) => ({ address: t.account, label: t.label }))
+      )
+    );
+    setTableData([...tableData]);
+  };
+
   return (
     <>
       <TableContainer component={Paper} sx={{ marginTop: "2em" }}>
@@ -179,7 +201,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
 
             <TableBody>
               <TotalsHeader
-                accounts={accounts}
+                accounts={tableData}
                 totals={totals}
                 displayValue={displayValue}
                 formatCurrency={formatCurrency}
@@ -188,7 +210,7 @@ export default function AccountsTable({ accounts, removeAcct }) {
                 bnbPrice={bnbPrice}
                 isBusd={isBusd}
               />
-              {accounts.map((row, index) => (
+              {tableData.map((row, index) => (
                 <TableRow
                   key={row.account}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -204,7 +226,23 @@ export default function AccountsTable({ accounts, removeAcct }) {
                   <TableCell component="th" scope="row">
                     {formatAddress(row.account)}
                   </TableCell>
-                  <TableCell>{row.label}</TableCell>
+                  <TableCell onDoubleClick={() => toggleEdit(index)}>
+                    {row.isEdit ? (
+                      <input
+                        type="text"
+                        size={8}
+                        autoFocus
+                        value={label}
+                        onChange={(e) => setLabel(e.target.value)}
+                        onBlur={() => toggleEdit(index)}
+                        onKeyDown={(e) =>
+                          e.key === "Enter" && toggleEdit(index)
+                        }
+                      />
+                    ) : (
+                      row.label
+                    )}
+                  </TableCell>
                   <TableCell align="right">
                     <RewardsTimer toDate={row.lastAction} />
                   </TableCell>
@@ -354,8 +392,7 @@ const TotalsHeader = ({
       <TableCell>Totals</TableCell>
       <TableCell>{accounts.length}</TableCell>
       <TableCell>
-        <span>Edit</span>
-        <Switch onChange={() => {}} />
+        <i>Double click to edit</i>
       </TableCell>
       <TableCell></TableCell>
       <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>

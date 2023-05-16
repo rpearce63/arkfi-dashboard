@@ -5,8 +5,6 @@ import AccountsTable from "../components/AccountsTable";
 import AddWallet from "../components/AddWallet";
 import { initData } from "../api/arkfi";
 
-import Example from "../components/TheTable";
-
 export default () => {
   const [acctData, setAcctData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,30 +16,33 @@ export default () => {
 
   const getInitData = async () => {
     setLoading(true);
-    const savedData =
-      [...new Set(JSON.parse(localStorage.getItem("arkFiWallets")))] || [];
-    localStorage.setItem(
-      "arkFiWallets",
-      JSON.stringify([...new Set([...savedData].map((t) => t.toLowerCase()))])
-    );
+    let savedData = JSON.parse(localStorage.getItem("arkFiWallets")) || [];
+
+    savedData = savedData?.map((a) => ({
+      address: a.address || a,
+      label: a.label || "",
+    }));
+    localStorage.setItem("arkFiWallets", JSON.stringify(savedData));
     const accountsData = [];
     const startTime = new Date().getTime();
     for (const wallet of savedData) {
       //await new Promise((resolve) => setTimeout(resolve, 2000));
-      const accountInfo = await initData([wallet]);
-      accountsData.push(accountInfo[0]);
+      const accountInfo = await initData([wallet.address]);
+      accountsData.push({ ...accountInfo[0], label: wallet.label });
       if (accountInfo[0].deposits >= 0) {
         setAcctData((prev) => {
           if (
-            prev.some((p) => p.account.toLowerCase() === wallet.toLowerCase())
+            prev.some(
+              (p) => p.account.toLowerCase() === wallet.address.toLowerCase()
+            )
           ) {
             return prev.map((p) =>
-              p.account.toLowerCase() === wallet.toLowerCase()
-                ? { ...p, ...accountInfo[0] }
+              p.account.toLowerCase() === wallet.address.toLowerCase()
+                ? { ...p, ...accountInfo[0], label: wallet.label }
                 : p
             );
           } else {
-            return [...prev, accountInfo[0]];
+            return [...prev, { ...accountInfo[0], label: wallet.label }];
           }
         });
       }
@@ -76,7 +77,7 @@ export default () => {
     const wallets = JSON.parse(localStorage.getItem("arkFiWallets")) || [];
     localStorage.setItem(
       "arkFiWallets",
-      JSON.stringify([...new Set([...wallets, address.toLowerCase()])])
+      JSON.stringify([...wallets, { ...address.toLowerCase(), label: "" }])
     );
 
     const accountInfo = await initData([address]);
@@ -90,7 +91,7 @@ export default () => {
   const removeWallet = (address) => {
     const stored = JSON.parse(localStorage.getItem("arkFiWallets"));
     const updated = stored.filter(
-      (w) => w.toLowerCase() !== address.toLowerCase()
+      (w) => w.address.toLowerCase() !== address.toLowerCase()
     );
     localStorage.setItem("arkFiWallets", JSON.stringify(updated));
 
@@ -107,8 +108,8 @@ export default () => {
   return (
     <>
       <AddWallet addWallet={addWallet} />
-      <Example data={acctData} />
-      {/* <AccountsTable accounts={acctData} removeAcct={removeWallet} /> */}
+
+      <AccountsTable accounts={acctData} removeAcct={removeWallet} />
     </>
   );
 };
