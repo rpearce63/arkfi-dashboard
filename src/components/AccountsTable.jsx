@@ -24,6 +24,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 import RewardsTimer from "./RewardsTimer";
+import SellTimer from "./SellTimer";
 
 export default function AccountsTable({ accounts, removeAcct }) {
   const [totals, setTotals] = useState([]);
@@ -226,7 +227,10 @@ export default function AccountsTable({ accounts, removeAcct }) {
                   <TableCell component="th" scope="row">
                     {formatAddress(row.account)}
                   </TableCell>
-                  <TableCell onDoubleClick={() => toggleEdit(index)}>
+                  <TableCell
+                    className="labelCell"
+                    onDoubleClick={() => toggleEdit(index)}
+                  >
                     {row.isEdit ? (
                       <input
                         type="text"
@@ -249,10 +253,11 @@ export default function AccountsTable({ accounts, removeAcct }) {
                   <TableCell align="right">
                     {displayValue(row.principalBalance)}
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" className="tooltip">
                     {isBusd
                       ? "$" + row.expectedBusd
                       : displayValue(row.walletBalance)}
+                    <SellTimer toDate={row.lastSell} />
                   </TableCell>
                   <TableCell align="right">
                     {formatCurrency(
@@ -388,49 +393,62 @@ const TotalsHeader = ({
   isBusd,
 }) => {
   return (
-    <TableRow sx={{ backgroundColor: "lightgrey" }}>
-      <TableCell>Totals</TableCell>
-      <TableCell>{accounts.length}</TableCell>
-      <TableCell>
-        <i>Double click to edit</i>
-      </TableCell>
-      <TableCell></TableCell>
-      <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
-      <TableCell align="right">
-        {displayValue(totals.walletTotal, 0.13)}
-      </TableCell>
-      <TableCell align="right">
-        {formatCurrency(isBusd ? totals.bnbTotal * bnbPrice : totals.bnbTotal)}
-      </TableCell>
-      <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
-      <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
-      <TableCell></TableCell>
-      <TableCell align="right">
-        {displayValue(totals.dailyEarnedTotal)}
-      </TableCell>
-      <TableCell align="right">{displayValue(totals.depositsTotal)}</TableCell>
-      <TableCell align="right">{displayValue(totals.withdrawnTotal)}</TableCell>
-      <TableCell align="right">{displayValue(totals.ndvTotal)}</TableCell>
-      <TableCell align="right">{displayValue(totals.maxPayoutTotal)}</TableCell>
-      {includeNfts && (
-        <>
-          <TableCell align="right">
-            {formatCurrency(totals.nftRewardsTotal)}
-          </TableCell>
-          <TableCell></TableCell>
-        </>
-      )}
-      <TableCell align="right">
-        {displayValue(totals.airdropsReceivedTotal)}
-      </TableCell>
-      {includeBonds && (
-        <>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-        </>
-      )}
-      <TableCell></TableCell>
-      <TableCell></TableCell>
-    </TableRow>
+    <>
+      <TableRow sx={{ backgroundColor: "lightgrey" }}>
+        <TableCell>Totals</TableCell>
+        <TableCell>{accounts.length}</TableCell>
+        <TableCell></TableCell>
+        <TableCell></TableCell>
+        <TableCell align="right">{displayValue(totals.balanceTotal)}</TableCell>
+        <TableCell align="right">
+          {displayValue(totals.walletTotal, 0.13)}
+        </TableCell>
+        <TableCell align="right">
+          {formatCurrency(
+            isBusd ? totals.bnbTotal * bnbPrice : totals.bnbTotal
+          )}
+        </TableCell>
+        <TableCell align="right">{formatCurrency(totals.busdTotal)}</TableCell>
+        <TableCell align="right">{displayValue(totals.availTotal)}</TableCell>
+        <TableCell></TableCell>
+        <TableCell align="right">
+          {displayValue(totals.dailyEarnedTotal)}
+        </TableCell>
+        <TableCell align="right">
+          {displayValue(totals.depositsTotal)}
+        </TableCell>
+        <TableCell align="right">
+          {displayValue(totals.withdrawnTotal)}
+        </TableCell>
+        <TableCell align="right">{displayValue(totals.ndvTotal)}</TableCell>
+        <TableCell align="right">
+          {displayValue(totals.maxPayoutTotal)}
+        </TableCell>
+        {includeNfts && (
+          <>
+            <TableCell align="right">
+              {formatCurrency(totals.nftRewardsTotal)}
+            </TableCell>
+            <TableCell></TableCell>
+          </>
+        )}
+        <TableCell align="right">
+          {displayValue(totals.airdropsReceivedTotal)}
+        </TableCell>
+        {includeBonds && (
+          <>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+          </>
+        )}
+        <TableCell></TableCell>
+        <TableCell></TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell colSpan={5}>
+          * Double click label cell to edit. Enter, tab, or click away to save.
+        </TableCell>
+      </TableRow>
+    </>
   );
 };

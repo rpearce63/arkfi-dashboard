@@ -643,10 +643,11 @@ export const initData = async (accounts) => {
     walletBalance,
     hasAccount
   );
-  //const directs = await getDownline()
+
   const bnbBalance = await getBnbBalance();
   const withdrawn = playerStats.withdrawn / 10e17; //await GetWithdrawn_Vault();
   const roundRobinPosition = playerStats.roundRobinPosition;
+  const lastSell = Number(playerStats.lastSell) * 1000;
 
   const response = [
     {
@@ -670,15 +671,12 @@ export const initData = async (accounts) => {
       refLevel,
       nftLevel: nftLevels[nftLevel],
       expectedBusd,
-      //directs
       bnbBalance,
       withdrawn,
       roundRobinPosition,
+      lastSell,
     },
   ];
-  // } catch (err) {
-  //   console.log(err)
-  //   return "";
-  // }
+
   return response;
 };

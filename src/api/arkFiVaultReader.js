@@ -81,11 +81,6 @@ const arkFiVaultReadersABI = [
           },
           {
             internalType: "uint256",
-            name: "lastAction",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
             name: "withdrawn",
             type: "uint256",
           },
@@ -104,14 +99,31 @@ const arkFiVaultReadersABI = [
             name: "airdropsReceived",
             type: "uint256",
           },
+        ],
+        internalType: "struct ArkFiVaultReader.Vault",
+        name: "vaultData",
+        type: "tuple",
+      },
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "lastAction",
+            type: "uint256",
+          },
           {
             internalType: "uint256",
             name: "roundRobinPosition",
             type: "uint256",
           },
+          {
+            internalType: "uint256",
+            name: "lastSell",
+            type: "uint256",
+          },
         ],
-        internalType: "struct ArkFiVaultReader.Vault",
-        name: "vaultData",
+        internalType: "struct ArkFiVaultReader.Vault2",
+        name: "addlData",
         type: "tuple",
       },
       {
@@ -184,7 +196,7 @@ const arkFiVaultReadersABI = [
     type: "function",
   },
 ];
-const arkiFiVaultReaderAddress = "0xd5a45AD525f35EC69eC8cc03A9e3b76fbEBfcE37";
+const arkiFiVaultReaderAddress = "0x2A3825a36dd315a67F1fdf10315CAce87ccfD0d8";
 const arkFiVaultReader = new web3bsc.eth.Contract(
   arkFiVaultReadersABI,
   arkiFiVaultReaderAddress
@@ -194,6 +206,6 @@ export const getPlayerStats = async (address) => {
   const playerStats = await arkFiVaultReader.methods
     .getInvestorStats(address)
     .call();
-  const { vaultData, bondData, nftData } = playerStats;
-  return { ...vaultData, bondData, nftData };
+  const { vaultData, addlData, bondData, nftData } = playerStats;
+  return { ...vaultData, ...addlData, bondData, nftData };
 };
